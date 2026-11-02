@@ -630,7 +630,12 @@
         async function dbAdd(s, d) { if (!userId) return showToast("Login required!", "error"); await addDoc(collection(db, 'artifacts', appId, 'users', userId, s), d); }
         async function dbPut(s, d) { if (!userId) return; const c = {...d}; delete c.id; await updateDoc(doc(db, 'artifacts', appId, 'users', userId, s, d.id), c); }
         async function dbDelete(s, id) { if (!userId) return; await deleteDoc(doc(db, 'artifacts', appId, 'users', userId, s, id)); }
-
+// पैसा (Paisa) लाई रुपैयाँमा लगेर फर्म्याट गर्ने फङ्सन
+function formatNPR(amount) {
+    const rupees = amount / 100;
+    return 'रु. ' + rupees.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+window.formatNPR = formatNPR;
         window.addEventListener('DOMContentLoaded', async () => {
             const today = "2083-07-16"; 
             ['income-date','expense-date','transfer-date','friend-transfer-date'].forEach(id => document.getElementById(id).value = today);
