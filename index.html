@@ -3,40 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Expense Tracker</title>
+    <title>Personal Expense Tracker V2.1</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2563eb">
     <link rel="apple-touch-icon" href="icon-192.png">
     
-    <!-- Tailwind CSS CDN for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
-                extend: {
-                    colors: {
-                        brand: { 50: '#eff6ff', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' }
-                    }
-                }
+                extend: { colors: { brand: { 50: '#eff6ff', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' } } }
             }
         }
     </script>
-    
-    <!-- Chart.js for analytics -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
         .dark ::-webkit-scrollbar-thumb { background: #475569; }
-
         .active-tab { background-color: #eff6ff; color: #2563eb; }
         .dark .active-tab { background-color: rgba(37, 99, 235, 0.15); color: #3b82f6; }
     </style>
@@ -46,13 +36,12 @@
     <!-- Mobile Sidebar Backdrop -->
     <div id="sidebar-backdrop" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden" onclick="toggleMobileSidebar()"></div>
 
-    <!-- Desktop & Mobile Sidebar Navigation -->
+    <!-- Sidebar Navigation -->
     <aside id="app-sidebar" class="fixed md:sticky top-0 left-0 h-screen w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl md:shadow-sm">
         <div class="p-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
             <h1 class="text-xl font-bold text-brand-600 dark:text-brand-500 flex items-center gap-2">
                 <i class="fa-solid fa-wallet"></i> <span data-i18n="app_title">Expense Tracker</span>
             </h1>
-            <!-- Mobile Close Sidebar Button -->
             <button onclick="toggleMobileSidebar()" class="md:hidden text-gray-500 hover:text-rose-500 text-xl focus:outline-none">
                 <i class="fa-solid fa-xmark"></i>
             </button>
@@ -93,9 +82,8 @@
         </div>
     </aside>
 
-    <!-- Main Content Area -->
     <main class="flex-1 flex flex-col min-h-screen relative z-10">
-        <!-- Top Header -->
+        <!-- Header -->
         <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-20">
             <div class="flex items-center gap-3">
                 <button onclick="toggleMobileSidebar()" class="md:hidden text-xl text-gray-600 dark:text-gray-300 focus:outline-none hover:text-brand-600 transition">
@@ -104,6 +92,11 @@
                 <h2 id="page-title" class="text-lg font-bold" data-i18n="nav_dashboard">Dashboard</h2>
             </div>
             <div class="flex items-center gap-3">
+                <button onclick="openNotificationModal()" class="relative p-2 text-gray-600 dark:text-gray-300 hover:text-brand-600 transition">
+                    <i class="fa-solid fa-bell text-xl"></i>
+                    <span id="notif-badge" class="hidden absolute top-0 right-0 w-4 h-4 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white dark:border-gray-800">0</span>
+                </button>
+                
                 <div id="sync-status" class="hidden sm:flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 text-gray-500">
                     <i class="fa-solid fa-cloud-slash"></i> <span id="sync-text" data-i18n="offline">Offline</span>
                 </div>
@@ -111,15 +104,11 @@
                 <button onclick="toggleLang()" class="text-sm font-medium px-3 py-1.5 bg-brand-50 text-brand-600 dark:bg-gray-700 dark:text-brand-400 rounded-lg shadow-sm border border-brand-100 dark:border-gray-600 hover:bg-brand-100 transition">
                     <i class="fa-solid fa-language"></i> <span id="lang-text">नेपाली</span>
                 </button>
-                <button onclick="toggleTheme()" class="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-sm">
-                    <i id="mobile-theme-icon" class="fa-solid fa-sun"></i>
-                </button>
             </div>
         </header>
 
-        <!-- Dynamic Content Sections -->
         <div class="p-4 md:p-8 flex-1 max-w-7xl w-full mx-auto space-y-6">
-
+            
             <!-- 1. DASHBOARD -->
             <section id="tab-dashboard" class="tab-content space-y-6">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -134,7 +123,7 @@
                     </div>
                     <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400" data-i18n="total_income_all">Total Income (All-Time)</p>
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400" data-i18n="total_income_all">Total Income</p>
                             <h3 id="dash-total-income" class="text-2xl font-bold mt-1 text-emerald-600">रु. 0</h3>
                         </div>
                         <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center text-xl">
@@ -143,68 +132,31 @@
                     </div>
                     <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400" data-i18n="total_expense_all">Total Expenses (All-Time)</p>
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400" data-i18n="total_expense_all">Total Expenses</p>
                             <h3 id="dash-total-expense" class="text-2xl font-bold mt-1 text-rose-600">रु. 0</h3>
                         </div>
                         <div class="w-12 h-12 rounded-xl bg-rose-50 dark:bg-rose-900/30 text-rose-600 flex items-center justify-center text-xl">
                             <i class="fa-solid fa-arrow-up-long"></i>
                         </div>
                     </div>
-                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400" data-i18n="month_income">This Month's Income</p>
-                            <h3 id="dash-month-income" class="text-2xl font-bold mt-1 text-emerald-600">रु. 0</h3>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-calendar-days"></i>
-                        </div>
-                    </div>
-                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400" data-i18n="month_expense">This Month's Expenses</p>
-                            <h3 id="dash-month-expense" class="text-2xl font-bold mt-1 text-rose-600">रु. 0</h3>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-rose-50 dark:bg-rose-900/30 text-rose-600 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-receipt"></i>
-                        </div>
-                    </div>
-                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400" data-i18n="month_savings">Monthly Savings</p>
-                            <h3 id="dash-month-savings" class="text-2xl font-bold mt-1 text-brand-600">रु. 0</h3>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-brand-600 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-piggy-bank"></i>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                        <h3 class="text-md font-bold mb-4" data-i18n="monthly_chart_title">Monthly Income vs Expense</h3>
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                        <h3 class="text-md font-bold mb-4" data-i18n="monthly_chart_title">Income vs Expense</h3>
                         <div class="h-64 relative"><canvas id="monthlyChart"></canvas></div>
                     </div>
-                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                        <h3 class="text-md font-bold mb-4" data-i18n="acc_balances_title">Account-wise Balances</h3>
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                        <h3 class="text-md font-bold mb-4" data-i18n="acc_balances_title">Account Balances</h3>
                         <div id="dash-account-list" class="space-y-3 max-h-64 overflow-y-auto pr-1"></div>
                     </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-md font-bold" data-i18n="recent_trans_title">Recent Transactions</h3>
-                        <button onclick="switchTab('transactions')" class="text-sm text-brand-600 dark:text-brand-400 font-semibold hover:underline" data-i18n="view_all">View All</button>
-                    </div>
-                    <div id="dash-recent-list" class="divide-y divide-gray-100 dark:divide-gray-700"></div>
                 </div>
             </section>
 
             <!-- 2. ACCOUNTS -->
             <section id="tab-accounts" class="tab-content hidden space-y-6">
                 <div class="flex items-center justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold" data-i18n="manage_accounts">Manage Financial Accounts</h3>
-                    </div>
+                    <h3 class="text-lg font-bold" data-i18n="manage_accounts">Manage Accounts</h3>
                     <button onclick="openAccountModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2">
                         <i class="fa-solid fa-plus"></i> <span data-i18n="add_account">Add Account</span>
                     </button>
@@ -214,20 +166,18 @@
 
             <!-- 3. INCOME -->
             <section id="tab-income" class="tab-content hidden space-y-6 max-w-2xl mx-auto">
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-emerald-600">
-                        <i class="fa-solid fa-circle-arrow-down"></i> <span data-i18n="record_income">Record New Income</span>
-                    </h3>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <h3 class="text-lg font-bold mb-4 text-emerald-600 flex items-center gap-2"><i class="fa-solid fa-circle-arrow-down"></i> <span data-i18n="record_income">Record Income</span></h3>
                     <form id="income-form" onsubmit="handleIncomeSubmit(event)" class="space-y-4">
                         <input type="hidden" id="income-id">
                         <div>
-                            <label class="block text-sm font-medium mb-1" data-i18n="title_source">Income Title / Source *</label>
+                            <label class="block text-sm font-medium mb-1" data-i18n="title_source">Title *</label>
                             <input type="text" id="income-title" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" data-i18n-placeholder="title_placeholder">
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium mb-1" data-i18n="amount">Amount (रु.) *</label>
-                                <input type="number" step="0.01" id="income-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="0.00">
+                                <input type="number" step="0.01" id="income-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-1" data-i18n="date">Date (B.S.) *</label>
@@ -242,22 +192,22 @@
                                     <option value="Business">Business</option>
                                     <option value="Teaching">Teaching</option>
                                     <option value="Interest">Interest</option>
-                                    <option value="Gift">Gift</option>
-                                    <option value="Other Income">Other Income</option>
+                                    <option value="Borrow">Borrow (सापट लिएको)</option>
+                                    <option value="Other Income">Other</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium mb-1" data-i18n="receive_account">Receive in Account *</label>
+                                <label class="block text-sm font-medium mb-1" data-i18n="receive_account">Account *</label>
                                 <select id="income-account" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></select>
                             </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-1" data-i18n="notes">Notes (Optional)</label>
+                            <label class="block text-sm font-medium mb-1" data-i18n="notes">Notes</label>
                             <textarea id="income-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
                         </div>
                         <div class="flex justify-end gap-3 pt-2">
                             <button type="button" onclick="resetIncomeForm()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-medium" data-i18n="reset">Reset</button>
-                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition" data-i18n="save_income">Save Income</button>
+                            <button type="submit" class="bg-emerald-600 text-white px-6 py-2.5 rounded-xl shadow-sm transition hover:bg-emerald-700" data-i18n="save_income">Save</button>
                         </div>
                     </form>
                 </div>
@@ -265,20 +215,18 @@
 
             <!-- 4. EXPENSE -->
             <section id="tab-expense" class="tab-content hidden space-y-6 max-w-2xl mx-auto">
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-rose-600">
-                        <i class="fa-solid fa-circle-arrow-up"></i> <span data-i18n="record_expense">Record New Expense</span>
-                    </h3>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <h3 class="text-lg font-bold mb-4 text-rose-600 flex items-center gap-2"><i class="fa-solid fa-circle-arrow-up"></i> <span data-i18n="record_expense">Record Expense</span></h3>
                     <form id="expense-form" onsubmit="handleExpenseSubmit(event)" class="space-y-4">
                         <input type="hidden" id="expense-id">
                         <div>
-                            <label class="block text-sm font-medium mb-1" data-i18n="title_source">Expense Title / Description *</label>
+                            <label class="block text-sm font-medium mb-1" data-i18n="title_source">Title *</label>
                             <input type="text" id="expense-title" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" data-i18n-placeholder="title_placeholder">
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium mb-1" data-i18n="amount">Amount (रु.) *</label>
-                                <input type="number" step="0.01" id="expense-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="0.00">
+                                <input type="number" step="0.01" id="expense-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-1" data-i18n="date">Date (B.S.) *</label>
@@ -295,23 +243,22 @@
                                     <option value="Health">Health</option>
                                     <option value="Shopping">Shopping</option>
                                     <option value="Bills">Bills</option>
-                                    <option value="Household">Household</option>
-                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Lend">Lend (सापट दिएको)</option>
                                     <option value="Other">Other</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium mb-1" data-i18n="payment_account">Payment Account *</label>
+                                <label class="block text-sm font-medium mb-1" data-i18n="payment_account">Account *</label>
                                 <select id="expense-account" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></select>
                             </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-1" data-i18n="notes">Notes (Optional)</label>
+                            <label class="block text-sm font-medium mb-1" data-i18n="notes">Notes</label>
                             <textarea id="expense-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
                         </div>
                         <div class="flex justify-end gap-3 pt-2">
                             <button type="button" onclick="resetExpenseForm()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-medium" data-i18n="reset">Reset</button>
-                            <button type="submit" class="bg-rose-600 hover:bg-rose-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition" data-i18n="save_expense">Save Expense</button>
+                            <button type="submit" class="bg-rose-600 text-white px-6 py-2.5 rounded-xl shadow-sm transition hover:bg-rose-700" data-i18n="save_expense">Save</button>
                         </div>
                     </form>
                 </div>
@@ -319,43 +266,62 @@
 
             <!-- 5. TRANSFER -->
             <section id="tab-transfer" class="tab-content hidden space-y-6 max-w-2xl mx-auto">
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-amber-600">
-                        <i class="fa-solid fa-right-left"></i> <span data-i18n="account_transfer">Account-to-Account Transfer</span>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <h3 class="text-lg font-bold mb-4 text-amber-600 flex items-center gap-2">
+                        <i class="fa-solid fa-right-left"></i> <span data-i18n="account_transfer">Transfer Money</span>
                     </h3>
-                    <form id="transfer-form" onsubmit="handleTransferSubmit(event)" class="space-y-4">
+                    
+                    <div class="flex gap-4 mb-6 border-b border-gray-200 dark:border-gray-700 pb-4">
+                        <label class="flex items-center gap-2 cursor-pointer font-semibold text-sm text-gray-700 dark:text-gray-300">
+                            <input type="radio" name="transferMode" value="self" checked onchange="toggleTransferMode()" class="accent-brand-600 w-4 h-4"> 
+                            <span data-i18n="self_transfer">आफ्नै खातामा (Self)</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer font-semibold text-sm text-gray-700 dark:text-gray-300">
+                            <input type="radio" name="transferMode" value="friend" onchange="toggleTransferMode()" class="accent-brand-600 w-4 h-4"> 
+                            <span data-i18n="friend_transfer">साथी/परिवारलाई</span>
+                        </label>
+                    </div>
+
+                    <!-- Transfer Self -->
+                    <form id="transfer-form-self" onsubmit="handleTransferSubmit(event)" class="space-y-4">
                         <input type="hidden" id="transfer-id">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium mb-1" data-i18n="from_account">From Account (Source) *</label>
-                                <select id="transfer-from" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1" data-i18n="to_account">To Account (Destination) *</label>
-                                <select id="transfer-to" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></select>
-                            </div>
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="from_account">From Account *</label><select id="transfer-from" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></select></div>
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="to_account">To Account *</label><select id="transfer-to" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></select></div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium mb-1" data-i18n="amount">Amount (रु.) *</label>
-                                <input type="number" step="0.01" id="transfer-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="0.00">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1" data-i18n="transfer_fee">Transfer Fee (Optional)</label>
-                                <input type="number" step="0.01" id="transfer-fee" value="0" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="0.00">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1" data-i18n="date">Date (B.S.) *</label>
-                                <input type="text" id="transfer-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" data-i18n-placeholder="date_placeholder">
-                            </div>
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="amount">Amount *</label><input type="number" step="0.01" id="transfer-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></div>
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="transfer_fee">Fee</label><input type="number" step="0.01" id="transfer-fee" value="0" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></div>
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="date">Date *</label><input type="text" id="transfer-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" data-i18n-placeholder="date_placeholder"></div>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-1" data-i18n="notes">Notes (Optional)</label>
-                            <textarea id="transfer-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
-                        </div>
+                        <div><label class="block text-sm font-medium mb-1" data-i18n="notes">Notes</label><textarea id="transfer-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea></div>
                         <div class="flex justify-end gap-3 pt-2">
-                            <button type="button" onclick="resetTransferForm()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-medium" data-i18n="reset">Reset</button>
-                            <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition" data-i18n="transfer_funds">Transfer Funds</button>
+                            <button type="submit" class="bg-amber-600 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition hover:bg-amber-700" data-i18n="transfer_funds">Transfer</button>
+                        </div>
+                    </form>
+
+                    <!-- Transfer Friend -->
+                    <form id="transfer-form-friend" onsubmit="handleFriendTransferSubmit(event)" class="space-y-4 hidden">
+                        <div class="p-3 mb-4 bg-amber-50 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200 rounded-xl text-xs flex gap-2">
+                            <i class="fa-solid fa-circle-info text-base mt-0.5"></i>
+                            <span data-i18n="friend_transfer_info">यसबाट पठाएको रकम तुरुन्तै खाताबाट घट्नेछ र साथीलाई Notification जानेछ।</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="from_account">From Account *</label><select id="friend-transfer-from" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></select></div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-i18n="friend_email">Friend's Email *</label>
+                                <input type="email" id="friend-transfer-email" list="contacts-list" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="Select or type email">
+                                <datalist id="contacts-list"></datalist>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="amount">Amount *</label><input type="number" step="0.01" id="friend-transfer-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></div>
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="date">Date *</label><input type="text" id="friend-transfer-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" data-i18n-placeholder="date_placeholder"></div>
+                        </div>
+                        <div><label class="block text-sm font-medium mb-1" data-i18n="notes">Message to friend</label><textarea id="friend-transfer-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea></div>
+                        <div class="flex justify-end gap-3 pt-2">
+                            <button type="button" onclick="saveContact()" class="px-4 py-2.5 rounded-xl text-sm border border-brand-200 dark:border-brand-800 text-brand-600 dark:text-brand-400 hover:bg-brand-50 dark:hover:bg-brand-900/30 transition"><i class="fa-solid fa-user-plus"></i> Save Contact</button>
+                            <button type="submit" class="bg-brand-600 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition hover:bg-brand-700" data-i18n="send_money">Send Money</button>
                         </div>
                     </form>
                 </div>
@@ -363,18 +329,18 @@
 
             <!-- 6. TRANSACTIONS -->
             <section id="tab-transactions" class="tab-content hidden space-y-6">
-                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm space-y-4">
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 space-y-4">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <h3 class="text-lg font-bold" data-i18n="transaction_history">Transaction History</h3>
                         <div class="flex flex-wrap items-center gap-2">
                             <input type="text" id="filter-search" oninput="renderTransactions()" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none" data-i18n-placeholder="search_placeholder">
-                            <select id="filter-type" onchange="renderTransactions()" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-3 py-2 text-sm">
+                            <select id="filter-type" onchange="renderTransactions()" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none">
                                 <option value="" data-i18n="all_types">All Types</option>
                                 <option value="income">Income</option>
                                 <option value="expense">Expense</option>
                                 <option value="transfer">Transfer</option>
                             </select>
-                            <select id="filter-account" onchange="renderTransactions()" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-3 py-2 text-sm">
+                            <select id="filter-account" onchange="renderTransactions()" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none">
                                 <option value="" data-i18n="all_accounts">All Accounts</option>
                             </select>
                         </div>
@@ -383,12 +349,12 @@
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="border-b border-gray-100 dark:border-gray-700 text-xs font-semibold text-gray-500 uppercase">
-                                    <th class="py-3 px-4" data-i18n="date_col">Date (BS)</th>
+                                    <th class="py-3 px-4" data-i18n="date_col">Date</th>
                                     <th class="py-3 px-4" data-i18n="type_col">Type</th>
-                                    <th class="py-3 px-4" data-i18n="title_col">Title / Details</th>
-                                    <th class="py-3 px-4" data-i18n="account_col">Account(s)</th>
+                                    <th class="py-3 px-4" data-i18n="title_col">Title</th>
+                                    <th class="py-3 px-4" data-i18n="account_col">Account</th>
                                     <th class="py-3 px-4 text-right" data-i18n="amount_col">Amount</th>
-                                    <th class="py-3 px-4 text-center" data-i18n="actions_col">Actions</th>
+                                    <th class="py-3 px-4 text-center" data-i18n="actions_col">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="transactions-table-body" class="divide-y divide-gray-100 dark:divide-gray-700 text-sm"></tbody>
@@ -400,29 +366,29 @@
             <!-- 7. BUDGET -->
             <section id="tab-budget" class="tab-content hidden space-y-6">
                 <div class="flex items-center justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold" data-i18n="monthly_budgets">Monthly Expense Budgets</h3>
-                    </div>
-                    <button onclick="openBudgetModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2">
-                        <i class="fa-solid fa-plus"></i> <span data-i18n="set_budget">Set Budget</span>
-                    </button>
+                    <h3 class="text-lg font-bold" data-i18n="monthly_budgets">Monthly Budgets</h3>
+                    <button onclick="openBudgetModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> <span data-i18n="set_budget">Set Budget</span></button>
                 </div>
                 <div id="budget-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </section>
 
             <!-- 8. REPORTS -->
             <section id="tab-reports" class="tab-content hidden space-y-6">
-                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm space-y-6">
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 space-y-6">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <h3 class="text-lg font-bold" data-i18n="financial_reports">Financial Analytics & Reports</h3>
-                        <div class="flex items-center gap-2">
-                            <!-- Changed to text input for BS month format -->
-                            <input type="text" id="report-month-input" onchange="generateReports()" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-3 py-2 text-sm" data-i18n-placeholder="month_placeholder">
+                        <h3 class="text-lg font-bold" data-i18n="financial_reports">Financial Reports</h3>
+                        
+                        <!-- Swipeable Month Selector -->
+                        <div class="flex items-center gap-4 bg-gray-100 dark:bg-gray-700 px-2 py-1.5 rounded-xl">
+                            <button onclick="changeReportMonth(-1)" class="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition"><i class="fa-solid fa-chevron-left text-gray-600 dark:text-gray-300"></i></button>
+                            <input type="hidden" id="report-month-input" value="2083-07">
+                            <span id="report-month-display" class="font-bold text-brand-600 dark:text-brand-400 min-w-[100px] text-center">Kartik 2083</span>
+                            <button onclick="changeReportMonth(1)" class="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition"><i class="fa-solid fa-chevron-right text-gray-600 dark:text-gray-300"></i></button>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="p-4 border border-gray-100 dark:border-gray-700 rounded-xl">
-                            <h4 class="font-semibold mb-3 text-sm text-gray-500" data-i18n="cat_expense">Category-wise Expenses</h4>
+                            <h4 class="font-semibold mb-3 text-sm text-gray-500" data-i18n="cat_expense">Category Expenses</h4>
                             <div class="h-64 relative"><canvas id="categoryChart"></canvas></div>
                         </div>
                         <div class="p-4 border border-gray-100 dark:border-gray-700 rounded-xl">
@@ -435,29 +401,15 @@
 
             <!-- 9. SETTINGS -->
             <section id="tab-settings" class="tab-content hidden space-y-6 max-w-2xl mx-auto">
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm space-y-6">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 space-y-6">
                     <h3 class="text-lg font-bold" data-i18n="data_settings">Data Management & Settings</h3>
-                    
-                    <div class="space-y-3">
-                        <div class="flex flex-wrap gap-3">
-                            <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2.5 rounded-xl text-sm shadow-sm transition flex items-center gap-2">
-                                <i class="fa-solid fa-file-csv"></i> <span data-i18n="export_csv">Export Transactions (CSV)</span>
-                            </button>
-                            <button onclick="exportJSONBackup()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-2.5 rounded-xl text-sm shadow-sm transition flex items-center gap-2">
-                                <i class="fa-solid fa-database"></i> <span data-i18n="download_json">Download JSON Backup</span>
-                            </button>
-                        </div>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="exportCSV()" class="bg-emerald-600 text-white font-medium px-4 py-2.5 rounded-xl text-sm shadow-sm flex items-center gap-2 hover:bg-emerald-700 transition"><i class="fa-solid fa-file-csv"></i> <span data-i18n="export_csv">Export CSV</span></button>
                     </div>
-
-                    <div class="border-t border-gray-100 dark:border-gray-700 pt-6 space-y-3">
-                        <h4 class="font-semibold text-sm text-gray-500" data-i18n="restore_data">Restore Data</h4>
-                        <input type="file" id="import-file-input" accept=".json" onchange="restoreJSONBackup(event)" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-600 hover:file:bg-brand-100 cursor-pointer">
-                    </div>
-
                     <div class="border-t border-gray-100 dark:border-gray-700 pt-6 space-y-3">
                         <h4 class="font-semibold text-sm text-gray-500" data-i18n="storage_notice">Storage & Offline Notice</h4>
                         <p class="text-xs text-gray-500 leading-relaxed">
-                            All your financial data is stored securely in your browser's IndexedDB. Please note that clearing browser site data or cookies may erase this database.
+                            Data is securely stored in your browser and synced to the cloud when online.
                         </p>
                     </div>
                 </div>
@@ -465,39 +417,35 @@
         </div>
     </main>
 
-    <!-- Mobile Bottom Navigation (FIXED z-index & positioning) -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-2 py-2 flex items-center justify-around z-[9999] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-        <a href="#dashboard" onclick="switchTab('dashboard')" class="mobile-nav-link flex flex-col items-center text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[10000]">
-            <i class="fa-solid fa-chart-pie text-xl mb-1"></i>
-            <span data-i18n="nav_dashboard">Home</span>
+    <!-- Mobile Bottom Navigation -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-2 py-2 flex items-center justify-around z-[1000] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <a href="#dashboard" onclick="switchTab('dashboard')" class="mobile-nav-link flex flex-col items-center text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[1010]">
+            <i class="fa-solid fa-chart-pie text-xl mb-1"></i><span data-i18n="nav_dashboard">Home</span>
         </a>
-        <a href="#accounts" onclick="switchTab('accounts')" class="mobile-nav-link flex flex-col items-center text-gray-500 hover:text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[10000]">
-            <i class="fa-solid fa-vault text-xl mb-1"></i>
-            <span data-i18n="nav_accounts">Accounts</span>
+        <a href="#accounts" onclick="switchTab('accounts')" class="mobile-nav-link flex flex-col items-center text-gray-500 hover:text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[1010]">
+            <i class="fa-solid fa-vault text-xl mb-1"></i><span data-i18n="nav_accounts">Accounts</span>
         </a>
-
-        <!-- Big Center + Button -->
-        <div class="relative -top-6 z-[10010]">
+        
+        <!-- Center Big Add Button -->
+        <div class="relative -top-6 z-[1020]">
             <button onclick="toggleAddMenu()" class="w-14 h-14 bg-brand-600 hover:bg-brand-700 text-white rounded-full flex items-center justify-center text-2xl shadow-lg border-4 border-white dark:border-gray-800 transition-transform transform hover:scale-105 active:scale-95 focus:outline-none pointer-events-auto">
                 <i class="fa-solid fa-plus"></i>
             </button>
         </div>
-
-        <a href="#transfer" onclick="switchTab('transfer')" class="mobile-nav-link flex flex-col items-center text-gray-500 hover:text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[10000]">
-            <i class="fa-solid fa-right-left text-xl mb-1 text-amber-500"></i>
-            <span data-i18n="nav_transfer">Transfer</span>
+        
+        <a href="#transfer" onclick="switchTab('transfer')" class="mobile-nav-link flex flex-col items-center text-gray-500 hover:text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[1010]">
+            <i class="fa-solid fa-right-left text-xl mb-1 text-amber-500"></i><span data-i18n="nav_transfer">Transfer</span>
         </a>
-        <a href="#transactions" onclick="switchTab('transactions')" class="mobile-nav-link flex flex-col items-center text-gray-500 hover:text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[10000]">
-            <i class="fa-solid fa-list-ul text-xl mb-1"></i>
-            <span data-i18n="nav_history">History</span>
+        <a href="#transactions" onclick="switchTab('transactions')" class="mobile-nav-link flex flex-col items-center text-gray-500 hover:text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[1010]">
+            <i class="fa-solid fa-list-ul text-xl mb-1"></i><span data-i18n="nav_history">History</span>
         </a>
     </nav>
 
-    <!-- Mobile Add Menu (Popup) -->
-    <div id="mobile-add-menu" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[10020] hidden items-end justify-center pb-24 px-4" onclick="toggleAddMenu()">
+    <!-- Mobile Add Menu Popup -->
+    <div id="mobile-add-menu" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[2000] hidden items-end justify-center pb-24 px-4" onclick="toggleAddMenu()">
         <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-3xl p-6 shadow-2xl flex flex-col gap-4 transform translate-y-full transition-transform duration-300" id="mobile-add-menu-content" onclick="event.stopPropagation()">
             <div class="flex justify-between items-center mb-2">
-                <h3 class="font-bold text-gray-700 dark:text-gray-200 text-lg" data-i18n="add_new">Add New</h3>
+                <h3 class="font-bold text-lg text-gray-800 dark:text-gray-100" data-i18n="add_new">Add New</h3>
                 <button onclick="toggleAddMenu()" class="text-gray-400 hover:text-gray-600 bg-gray-100 dark:bg-gray-700 rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="grid grid-cols-2 gap-4">
@@ -513,45 +461,45 @@
         </div>
     </div>
 
+    <!-- Modals (Account, Budget, Confirm, Notifications) -->
+    
     <!-- Account Modal -->
-    <div id="account-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[10030] p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4">
+    <div id="account-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[3000] p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl">
             <div class="flex items-center justify-between">
-                <h3 id="account-modal-title" class="text-lg font-bold" data-i18n="manage_accounts">Manage Account</h3>
+                <h3 id="account-modal-title" class="text-lg font-bold">Manage Account</h3>
                 <button onclick="closeAccountModal()" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form id="account-form" onsubmit="handleAccountSubmit(event)" class="space-y-4">
                 <input type="hidden" id="acc-id">
                 <div>
                     <label class="block text-sm font-medium mb-1">Account Name *</label>
-                    <input type="text" id="acc-name" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <input type="text" id="acc-name" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium mb-1">Type *</label>
-                        <select id="acc-type" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                            <option value="Cash">Cash</option>
-                            <option value="Bank Account">Bank Account</option>
-                            <option value="Mobile Wallet">Mobile Wallet</option>
-                            <option value="Other Account">Other Account</option>
+                        <select id="acc-type" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none">
+                            <option value="Cash">Cash</option><option value="Bank Account">Bank Account</option>
+                            <option value="Mobile Wallet">Mobile Wallet</option><option value="Other Account">Other Account</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1">Balance (रु.) *</label>
-                        <input type="number" step="0.01" id="acc-opening" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <input type="number" step="0.01" id="acc-opening" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none">
                     </div>
                 </div>
                 <div class="flex justify-end gap-3 pt-2">
-                    <button type="button" onclick="closeAccountModal()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-medium">Cancel</button>
-                    <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition">Save</button>
+                    <button type="button" onclick="closeAccountModal()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700">Cancel</button>
+                    <button type="submit" class="bg-brand-600 text-white px-6 py-2.5 rounded-xl transition hover:bg-brand-700">Save</button>
                 </div>
             </form>
         </div>
     </div>
-
+    
     <!-- Budget Modal -->
-    <div id="budget-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[10030] p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4">
+    <div id="budget-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[3000] p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl">
             <div class="flex items-center justify-between">
                 <h3 class="text-lg font-bold" data-i18n="set_budget">Set Budget</h3>
                 <button onclick="closeBudgetModal()" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
@@ -559,736 +507,919 @@
             <form id="budget-form" onsubmit="handleBudgetSubmit(event)" class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium mb-1">Category *</label>
-                    <select id="bud-category" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                        <option value="Food">Food</option>
-                        <option value="Transportation">Transportation</option>
-                        <option value="Education">Education</option>
-                        <option value="Health">Health</option>
-                        <option value="Shopping">Shopping</option>
-                        <option value="Bills">Bills</option>
-                        <option value="Household">Household</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Other">Other</option>
+                    <select id="bud-category" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none">
+                        <option value="Food">Food</option><option value="Transportation">Transportation</option><option value="Education">Education</option><option value="Health">Health</option><option value="Shopping">Shopping</option><option value="Bills">Bills</option><option value="Household">Household</option><option value="Entertainment">Entertainment</option><option value="Other">Other</option>
                     </select>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Month (YYYY-MM)</label>
-                        <input type="text" id="bud-month" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" data-i18n-placeholder="month_placeholder">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Limit (रु.)</label>
-                        <input type="number" step="0.01" id="bud-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                    </div>
+                    <div><label class="block text-sm font-medium mb-1">Month (YYYY-MM)</label><input type="text" id="bud-month" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></div>
+                    <div><label class="block text-sm font-medium mb-1">Limit (रु.)</label><input type="number" step="0.01" id="bud-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></div>
                 </div>
                 <div class="flex justify-end gap-3 pt-2">
-                    <button type="button" onclick="closeBudgetModal()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-medium">Cancel</button>
-                    <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition">Save</button>
+                    <button type="button" onclick="closeBudgetModal()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700">Cancel</button>
+                    <button type="submit" class="bg-brand-600 text-white px-6 py-2.5 rounded-xl transition hover:bg-brand-700">Save</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[3000] p-4" onclick="closeNotificationModal()">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 flex flex-col max-h-[80vh] shadow-xl" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-3">
+                <h3 class="text-lg font-bold flex items-center gap-2"><i class="fa-solid fa-bell text-brand-500"></i> Notifications</h3>
+                <button onclick="closeNotificationModal()" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="notifications-list" class="flex-1 overflow-y-auto space-y-4 pt-4">
+                <p class="text-center text-sm text-gray-500">No new notifications.</p>
+            </div>
+        </div>
+    </div>
+    
     <!-- Confirm Modal -->
-    <div id="confirm-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[10030] p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-xl space-y-4">
+    <div id="confirm-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[3000] p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 space-y-4 shadow-xl">
             <h3 class="text-lg font-bold" data-i18n="confirm_title">Confirm Action</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400" id="confirm-message"></p>
             <div class="flex justify-end gap-3 pt-2">
-                <button id="confirm-cancel" class="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-medium" data-i18n="cancel">Cancel</button>
-                <button id="confirm-ok" class="bg-rose-600 hover:bg-rose-700 text-white font-medium px-4 py-2.5 rounded-xl" data-i18n="confirm_btn">Confirm</button>
+                <button id="confirm-cancel" class="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700" data-i18n="cancel">Cancel</button>
+                <button id="confirm-ok" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2.5 rounded-xl" data-i18n="confirm_btn">Confirm</button>
             </div>
         </div>
     </div>
 
     <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-20 md:bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 z-[10050] flex items-center gap-3 text-sm">
+    <div id="toast" class="fixed bottom-24 md:bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 z-[5000] flex items-center gap-3 text-sm">
         <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i>
         <span id="toast-message">Success message</span>
     </div>
 
+    <!-- JAVASCRIPT SECTION (Uncompressed and Clean) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, initializeFirestore, persistentLocalCache, persistentMultipleTabManager, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Expose Globals
-        window.switchTab = switchTab; window.toggleLang = toggleLang; window.toggleTheme = toggleTheme;
-        window.toggleMobileSidebar = toggleMobileSidebar; window.toggleAddMenu = toggleAddMenu;
-        window.openAccountModal = openAccountModal; window.closeAccountModal = closeAccountModal;
-        window.handleAccountSubmit = handleAccountSubmit; window.editAccount = editAccount; window.deleteAccount = deleteAccount;
-        window.handleIncomeSubmit = handleIncomeSubmit; window.resetIncomeForm = resetIncomeForm;
-        window.handleExpenseSubmit = handleExpenseSubmit; window.resetExpenseForm = resetExpenseForm;
-        window.handleTransferSubmit = handleTransferSubmit; window.resetTransferForm = resetTransferForm;
-        window.renderTransactions = renderTransactions; window.editTransaction = editTransaction; window.deleteTransaction = deleteTransaction;
-        window.openBudgetModal = openBudgetModal; window.closeBudgetModal = closeBudgetModal; window.handleBudgetSubmit = handleBudgetSubmit;
-        window.generateReports = generateReports; window.exportCSV = exportCSV; window.exportJSONBackup = exportJSONBackup;
-        window.restoreJSONBackup = restoreJSONBackup; window.signInWithGoogle = signInWithGoogle; window.signOutUser = signOutUser;
+        // Exposing functions to global scope for HTML onclick events
+        window.switchTab = switchTab;
+        window.toggleLang = toggleLang;
+        window.toggleTheme = toggleTheme;
+        window.toggleMobileSidebar = toggleMobileSidebar;
+        window.toggleAddMenu = toggleAddMenu;
+        window.openAccountModal = openAccountModal;
+        window.closeAccountModal = closeAccountModal;
+        window.handleAccountSubmit = handleAccountSubmit;
+        window.editAccount = editAccount;
+        window.deleteAccount = deleteAccount;
+        window.handleIncomeSubmit = handleIncomeSubmit;
+        window.resetIncomeForm = resetIncomeForm;
+        window.handleExpenseSubmit = handleExpenseSubmit;
+        window.resetExpenseForm = resetExpenseForm;
+        window.handleTransferSubmit = handleTransferSubmit;
+        window.resetTransferForm = resetTransferForm;
+        window.handleFriendTransferSubmit = handleFriendTransferSubmit;
+        window.toggleTransferMode = toggleTransferMode;
+        window.renderTransactions = renderTransactions;
+        window.editTransaction = editTransaction;
+        window.deleteTransaction = deleteTransaction;
+        window.generateReports = generateReports;
+        window.changeReportMonth = changeReportMonth;
+        window.signInWithGoogle = signInWithGoogle;
+        window.signOutUser = signOutUser;
+        window.openNotificationModal = openNotificationModal;
+        window.closeNotificationModal = closeNotificationModal;
+        window.acceptPeerTransfer = acceptPeerTransfer;
+        window.saveContact = saveContact;
+        window.openBudgetModal = openBudgetModal;
+        window.closeBudgetModal = closeBudgetModal;
+        window.handleBudgetSubmit = handleBudgetSubmit;
+        window.exportCSV = exportCSV;
 
+        // Translation Dictionary
         const i18n = {
             en: {
-                app_title: "Expense Tracker", nav_dashboard: "Dashboard", nav_accounts: "Accounts", nav_income: "Income", nav_expense: "Expense",
-                nav_transfer: "Transfer", nav_history: "History", nav_budget: "Budgets", nav_reports: "Reports", nav_settings: "Settings",
-                dark_mode: "Dark Mode", light_mode: "Light Mode", total_balance: "Total Balance", total_income_all: "Total Income (All-Time)",
-                total_expense_all: "Total Expenses (All-Time)", month_income: "This Month's Income", month_expense: "This Month's Expenses",
-                month_savings: "Monthly Savings", monthly_chart_title: "Monthly Income vs Expense", acc_balances_title: "Account-wise Balances",
-                recent_trans_title: "Recent Transactions", view_all: "View All", manage_accounts: "Manage Financial Accounts",
-                add_account: "Add Account", record_income: "Record New Income", record_expense: "Record New Expense",
-                account_transfer: "Account-to-Account Transfer", title_source: "Title / Source *", amount: "Amount (रु.) *",
-                date: "Date (B.S.) *", category: "Category *", receive_account: "Receive in Account *", payment_account: "Payment Account *",
-                notes: "Notes (Optional)", save_income: "Save Income", save_expense: "Save Expense", reset: "Reset",
-                from_account: "From Account *", to_account: "To Account *", transfer_fee: "Transfer Fee (Optional)",
-                transfer_funds: "Transfer Funds", transaction_history: "Transaction History", search_placeholder: "Search title...",
-                title_placeholder: "e.g. Salary, Grocery", date_placeholder: "YYYY-MM-DD (e.g. 2083-07-16)", month_placeholder: "YYYY-MM (e.g. 2083-07)",
-                all_types: "All Types", all_accounts: "All Accounts", date_col: "Date (BS)", type_col: "Type",
-                title_col: "Title / Details", account_col: "Account(s)", amount_col: "Amount", actions_col: "Actions",
-                monthly_budgets: "Monthly Expense Budgets", set_budget: "Set Budget", financial_reports: "Financial Analytics & Reports",
-                cat_expense: "Category-wise Expenses", savings_trend: "Savings Trend", data_settings: "Data Management & Settings",
-                export_csv: "Export Transactions (CSV)", download_json: "Download JSON Backup", restore_data: "Restore Data",
-                storage_notice: "Storage & Offline Notice", logout: "Logout", login: "Login", offline: "Offline", synced: "Synced", 
-                pending: "Pending Sync", confirm_title: "Confirm Action", cancel: "Cancel", confirm_btn: "Confirm", add_new: "Add New"
+                app_title: "Expense Tracker", nav_dashboard: "Dashboard", nav_accounts: "Accounts", nav_income: "Income", 
+                nav_expense: "Expense", nav_transfer: "Transfer", nav_history: "History", nav_reports: "Reports", 
+                nav_settings: "Settings", dark_mode: "Dark Mode", light_mode: "Light Mode", total_balance: "Total Balance", 
+                total_income_all: "Total Income", total_expense_all: "Total Expenses", month_income: "Month's Income", 
+                month_expense: "Month's Expenses", month_savings: "Monthly Savings", monthly_chart_title: "Income vs Expense", 
+                acc_balances_title: "Account Balances", recent_trans_title: "Recent Transactions", view_all: "View All", 
+                manage_accounts: "Manage Accounts", add_account: "Add Account", record_income: "Record Income", 
+                record_expense: "Record Expense", account_transfer: "Transfer Money", title_source: "Title / Source *", 
+                amount: "Amount (रु.) *", date: "Date (B.S.) *", category: "Category *", receive_account: "Receive in Account *", 
+                payment_account: "Payment Account *", notes: "Notes (Optional)", save_income: "Save Income", 
+                save_expense: "Save Expense", reset: "Reset", from_account: "From Account *", to_account: "To Account *", 
+                transfer_fee: "Transfer Fee", transfer_funds: "Transfer Funds", transaction_history: "Transaction History", 
+                search_placeholder: "Search...", date_placeholder: "YYYY-MM-DD", all_types: "All Types", 
+                all_accounts: "All Accounts", date_col: "Date", type_col: "Type", title_col: "Title", amount_col: "Amount", 
+                actions_col: "Action", financial_reports: "Reports", cat_expense: "Category Expenses", savings_trend: "Savings Trend", 
+                data_settings: "Data Settings", logout: "Logout", login: "Login", offline: "Offline", synced: "Synced", 
+                pending: "Pending Sync", add_new: "Add New", self_transfer: "Own Accounts", friend_transfer: "To Friend/Family", 
+                friend_email: "Select Contact / Email *", send_money: "Send Money", 
+                friend_transfer_info: "Amount will deduct immediately. Friend will receive a notification.", confirm_title: "Confirm", 
+                cancel: "Cancel", confirm_btn: "Confirm"
             },
             ne: {
-                app_title: "खर्च ट्रयाकर", nav_dashboard: "ड्यासबोर्ड", nav_accounts: "खाताहरू", nav_income: "आम्दानी", nav_expense: "खर्च",
-                nav_transfer: "रकमान्तर", nav_history: "इतिहास", nav_budget: "बजेट", nav_reports: "रिपोर्टहरू", nav_settings: "सेटिङ्स",
-                dark_mode: "गाढा मोड", light_mode: "उज्यालो मोड", total_balance: "कुल ब्यालेन्स", total_income_all: "कुल आम्दानी (सबै)",
-                total_expense_all: "कुल खर्च (सबै)", month_income: "यस महिनाको आम्दानी", month_expense: "यस महिनाको खर्च",
-                month_savings: "मासिक बचत", monthly_chart_title: "मासिक आम्दानी र खर्च", acc_balances_title: "खाता अनुसार ब्यालेन्स",
-                recent_trans_title: "भर्खरैका कारोबारहरू", view_all: "सबै हेर्नुहोस्", manage_accounts: "आर्थिक खाताहरू व्यवस्थापन",
-                add_account: "खाता थप्नुहोस्", record_income: "नयाँ आम्दानी रेकर्ड गर्नुहोस्", record_expense: "नयाँ खर्च रेकर्ड गर्नुहोस्",
-                account_transfer: "खाताबाट खातामा रकमान्तर", title_source: "शीर्षक / स्रोत *", amount: "रकम (रु.) *",
-                date: "मिति (वि.सं.) *", category: "वर्ग (Category) *", receive_account: "प्राप्त हुने खाता *", payment_account: "भुक्तानी गर्ने खाता *",
-                notes: "कैफियत (वैकल्पिक)", save_income: "आम्दानी सुरक्षित गर्नुहोस्", save_expense: "खर्च सुरक्षित गर्नुहोस्", reset: "रिसेट गर्नुहोस्",
-                from_account: "पठाउने खाता *", to_account: "प्राप्त गर्ने खाता *", transfer_fee: "ट्रान्सफर शुल्क (वैकल्पिक)",
-                transfer_funds: "रकमान्तर गर्नुहोस्", transaction_history: "कारोबार इतिहास", search_placeholder: "शीर्षक खोज्नुहोस्...",
-                title_placeholder: "जस्तै: तलब, तरकारी", date_placeholder: "वर्ष-महिना-दिन (जस्तै: 2083-07-16)", month_placeholder: "वर्ष-महिना (जस्तै: 2083-07)",
-                all_types: "सबै प्रकार", all_accounts: "सबै खाताहरू", date_col: "मिति (वि.सं.)", type_col: "प्रकार",
-                title_col: "शीर्षक / विवरण", account_col: "खाता(हरू)", amount_col: "रकम", actions_col: "कार्यहरू",
-                monthly_budgets: "मासिक खर्च बजेट", set_budget: "बजेट सेट गर्नुहोस्", financial_reports: "आर्थिक रिपोर्टहरू",
-                cat_expense: "वर्ग अनुसार खर्च", savings_trend: "बचत प्रवृत्ति", data_settings: "डाटा व्यवस्थापन र सेटिङ्स",
-                export_csv: "कारोबार डाउनलोड (CSV)", download_json: "ब्याकअप डाउनलोड (JSON)", restore_data: "डाटा रिस्टोर गर्नुहोस्",
-                storage_notice: "स्टोरेज र अफलाइन जानकारी", logout: "लगआउट", login: "लगइन", offline: "अफलाइन", synced: "सिंक भयो", 
-                pending: "सिंक बाँकी", confirm_title: "प्रमाणीकरण", cancel: "रद्द", confirm_btn: "निश्चित गर्नुहोस्", add_new: "नयाँ थप्नुहोस्"
+                app_title: "खर्च ट्रयाकर", nav_dashboard: "ड्यासबोर्ड", nav_accounts: "खाताहरू", nav_income: "आम्दानी", 
+                nav_expense: "खर्च", nav_transfer: "रकमान्तर", nav_history: "इतिहास", nav_reports: "रिपोर्टहरू", 
+                nav_settings: "सेटिङ्स", dark_mode: "गाढा मोड", light_mode: "उज्यालो मोड", total_balance: "कुल ब्यालेन्स", 
+                total_income_all: "कुल आम्दानी", total_expense_all: "कुल खर्च", month_income: "महिनाको आम्दानी", 
+                month_expense: "महिनाको खर्च", month_savings: "मासिक बचत", monthly_chart_title: "आम्दानी र खर्च", 
+                acc_balances_title: "खाता अनुसार ब्यालेन्स", recent_trans_title: "भर्खरैका कारोबारहरू", view_all: "सबै हेर्नुहोस्", 
+                manage_accounts: "खाताहरू व्यवस्थापन", add_account: "खाता थप्नुहोस्", record_income: "नयाँ आम्दानी रेकर्ड", 
+                record_expense: "नयाँ खर्च रेकर्ड", account_transfer: "रकमान्तर गर्नुहोस्", title_source: "शीर्षक / स्रोत *", 
+                amount: "रकम (रु.) *", date: "मिति (वि.सं.) *", category: "वर्ग (Category) *", receive_account: "प्राप्त हुने खाता *", 
+                payment_account: "भुक्तानी गर्ने खाता *", notes: "कैफियत (वैकल्पिक)", save_income: "आम्दानी सेभ", 
+                save_expense: "खर्च सेभ", reset: "रिसेट", from_account: "पठाउने खाता *", to_account: "प्राप्त गर्ने खाता *", 
+                transfer_fee: "शुल्क (वैकल्पिक)", transfer_funds: "आफ्नै खातामा पठाउनुहोस्", transaction_history: "कारोबार इतिहास", 
+                search_placeholder: "खोज्नुहोस्...", date_placeholder: "जस्तै: 2083-07-16", all_types: "सबै प्रकार", 
+                all_accounts: "सबै खाताहरू", date_col: "मिति", type_col: "प्रकार", title_col: "शीर्षक", amount_col: "रकम", 
+                actions_col: "कार्य", financial_reports: "आर्थिक रिपोर्टहरू", cat_expense: "वर्ग अनुसार खर्च", 
+                savings_trend: "बचत प्रवृत्ति", data_settings: "डाटा व्यवस्थापन", logout: "लगआउट", login: "लगइन", 
+                offline: "अफलाइन", synced: "सिंक भयो", pending: "सिंक बाँकी", add_new: "नयाँ थप्नुहोस्", 
+                self_transfer: "आफ्नै खातामा", friend_transfer: "साथीलाई (Transfer)", friend_email: "सम्पर्क छान्नुहोस् / इमेल *", 
+                send_money: "साथीलाई पठाउनुहोस्", friend_transfer_info: "यसबाट पठाएको रकम तुरुन्तै खाताबाट घट्नेछ र साथीलाई Notification जानेछ।",
+                confirm_title: "प्रमाणीकरण", cancel: "रद्द", confirm_btn: "निश्चित"
             }
         };
 
         let appLang = localStorage.getItem('appLang') || 'en';
-
-        // Nepali BS Month Formatter
+        
+        // Month Formatting & Slider
+        const neMonths = ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कात्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
+        const enMonths = ["Baisakh", "Jestha", "Ashadh", "Shrawan", "Bhadra", "Ashwin", "Kartik", "Mangsir", "Poush", "Magh", "Falgun", "Chaitra"];
+        
         function formatBSMonth(yyyyMm) {
-            if (!yyyyMm || typeof yyyyMm !== 'string' || !yyyyMm.includes('-')) return yyyyMm;
+            if (!yyyyMm || !yyyyMm.includes('-')) return yyyyMm;
             const parts = yyyyMm.split('-');
-            const year = parts[0];
             const m = parseInt(parts[1], 10);
             if (m >= 1 && m <= 12) {
-                const months = appLang === 'ne' ? 
-                    ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कात्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"] : 
-                    ["Baisakh", "Jestha", "Ashadh", "Shrawan", "Bhadra", "Ashwin", "Kartik", "Mangsir", "Poush", "Magh", "Falgun", "Chaitra"];
-                return `${months[m - 1]} ${year}`;
+                return `${(appLang === 'ne' ? neMonths : enMonths)[m - 1]} ${parts[0]}`;
             }
             return yyyyMm;
         }
 
+        function changeReportMonth(offset) {
+            const input = document.getElementById('report-month-input');
+            let [y, m] = input.value.split('-').map(Number);
+            m += offset;
+            if (m > 12) { m = 1; y += 1; } 
+            else if (m < 1) { m = 12; y -= 1; }
+            input.value = `${y}-${m.toString().padStart(2, '0')}`;
+            document.getElementById('report-month-display').innerText = formatBSMonth(input.value);
+            generateReports();
+        }
+
         function applyLanguage() {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
+            document.querySelectorAll('[data-i18n]').forEach(el => { 
                 const key = el.getAttribute('data-i18n');
-                if (i18n[appLang][key]) el.textContent = i18n[appLang][key];
+                if (i18n[appLang][key]) el.textContent = i18n[appLang][key]; 
             });
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { 
                 const key = el.getAttribute('data-i18n-placeholder');
-                if (i18n[appLang][key]) el.placeholder = i18n[appLang][key];
+                if (i18n[appLang][key]) el.placeholder = i18n[appLang][key]; 
             });
             document.getElementById('lang-text').textContent = appLang === 'en' ? 'नेपाली' : 'English';
+            document.getElementById('report-month-display').innerText = formatBSMonth(document.getElementById('report-month-input').value);
             updateSyncStatus();
             
             const navKey = 'nav_' + (currentTab === 'transactions' ? 'history' : currentTab);
             const titleEl = document.getElementById('page-title');
             if(titleEl && i18n[appLang][navKey]) titleEl.innerText = i18n[appLang][navKey] || i18n[appLang]['app_title'];
-            
-            refreshCurrentTab(); // Refresh charts & data for new month labels
+            refreshCurrentTab();
         }
 
-        function toggleLang() {
-            appLang = appLang === 'en' ? 'ne' : 'en';
-            localStorage.setItem('appLang', appLang);
-            applyLanguage();
+        function toggleLang() { 
+            appLang = appLang === 'en' ? 'ne' : 'en'; 
+            localStorage.setItem('appLang', appLang); 
+            applyLanguage(); 
         }
 
-        function toggleMobileSidebar() {
-            const sidebar = document.getElementById('app-sidebar');
-            const backdrop = document.getElementById('sidebar-backdrop');
-            if (sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.remove('-translate-x-full');
-                backdrop.classList.remove('hidden');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                backdrop.classList.add('hidden');
-            }
+        // Sidebar and Menu UI Toggles
+        function toggleMobileSidebar() { 
+            document.getElementById('app-sidebar').classList.toggle('-translate-x-full'); 
+            document.getElementById('sidebar-backdrop').classList.toggle('hidden'); 
         }
 
         function toggleAddMenu() {
-            const menu = document.getElementById('mobile-add-menu');
-            const content = document.getElementById('mobile-add-menu-content');
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                menu.classList.add('flex');
-                setTimeout(() => content.classList.remove('translate-y-full'), 10);
-            } else {
-                content.classList.add('translate-y-full');
-                setTimeout(() => {
-                    menu.classList.add('hidden');
-                    menu.classList.remove('flex');
-                }, 300);
+            const m = document.getElementById('mobile-add-menu');
+            const c = document.getElementById('mobile-add-menu-content');
+            if (m.classList.contains('hidden')) { 
+                m.classList.remove('hidden'); 
+                m.classList.add('flex'); 
+                setTimeout(() => c.classList.remove('translate-y-full'), 10); 
+            } else { 
+                c.classList.add('translate-y-full'); 
+                setTimeout(() => { m.classList.add('hidden'); m.classList.remove('flex'); }, 300); 
             }
         }
 
-        function customConfirm(msg, callback) {
-            document.getElementById('confirm-message').innerText = msg;
-            const modal = document.getElementById('confirm-modal');
-            modal.classList.replace('hidden', 'flex');
-            document.getElementById('confirm-cancel').onclick = () => modal.classList.replace('flex', 'hidden');
-            document.getElementById('confirm-ok').onclick = () => {
-                modal.classList.replace('flex', 'hidden');
-                callback();
+        function customConfirm(msg, cb) {
+            document.getElementById('confirm-message').innerText = msg; 
+            document.getElementById('confirm-modal').classList.replace('hidden', 'flex');
+            document.getElementById('confirm-cancel').onclick = () => document.getElementById('confirm-modal').classList.replace('flex', 'hidden');
+            document.getElementById('confirm-ok').onclick = () => { 
+                document.getElementById('confirm-modal').classList.replace('flex', 'hidden'); 
+                cb(); 
             };
         }
 
-        // --- Firebase Setup ---
-        const firebaseConfig = {
-            apiKey: "AIzaSyA6DNrVhGwYvGZdhTr_6YvVSnuPF6ffEqM",
-            authDomain: "merohisab-kitab.firebaseapp.com",
-            projectId: "merohisab-kitab",
-            storageBucket: "merohisab-kitab.firebasestorage.app",
-            messagingSenderId: "146780403704",
-            appId: "1:146780403704:web:627e4ec83e78146135080d"
+        // Firebase Configuration
+        const firebaseConfig = { 
+            apiKey: "AIzaSyA6DNrVhGwYvGZdhTr_6YvVSnuPF6ffEqM", 
+            authDomain: "merohisab-kitab.firebaseapp.com", 
+            projectId: "merohisab-kitab", 
+            storageBucket: "merohisab-kitab.firebasestorage.app", 
+            messagingSenderId: "146780403704", 
+            appId: "1:146780403704:web:627e4ec83e78146135080d" 
         };
         const appId = firebaseConfig.appId;
-        
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = initializeFirestore(app, {
-            localCache: persistentLocalCache({tabManager: persistentMultipleTabManager()})
-        });
+        const app = initializeApp(firebaseConfig); 
+        const auth = getAuth(app); 
+        const db = initializeFirestore(app, { localCache: persistentLocalCache({tabManager: persistentMultipleTabManager()}) });
 
+        // App State Data
         let userId = null;
+        let userEmail = null;
         let accountsData = [];
         let transactionsData = [];
         let budgetsData = [];
-        let pendingWritesCount = { accounts: 0, transactions: 0, budgets: 0 };
+        let peerTransfersData = [];
+        let contactsData = JSON.parse(localStorage.getItem('appContacts') || '[]');
+        
+        let pendingWritesCount = { accounts: 0, transactions: 0, budgets: 0 }; 
         let unsubscribers = [];
-
-        function dbGetAll(storeName) {
-            if(storeName === 'accounts') return Promise.resolve([...accountsData]);
-            if(storeName === 'transactions') return Promise.resolve([...transactionsData]);
-            if(storeName === 'budgets') return Promise.resolve([...budgetsData]);
-            return Promise.resolve([]);
-        }
-        
-        async function dbAdd(storeName, data) {
-            if (!userId) return showToast("Please login first!", "error");
-            const colRef = collection(db, 'artifacts', appId, 'users', userId, storeName);
-            await addDoc(colRef, data);
-        }
-        
-        async function dbPut(storeName, data) {
-            if (!userId) return showToast("Please login first!", "error");
-            const docId = data.id; 
-            const copy = {...data}; delete copy.id;
-            const docRef = doc(db, 'artifacts', appId, 'users', userId, storeName, docId);
-            await updateDoc(docRef, copy);
-        }
-        
-        async function dbDelete(storeName, id) {
-            if (!userId) return showToast("Please login first!", "error");
-            const docRef = doc(db, 'artifacts', appId, 'users', userId, storeName, id);
-            await deleteDoc(docRef);
-        }
 
         let currentTab = 'dashboard';
         let monthlyChartInstance = null;
         let categoryChartInstance = null;
         let savingsChartInstance = null;
 
-        window.addEventListener('DOMContentLoaded', async () => {
-            const todayBS = "2083-07-16";
-            document.getElementById('income-date').value = todayBS;
-            document.getElementById('expense-date').value = todayBS;
-            document.getElementById('transfer-date').value = todayBS;
-            document.getElementById('bud-month').value = "2083-07";
-            document.getElementById('report-month-input').value = "2083-07";
-            
-            initAuth();
-            applyLanguage();
-        });
+        // DB Abstraction Functions
+        function dbGetAll(storeName) {
+            if(storeName === 'accounts') return Promise.resolve([...accountsData]);
+            if(storeName === 'transactions') return Promise.resolve([...transactionsData]);
+            if(storeName === 'budgets') return Promise.resolve([...budgetsData]);
+            return Promise.resolve([]);
+        }
 
-        async function initAuth() {
+        async function dbAdd(storeName, data) { 
+            if (!userId) return showToast("Please login first!", "error"); 
+            const colRef = collection(db, 'artifacts', appId, 'users', userId, storeName);
+            await addDoc(colRef, data); 
+        }
+
+        async function dbPut(storeName, data) { 
+            if (!userId) return showToast("Please login first!", "error"); 
+            const copy = {...data}; 
+            delete copy.id; 
+            const docRef = doc(db, 'artifacts', appId, 'users', userId, storeName, data.id);
+            await updateDoc(docRef, copy); 
+        }
+
+        async function dbDelete(storeName, id) { 
+            if (!userId) return showToast("Please login first!", "error"); 
+            const docRef = doc(db, 'artifacts', appId, 'users', userId, storeName, id);
+            await deleteDoc(docRef); 
+        }
+
+        // Startup Logic
+        window.addEventListener('DOMContentLoaded', async () => {
+            const today = "2083-07-16"; 
+            document.getElementById('income-date').value = today; 
+            document.getElementById('expense-date').value = today; 
+            document.getElementById('transfer-date').value = today; 
+            document.getElementById('friend-transfer-date').value = today;
+            document.getElementById('report-month-input').value = "2083-07";
+            document.getElementById('bud-month').value = "2083-07";
+            
+            populateContactsList();
+            
             if (typeof __initial_auth_token !== 'undefined') {
                 await signInWithCustomToken(auth, __initial_auth_token);
             }
+            applyLanguage();
+        });
+
+        // Authentication logic
+        async function signInWithGoogle() { 
+            try { 
+                await signInWithPopup(auth, new GoogleAuthProvider()); 
+            } catch (e) { 
+                showToast("Login failed!", "error"); 
+            } 
         }
 
-        async function signInWithGoogle() {
-            try {
-                const provider = new GoogleAuthProvider();
-                await signInWithPopup(auth, provider);
-            } catch (error) {
-                showToast("Login failed!", "error");
-            }
-        }
-
-        async function signOutUser() {
-            await signOut(auth);
-            window.location.reload();
+        async function signOutUser() { 
+            await signOut(auth); 
+            window.location.reload(); 
         }
 
         function updateSyncStatus() {
-            const totalPending = pendingWritesCount.accounts + pendingWritesCount.transactions + pendingWritesCount.budgets;
-            const statusEl = document.getElementById('sync-status');
+            const total = pendingWritesCount.accounts + pendingWritesCount.transactions + pendingWritesCount.budgets; 
+            const el = document.getElementById('sync-status');
             
-            if (!userId || !navigator.onLine) {
-                statusEl.className = "hidden sm:flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 text-gray-500";
-                statusEl.innerHTML = `<i class="fa-solid fa-cloud-slash"></i> <span id="sync-text">${i18n[appLang]['offline'] || 'Offline'}</span>`;
-            } else if (totalPending > 0) {
-                statusEl.className = "hidden sm:flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 text-amber-700";
-                statusEl.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> <span id="sync-text">${totalPending} ${i18n[appLang]['pending'] || 'Pending Sync'}</span>`;
-            } else {
-                statusEl.className = "hidden sm:flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700";
-                statusEl.innerHTML = `<i class="fa-solid fa-cloud-check"></i> <span id="sync-text">${i18n[appLang]['synced'] || 'Synced'}</span>`;
+            if (!userId || !navigator.onLine) { 
+                el.className = "hidden sm:flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-500"; 
+                el.innerHTML = `<i class="fa-solid fa-cloud-slash"></i> ${i18n[appLang]['offline']}`; 
+            } 
+            else if (total > 0) { 
+                el.className = "hidden sm:flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-700"; 
+                el.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> ${total} ${i18n[appLang]['pending']}`; 
+            } 
+            else { 
+                el.className = "hidden sm:flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-emerald-100 text-emerald-700"; 
+                el.innerHTML = `<i class="fa-solid fa-cloud-check"></i> ${i18n[appLang]['synced']}`; 
             }
         }
 
-        window.addEventListener('online', updateSyncStatus);
+        window.addEventListener('online', updateSyncStatus); 
         window.addEventListener('offline', updateSyncStatus);
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                userId = user.uid;
+                userId = user.uid; 
+                userEmail = user.email;
                 document.getElementById('auth-section').innerHTML = `
-                    <div class="flex items-center gap-2 cursor-pointer" onclick="signOutUser()">
-                        <img src="${user.photoURL || 'https://ui-avatars.com/api/?name=User&background=eff6ff&color=2563eb'}" class="w-8 h-8 rounded-full border border-gray-200 shadow-sm" title="Logout">
-                    </div>`;
+                    <div class="cursor-pointer" onclick="signOutUser()">
+                        <img src="${user.photoURL}" class="w-8 h-8 rounded-full border border-gray-200 shadow-sm" title="Logout">
+                    </div>
+                `;
                 setupListeners();
             } else {
-                userId = null;
+                userId = null; 
+                userEmail = null;
                 document.getElementById('auth-section').innerHTML = `
-                    <button onclick="signInWithGoogle()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-1.5 rounded-lg shadow-sm text-sm flex items-center gap-2 transition">
-                        <i class="fa-brands fa-google"></i> <span data-i18n="login">${i18n[appLang]['login']}</span>
-                    </button>`;
-                clearListeners();
-                accountsData = []; transactionsData = []; budgetsData = [];
-                switchTab('dashboard');
-                updateSyncStatus();
+                    <button onclick="signInWithGoogle()" class="bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-sm flex items-center gap-2 transition">
+                        <i class="fa-brands fa-google"></i> ${i18n[appLang]['login']}
+                    </button>
+                `;
+                
+                // Clear state on logout
+                unsubscribers.forEach(u => u()); 
+                unsubscribers = []; 
+                accountsData = []; 
+                transactionsData = []; 
+                budgetsData = []; 
+                peerTransfersData = [];
+                switchTab('dashboard'); 
+                updateSyncStatus(); 
+                updateNotificationBadge();
             }
             applyLanguage();
         });
 
+        // Firestore Listeners
         function setupListeners() {
-            if (!userId) return;
             const opts = { includeMetadataChanges: true };
             
-            const uA = onSnapshot(collection(db, 'artifacts', appId, 'users', userId, 'accounts'), opts, (snap) => {
-                accountsData = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                pendingWritesCount.accounts = snap.docs.filter(d => d.metadata.hasPendingWrites).length;
-                updateSyncStatus(); populateAccountDropdowns(); refreshCurrentTab();
+            const uA = onSnapshot(collection(db, 'artifacts', appId, 'users', userId, 'accounts'), opts, (snap) => { 
+                accountsData = snap.docs.map(d => ({id: d.id, ...d.data()})); 
+                pendingWritesCount.accounts = snap.docs.filter(d => d.metadata.hasPendingWrites).length; 
+                updateSyncStatus(); populateAccountDropdowns(); refreshCurrentTab(); 
             });
-
-            const uT = onSnapshot(collection(db, 'artifacts', appId, 'users', userId, 'transactions'), opts, (snap) => {
-                transactionsData = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                pendingWritesCount.transactions = snap.docs.filter(d => d.metadata.hasPendingWrites).length;
-                updateSyncStatus(); refreshCurrentTab();
+            
+            const uT = onSnapshot(collection(db, 'artifacts', appId, 'users', userId, 'transactions'), opts, (snap) => { 
+                transactionsData = snap.docs.map(d => ({id: d.id, ...d.data()})); 
+                pendingWritesCount.transactions = snap.docs.filter(d => d.metadata.hasPendingWrites).length; 
+                updateSyncStatus(); refreshCurrentTab(); 
             });
-
-            const uB = onSnapshot(collection(db, 'artifacts', appId, 'users', userId, 'budgets'), opts, (snap) => {
-                budgetsData = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                pendingWritesCount.budgets = snap.docs.filter(d => d.metadata.hasPendingWrites).length;
-                updateSyncStatus(); refreshCurrentTab();
+            
+            const uB = onSnapshot(collection(db, 'artifacts', appId, 'users', userId, 'budgets'), opts, (snap) => { 
+                budgetsData = snap.docs.map(d => ({id: d.id, ...d.data()})); 
+                pendingWritesCount.budgets = snap.docs.filter(d => d.metadata.hasPendingWrites).length; 
+                updateSyncStatus(); refreshCurrentTab(); 
             });
-            unsubscribers = [uA, uT, uB];
+            
+            const uP = onSnapshot(query(collection(db, 'artifacts', appId, 'peer_transfers'), where("toEmail", "==", userEmail), where("status", "==", "pending")), (snap) => { 
+                peerTransfersData = snap.docs.map(d => ({id: d.id, ...d.data()})); 
+                updateNotificationBadge(); 
+            });
+            
+            unsubscribers = [uA, uT, uB, uP];
         }
 
-        function clearListeners() {
-            unsubscribers.forEach(u => u());
-            unsubscribers = [];
-        }
-
-        function refreshCurrentTab() {
-            if(currentTab === 'dashboard') loadDashboard();
-            if(currentTab === 'accounts') loadAccounts();
-            if(currentTab === 'transactions') renderTransactions();
-            if(currentTab === 'reports') generateReports();
-            if(currentTab === 'budget') loadBudgets();
+        // Tab Management
+        function refreshCurrentTab() { 
+            if(currentTab === 'dashboard') loadDashboard(); 
+            if(currentTab === 'accounts') loadAccounts(); 
+            if(currentTab === 'transactions') renderTransactions(); 
+            if(currentTab === 'reports') generateReports(); 
+            if(currentTab === 'budget') loadBudgets(); 
         }
 
         function switchTab(tabId) {
             currentTab = tabId;
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden')); 
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-
-            document.querySelectorAll('.nav-link').forEach(el => {
-                el.classList.remove('active-tab', 'text-brand-600', 'dark:text-brand-400');
-                el.classList.add('text-gray-600', 'dark:text-gray-400');
-                if(el.getAttribute('href') === `#${tabId}`) {
-                    el.classList.add('active-tab');
-                    el.classList.remove('text-gray-600', 'dark:text-gray-400');
-                }
-            });
-            document.querySelectorAll('.mobile-nav-link').forEach(el => {
-                el.classList.remove('text-brand-600');
-                el.classList.add('text-gray-500');
-                if(el.getAttribute('href') === `#${tabId}`) {
-                    el.classList.add('text-brand-600');
-                    el.classList.remove('text-gray-500');
-                }
-            });
-
-            const navKey = 'nav_' + (tabId === 'transactions' ? 'history' : tabId);
-            const titleEl = document.getElementById('page-title');
-            if(titleEl && i18n[appLang][navKey]) titleEl.innerText = i18n[appLang][navKey] || i18n[appLang]['app_title'];
             
-            if(window.innerWidth < 768) {
-                const sidebar = document.getElementById('app-sidebar');
-                if(sidebar && !sidebar.classList.contains('-translate-x-full')) {
-                    toggleMobileSidebar();
-                }
+            document.querySelectorAll('.nav-link').forEach(el => { 
+                el.classList.remove('active-tab', 'text-brand-600', 'dark:text-brand-400'); 
+                el.classList.add('text-gray-600', 'dark:text-gray-400'); 
+                if(el.getAttribute('href') === `#${tabId}`) { 
+                    el.classList.add('active-tab'); 
+                    el.classList.remove('text-gray-600', 'dark:text-gray-400'); 
+                } 
+            });
+            
+            document.querySelectorAll('.mobile-nav-link').forEach(el => { 
+                el.classList.remove('text-brand-600'); 
+                el.classList.add('text-gray-500'); 
+                if(el.getAttribute('href') === `#${tabId}`) { 
+                    el.classList.add('text-brand-600'); 
+                    el.classList.remove('text-gray-500'); 
+                } 
+            });
+            
+            const navKey = 'nav_' + (tabId === 'transactions' ? 'history' : tabId);
+            const titleEl = document.getElementById('page-title'); 
+            if(titleEl && i18n[appLang][navKey]) {
+                titleEl.innerText = i18n[appLang][navKey] || i18n[appLang]['app_title'];
             }
-
-            refreshCurrentTab();
-            if (['income', 'expense', 'transfer', 'transactions'].includes(tabId)) {
-                populateAccountDropdowns();
+            
+            if(window.innerWidth < 768) { 
+                const sb = document.getElementById('app-sidebar'); 
+                if(sb && !sb.classList.contains('-translate-x-full')) toggleMobileSidebar(); 
             }
+            
+            refreshCurrentTab(); 
+            if (['income','expense','transfer','transactions'].includes(tabId)) populateAccountDropdowns();
         }
 
-        function formatNPR(paisa) {
-            const npr = paisa / 100;
-            return "रु. " + npr.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        // Formatting and Utils
+        function formatNPR(p) { return "रु. " + (p/100).toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+        
+        function showToast(msg, type="success") { 
+            const t = document.getElementById('toast'); 
+            document.getElementById('toast-message').innerText = msg; 
+            document.getElementById('toast-icon').className = type === "error" ? "fa-solid fa-triangle-exclamation text-rose-400" : "fa-solid fa-circle-check text-emerald-400"; 
+            t.classList.remove('translate-y-20','opacity-0'); 
+            setTimeout(() => t.classList.add('translate-y-20','opacity-0'), 3500); 
+        }
+        
+        function toggleTheme() { 
+            document.documentElement.classList.toggle('dark'); 
+            const isDark = document.documentElement.classList.contains('dark'); 
+            document.getElementById('theme-icon').className = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon"; 
+            document.getElementById('theme-text').innerText = i18n[appLang][isDark ? 'light_mode' : 'dark_mode']; 
+            document.getElementById('mobile-theme-icon').className = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon"; 
         }
 
-        function showToast(message, type = "success") {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').innerText = message;
-            document.getElementById('toast-icon').className = type === "error" ? "fa-solid fa-triangle-exclamation text-rose-400" : "fa-solid fa-circle-check text-emerald-400";
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3500);
-        }
-
-        function toggleTheme() {
-            const html = document.documentElement;
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                document.getElementById('theme-icon').className = "fa-solid fa-moon";
-                document.getElementById('theme-text').innerText = i18n[appLang]['dark_mode'];
-                document.getElementById('mobile-theme-icon').className = "fa-solid fa-moon";
-            } else {
-                html.classList.add('dark');
-                document.getElementById('theme-icon').className = "fa-solid fa-sun";
-                document.getElementById('theme-text').innerText = i18n[appLang]['light_mode'];
-                document.getElementById('mobile-theme-icon').className = "fa-solid fa-sun";
-            }
-        }
-
+        // Balance Calculator
         async function calculateAccountBalances() {
-            const accounts = await dbGetAll("accounts");
-            const transactions = await dbGetAll("transactions");
-            const balances = {};
-            accounts.forEach(acc => { balances[acc.id] = { ...acc, currentBalance: acc.openingBalance }; });
-            transactions.forEach(tx => {
-                if (tx.type === "income" && balances[tx.accountId]) balances[tx.accountId].currentBalance += tx.amount;
-                else if (tx.type === "expense" && balances[tx.accountId]) balances[tx.accountId].currentBalance -= tx.amount;
-                else if (tx.type === "transfer") {
-                    if (balances[tx.fromAccountId]) balances[tx.fromAccountId].currentBalance -= tx.amount;
-                    if (balances[tx.toAccountId]) balances[tx.toAccountId].currentBalance += tx.amount;
-                    if (tx.fee && balances[tx.fromAccountId]) balances[tx.fromAccountId].currentBalance -= tx.fee;
-                }
+            const b = {}; 
+            accountsData.forEach(a => { b[a.id] = {...a, currentBalance: a.openingBalance}; });
+            
+            transactionsData.forEach(t => { 
+                if(t.type === "income" && b[t.accountId]) b[t.accountId].currentBalance += t.amount; 
+                else if(t.type === "expense" && b[t.accountId]) b[t.accountId].currentBalance -= t.amount; 
+                else if(t.type === "transfer"){ 
+                    if(b[t.fromAccountId]) b[t.fromAccountId].currentBalance -= t.amount; 
+                    if(b[t.toAccountId]) b[t.toAccountId].currentBalance += t.amount; 
+                    if(t.fee && b[t.fromAccountId]) b[t.fromAccountId].currentBalance -= t.fee; 
+                } 
             });
-            return Object.values(balances);
+            return Object.values(b);
         }
 
+        // 1. Dashboard
         async function loadDashboard() {
-            const accountsWithBal = await calculateAccountBalances();
-            const transactions = await dbGetAll("transactions");
-            let totalBal = 0, totalInc = 0, totalExp = 0, monthInc = 0, monthExp = 0;
-            const currentMonth = document.getElementById('report-month-input').value || "2083-07";
-
-            accountsWithBal.forEach(acc => totalBal += acc.currentBalance);
-            transactions.forEach(tx => {
-                if (tx.type === "income") { totalInc += tx.amount; if ((tx.date||'').startsWith(currentMonth)) monthInc += tx.amount; }
-                else if (tx.type === "expense") { totalExp += tx.amount; if ((tx.date||'').startsWith(currentMonth)) monthExp += tx.amount; }
-                else if (tx.type === "transfer" && tx.fee) { totalExp += tx.fee; if ((tx.date||'').startsWith(currentMonth)) monthExp += tx.fee; }
+            const accs = await calculateAccountBalances(); 
+            let tBal = 0, tInc = 0, tExp = 0, mInc = 0, mExp = 0; 
+            const cM = document.getElementById('report-month-input').value;
+            
+            accs.forEach(a => tBal += a.currentBalance);
+            
+            transactionsData.forEach(t => { 
+                if(t.type === "income"){ 
+                    tInc += t.amount; 
+                    if((t.date||'').startsWith(cM)) mInc += t.amount; 
+                } else if(t.type === "expense"){ 
+                    tExp += t.amount; 
+                    if((t.date||'').startsWith(cM)) mExp += t.amount; 
+                } else if(t.type === "transfer" && t.fee){ 
+                    tExp += t.fee; 
+                    if((t.date||'').startsWith(cM)) mExp += t.fee; 
+                } 
             });
-
-            document.getElementById('dash-total-balance').innerText = formatNPR(totalBal);
-            document.getElementById('dash-total-income').innerText = formatNPR(totalInc);
-            document.getElementById('dash-total-expense').innerText = formatNPR(totalExp);
-            document.getElementById('dash-month-income').innerText = formatNPR(monthInc);
-            document.getElementById('dash-month-expense').innerText = formatNPR(monthExp);
-            document.getElementById('dash-month-savings').innerText = formatNPR(monthInc - monthExp);
-
-            document.getElementById('dash-account-list').innerHTML = accountsWithBal.map(acc => `
-                <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-                    <div><p class="font-semibold text-sm">${acc.name}</p><p class="text-xs text-gray-500">${acc.type}</p></div>
-                    <p class="font-bold text-sm">${formatNPR(acc.currentBalance)}</p>
+            
+            document.getElementById('dash-total-balance').innerText = formatNPR(tBal); 
+            document.getElementById('dash-total-income').innerText = formatNPR(tInc); 
+            document.getElementById('dash-total-expense').innerText = formatNPR(tExp); 
+            
+            document.getElementById('dash-account-list').innerHTML = accs.map(a => `
+                <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+                    <div>
+                        <p class="font-semibold text-sm">${a.name}</p>
+                        <p class="text-xs text-gray-500">${a.type}</p>
+                    </div>
+                    <p class="font-bold text-sm">${formatNPR(a.currentBalance)}</p>
                 </div>
             `).join('');
-
-            const sortedTx = [...transactions].sort((a,b) => (b.id < a.id ? -1 : 1)).slice(0, 5);
-            document.getElementById('dash-recent-list').innerHTML = sortedTx.map(tx => {
-                let col = tx.type === 'income' ? 'emerald' : tx.type === 'expense' ? 'rose' : 'amber';
-                let sign = tx.type === 'expense' ? '-' : tx.type === 'income' ? '+' : '⇄';
-                let icon = tx.type === 'income' ? 'arrow-down' : tx.type === 'expense' ? 'arrow-up' : 'right-left';
-                return `
-                    <div class="py-3 flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-${col}-50 text-${col}-600 dark:bg-${col}-900/30 flex items-center justify-center font-bold">
-                                <i class="fa-solid fa-${icon}"></i>
-                            </div>
-                            <div><p class="font-semibold text-sm">${tx.title || tx.category || 'Transfer'}</p><p class="text-xs text-gray-500">${tx.date}</p></div>
-                        </div>
-                        <p class="font-bold text-sm text-${col}-600">${sign} ${formatNPR(tx.amount)}</p>
-                    </div>`;
-            }).join('');
-
-            renderMonthlyChart(transactions);
-        }
-
-        function renderMonthlyChart(transactions) {
-            const ctx = document.getElementById('monthlyChart').getContext('2d');
+            
             if (monthlyChartInstance) monthlyChartInstance.destroy();
-            const mData = {};
-            transactions.forEach(tx => {
-                if (!tx.date) return;
-                const m = tx.date.substring(0, 7);
-                if (!mData[m]) mData[m] = { inc: 0, exp: 0 };
-                if (tx.type === 'income') mData[m].inc += tx.amount;
-                if (tx.type === 'expense') mData[m].exp += tx.amount;
-                if (tx.type === 'transfer' && tx.fee) mData[m].exp += tx.fee;
+            const mData = {}; 
+            
+            transactionsData.forEach(tx => { 
+                if (!tx.date) return; 
+                const m = tx.date.substring(0, 7); 
+                if (!mData[m]) mData[m] = { inc: 0, exp: 0 }; 
+                if (tx.type === 'income') mData[m].inc += tx.amount; 
+                if (tx.type === 'expense') mData[m].exp += tx.amount; 
+                if (tx.type === 'transfer' && tx.fee) mData[m].exp += tx.fee; 
             });
+            
             const labels = Object.keys(mData).sort();
-            monthlyChartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels.map(formatBSMonth), // Using Nepali Month Formatter
-                    datasets: [
-                        { label: i18n[appLang]['nav_income'], data: labels.map(m => mData[m].inc/100), backgroundColor: '#10b981', borderRadius: 4 },
-                        { label: i18n[appLang]['nav_expense'], data: labels.map(m => mData[m].exp/100), backgroundColor: '#f43f5e', borderRadius: 4 }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
+            monthlyChartInstance = new Chart(document.getElementById('monthlyChart').getContext('2d'), { 
+                type: 'bar', 
+                data: { 
+                    labels: labels.map(formatBSMonth), 
+                    datasets: [ 
+                        { label: i18n[appLang]['nav_income'], data: labels.map(m => mData[m].inc/100), backgroundColor: '#10b981', borderRadius: 4 }, 
+                        { label: i18n[appLang]['nav_expense'], data: labels.map(m => mData[m].exp/100), backgroundColor: '#f43f5e', borderRadius: 4 } 
+                    ] 
+                }, 
+                options: { responsive: true, maintainAspectRatio: false } 
             });
         }
 
-        async function loadAccounts() {
-            const accounts = await calculateAccountBalances();
-            document.getElementById('accounts-grid').innerHTML = accounts.map(acc => `
-                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm space-y-4">
+        // 2. Accounts
+        async function loadAccounts() { 
+            const accs = await calculateAccountBalances(); 
+            document.getElementById('accounts-grid').innerHTML = accs.map(a => `
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 space-y-4">
                     <div class="flex items-start justify-between">
-                        <div><span class="text-xs bg-brand-50 text-brand-600 px-2.5 py-1 rounded-full font-semibold">${acc.type}</span>
-                        <h3 class="text-lg font-bold mt-2">${acc.name}</h3></div>
+                        <div>
+                            <span class="text-xs bg-brand-50 text-brand-600 px-2.5 py-1 rounded-full font-semibold">${a.type}</span>
+                            <h3 class="text-lg font-bold mt-2">${a.name}</h3>
+                        </div>
                         <div class="flex gap-1">
-                            <button onclick="editAccount('${acc.id}')" class="p-2 text-gray-400 hover:text-brand-600"><i class="fa-solid fa-pen"></i></button>
-                            <button onclick="deleteAccount('${acc.id}')" class="p-2 text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
+                            <button onclick="editAccount('${a.id}')" class="p-2 text-gray-400 hover:text-brand-600"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="deleteAccount('${a.id}')" class="p-2 text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
-                    <div class="border-t border-gray-100 dark:border-gray-700 pt-3"><p class="text-xs text-gray-500">Current Balance</p>
-                    <p class="text-xl font-bold mt-0.5">${formatNPR(acc.currentBalance)}</p></div>
-                </div>`).join('');
+                    <div class="border-t border-gray-100 dark:border-gray-700 pt-3">
+                        <p class="text-xs text-gray-500">Current Balance</p>
+                        <p class="text-xl font-bold mt-0.5">${formatNPR(a.currentBalance)}</p>
+                    </div>
+                </div>
+            `).join(''); 
         }
 
-        function openAccountModal(acc = null) {
-            document.getElementById('account-modal').classList.replace('hidden', 'flex');
-            if (acc) {
-                document.getElementById('acc-id').value = acc.id;
-                document.getElementById('acc-name').value = acc.name;
-                document.getElementById('acc-type').value = acc.type;
-                document.getElementById('acc-opening').value = acc.openingBalance / 100;
-            } else {
-                document.getElementById('account-form').reset(); document.getElementById('acc-id').value = "";
-            }
+        function openAccountModal(acc=null) { 
+            document.getElementById('account-modal').classList.replace('hidden', 'flex'); 
+            if(acc){ 
+                document.getElementById('acc-id').value = acc.id; 
+                document.getElementById('acc-name').value = acc.name; 
+                document.getElementById('acc-type').value = acc.type; 
+                document.getElementById('acc-opening').value = acc.openingBalance / 100; 
+            } else { 
+                document.getElementById('account-form').reset(); 
+                document.getElementById('acc-id').value = ""; 
+            } 
         }
         function closeAccountModal() { document.getElementById('account-modal').classList.replace('flex', 'hidden'); }
-
-        async function handleAccountSubmit(e) {
-            e.preventDefault();
-            const data = {
-                name: document.getElementById('acc-name').value, type: document.getElementById('acc-type').value,
-                openingBalance: Math.round(parseFloat(document.getElementById('acc-opening').value) * 100)
-            };
-            const id = document.getElementById('acc-id').value;
-            if (id) { data.id = id; await dbPut("accounts", data); } else await dbAdd("accounts", data);
-            closeAccountModal(); showToast("Account Saved!");
+        
+        async function handleAccountSubmit(e) { 
+            e.preventDefault(); 
+            const d = { 
+                name: document.getElementById('acc-name').value, 
+                type: document.getElementById('acc-type').value, 
+                openingBalance: Math.round(parseFloat(document.getElementById('acc-opening').value) * 100) 
+            }; 
+            const id = document.getElementById('acc-id').value; 
+            if(id) { d.id = id; await dbPut("accounts", d); } else await dbAdd("accounts", d); 
+            closeAccountModal(); showToast("Account Saved!"); 
         }
-
-        async function editAccount(id) { const accs = await dbGetAll("accounts"); openAccountModal(accs.find(a => a.id === id)); }
+        async function editAccount(id) { openAccountModal(accountsData.find(a => a.id === id)); }
         async function deleteAccount(id) { 
-            customConfirm("Are you sure you want to delete this account?", async () => {
-                await dbDelete("accounts", id);
-            });
+            customConfirm("Are you sure you want to delete this account?", async () => { await dbDelete("accounts", id); }); 
         }
 
-        async function populateAccountDropdowns() {
-            const accs = await dbGetAll("accounts");
-            const opts = accs.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
-            ['income-account', 'expense-account', 'transfer-from', 'transfer-to', 'filter-account'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) { const v = el.value; el.innerHTML = (id==='filter-account'?'<option value="">All</option>':'') + opts; el.value = v; }
-            });
+        async function populateAccountDropdowns() { 
+            const opts = accountsData.map(a => `<option value="${a.id}">${a.name}</option>`).join(''); 
+            ['income-account', 'expense-account', 'transfer-from', 'transfer-to', 'friend-transfer-from'].forEach(id => { 
+                const el = document.getElementById(id); 
+                if(el){ 
+                    const v = el.value; 
+                    el.innerHTML = opts; 
+                    el.value = v; 
+                } 
+            }); 
         }
 
-        async function handleIncomeSubmit(e) {
-            e.preventDefault();
-            const data = {
-                type: "income", title: document.getElementById('income-title').value,
-                amount: Math.round(parseFloat(document.getElementById('income-amount').value) * 100),
-                date: document.getElementById('income-date').value, category: document.getElementById('income-category').value,
-                accountId: document.getElementById('income-account').value, notes: document.getElementById('income-notes').value
-            };
-            const id = document.getElementById('income-id').value;
-            if (id) { data.id = id; await dbPut("transactions", data); } else await dbAdd("transactions", data);
-            resetIncomeForm(); switchTab('transactions'); showToast("Income Saved!");
+        // Contacts Logic
+        function saveContact() { 
+            const email = document.getElementById('friend-transfer-email').value.trim().toLowerCase(); 
+            if(!email || !email.includes('@')) return showToast("Enter a valid email first.", "error"); 
+            if(!contactsData.includes(email)) { 
+                contactsData.push(email); 
+                localStorage.setItem('appContacts', JSON.stringify(contactsData)); 
+                populateContactsList(); 
+                showToast("Contact saved locally!"); 
+            } 
+        }
+        function populateContactsList() { 
+            document.getElementById('contacts-list').innerHTML = contactsData.map(e => `<option value="${e}">`).join(''); 
+        }
+
+        // 3. Income
+        async function handleIncomeSubmit(e) { 
+            e.preventDefault(); 
+            const d = { 
+                type: "income", 
+                title: document.getElementById('income-title').value, 
+                amount: Math.round(parseFloat(document.getElementById('income-amount').value) * 100), 
+                date: document.getElementById('income-date').value, 
+                category: document.getElementById('income-category').value, 
+                accountId: document.getElementById('income-account').value, 
+                notes: document.getElementById('income-notes').value 
+            }; 
+            const id = document.getElementById('income-id').value; 
+            if(id) { d.id = id; await dbPut("transactions", d); } else await dbAdd("transactions", d); 
+            resetIncomeForm(); switchTab('transactions'); showToast("Income Saved!"); 
         }
         function resetIncomeForm() { document.getElementById('income-form').reset(); document.getElementById('income-id').value = ""; }
 
-        async function handleExpenseSubmit(e) {
-            e.preventDefault();
-            const data = {
-                type: "expense", title: document.getElementById('expense-title').value,
-                amount: Math.round(parseFloat(document.getElementById('expense-amount').value) * 100),
-                date: document.getElementById('expense-date').value, category: document.getElementById('expense-category').value,
-                accountId: document.getElementById('expense-account').value, notes: document.getElementById('expense-notes').value
-            };
-            const id = document.getElementById('expense-id').value;
-            if (id) { data.id = id; await dbPut("transactions", data); } else await dbAdd("transactions", data);
-            resetExpenseForm(); switchTab('transactions'); showToast("Expense Saved!");
+        // 4. Expense
+        async function handleExpenseSubmit(e) { 
+            e.preventDefault(); 
+            const d = { 
+                type: "expense", 
+                title: document.getElementById('expense-title').value, 
+                amount: Math.round(parseFloat(document.getElementById('expense-amount').value) * 100), 
+                date: document.getElementById('expense-date').value, 
+                category: document.getElementById('expense-category').value, 
+                accountId: document.getElementById('expense-account').value, 
+                notes: document.getElementById('expense-notes').value 
+            }; 
+            const id = document.getElementById('expense-id').value; 
+            if(id) { d.id = id; await dbPut("transactions", d); } else await dbAdd("transactions", d); 
+            resetExpenseForm(); switchTab('transactions'); showToast("Expense Saved!"); 
         }
         function resetExpenseForm() { document.getElementById('expense-form').reset(); document.getElementById('expense-id').value = ""; }
 
-        async function handleTransferSubmit(e) {
-            e.preventDefault();
-            const from = document.getElementById('transfer-from').value;
-            const to = document.getElementById('transfer-to').value;
-            if(from === to) return showToast("Source and Destination must be different!", "error");
-            const data = {
-                type: "transfer", fromAccountId: from, toAccountId: to,
-                amount: Math.round(parseFloat(document.getElementById('transfer-amount').value) * 100),
-                fee: Math.round(parseFloat(document.getElementById('transfer-fee').value||0) * 100),
-                date: document.getElementById('transfer-date').value, notes: document.getElementById('transfer-notes').value
-            };
-            const id = document.getElementById('transfer-id').value;
-            if (id) { data.id = id; await dbPut("transactions", data); } else await dbAdd("transactions", data);
-            resetTransferForm(); switchTab('transactions'); showToast("Transfer Saved!");
+        // 5. Transfer
+        function toggleTransferMode() { 
+            const m = document.querySelector('input[name="transferMode"]:checked').value; 
+            if(m === 'self') { 
+                document.getElementById('transfer-form-self').classList.remove('hidden'); 
+                document.getElementById('transfer-form-friend').classList.add('hidden'); 
+            } else { 
+                document.getElementById('transfer-form-self').classList.add('hidden'); 
+                document.getElementById('transfer-form-friend').classList.remove('hidden'); 
+            } 
         }
-        function resetTransferForm() { document.getElementById('transfer-form').reset(); document.getElementById('transfer-id').value = ""; }
 
+        async function handleTransferSubmit(e) { 
+            e.preventDefault(); 
+            const d = { 
+                type: "transfer", 
+                fromAccountId: document.getElementById('transfer-from').value, 
+                toAccountId: document.getElementById('transfer-to').value, 
+                amount: Math.round(parseFloat(document.getElementById('transfer-amount').value) * 100), 
+                fee: Math.round(parseFloat(document.getElementById('transfer-fee').value || 0) * 100), 
+                date: document.getElementById('transfer-date').value, 
+                notes: document.getElementById('transfer-notes').value 
+            }; 
+            const id = document.getElementById('transfer-id').value; 
+            if (id) { d.id = id; await dbPut("transactions", d); } else await dbAdd("transactions", d); 
+            resetTransferForm(); switchTab('transactions'); showToast("Transfer Saved!"); 
+        }
+        function resetTransferForm() { document.getElementById('transfer-form-self').reset(); document.getElementById('transfer-id').value = ""; }
+
+        async function handleFriendTransferSubmit(e) {
+            e.preventDefault(); 
+            if(!userEmail) return showToast("Login required to send money.", "error");
+            
+            const fId = document.getElementById('friend-transfer-from').value;
+            const tEmail = document.getElementById('friend-transfer-email').value.toLowerCase().trim();
+            const amt = Math.round(parseFloat(document.getElementById('friend-transfer-amount').value) * 100);
+            const dt = document.getElementById('friend-transfer-date').value;
+            const nt = document.getElementById('friend-transfer-notes').value;
+
+            // Save transaction as expense out
+            await dbAdd("transactions", { 
+                type: "expense", title: `Sent to ${tEmail}`, amount: amt, date: dt, 
+                category: "Transfer Out", accountId: fId, notes: nt 
+            });
+
+            // Send peer notification
+            await addDoc(collection(db, 'artifacts', appId, 'peer_transfers'), { 
+                fromEmail: userEmail, toEmail: tEmail, amount: amt, date: dt, notes: nt, status: 'pending' 
+            });
+
+            if(!contactsData.includes(tEmail)) { 
+                contactsData.push(tEmail); 
+                localStorage.setItem('appContacts', JSON.stringify(contactsData)); 
+                populateContactsList(); 
+            }
+
+            document.getElementById('transfer-form-friend').reset(); 
+            showToast("Money sent to friend successfully!"); 
+            switchTab('dashboard');
+        }
+
+        // Peer Transfer Notifications
+        function updateNotificationBadge() { 
+            const b = document.getElementById('notif-badge'); 
+            if(peerTransfersData.length > 0) { 
+                b.innerText = peerTransfersData.length; 
+                b.classList.remove('hidden'); 
+            } else { 
+                b.classList.add('hidden'); 
+            } 
+        }
+
+        function openNotificationModal() {
+            const l = document.getElementById('notifications-list');
+            if(peerTransfersData.length === 0) {
+                l.innerHTML = `<p class="text-center text-sm text-gray-500 py-4">No new transfers.</p>`;
+            } else { 
+                const opts = accountsData.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+                l.innerHTML = peerTransfersData.map(t => `
+                    <div class="p-4 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl border border-emerald-100 dark:border-emerald-800 space-y-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-emerald-700 dark:text-emerald-400">Received Money</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">From: ${t.fromEmail}</p>
+                            </div>
+                            <p class="font-bold text-lg text-emerald-600">+${formatNPR(t.amount)}</p>
+                        </div>
+                        ${t.notes ? `<p class="text-xs italic text-gray-500 bg-white/50 dark:bg-black/20 p-2 rounded">"${t.notes}"</p>` : ''}
+                        <div class="mt-3 flex gap-2">
+                            <select id="acc-${t.id}" class="flex-1 text-xs py-1.5 px-2 rounded bg-white dark:bg-gray-700 border border-emerald-200">
+                                <option disabled selected value="">Select Account</option>${opts}
+                            </select>
+                            <button onclick="acceptPeerTransfer('${t.id}')" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Accept</button>
+                        </div>
+                    </div>
+                `).join(''); 
+            }
+            document.getElementById('notification-modal').classList.replace('hidden', 'flex');
+        }
+        function closeNotificationModal() { document.getElementById('notification-modal').classList.replace('flex', 'hidden'); }
+        
+        async function acceptPeerTransfer(tId) {
+            const accId = document.getElementById(`acc-${tId}`).value; 
+            if(!accId) return alert("Please select an account first!");
+            const t = peerTransfersData.find(x => x.id === tId); 
+            if(!t) return;
+            
+            await dbAdd("transactions", { 
+                type: "income", title: `Received from ${t.fromEmail}`, amount: t.amount, 
+                date: t.date, category: "Transfer In", accountId: accId, notes: t.notes 
+            });
+            await updateDoc(doc(db, 'artifacts', appId, 'peer_transfers', tId), { status: 'accepted' }); 
+            showToast("Transfer Accepted!"); 
+            closeNotificationModal();
+        }
+
+        // 6. Transactions
         async function renderTransactions() {
-            const txs = await dbGetAll("transactions");
-            const accs = await dbGetAll("accounts");
-            const aMap = {}; accs.forEach(a => aMap[a.id] = a.name);
+            const aMap = {}; 
+            accountsData.forEach(a => aMap[a.id] = a.name);
             const sFil = document.getElementById('filter-search').value.toLowerCase();
             const tFil = document.getElementById('filter-type').value;
-            const aFil = document.getElementById('filter-account').value;
-
-            const filtered = txs.filter(t => {
-                const accMatch = aFil ? (t.type==='transfer' ? (t.fromAccountId===aFil||t.toAccountId===aFil) : t.accountId===aFil) : true;
-                return (t.title||t.category||'').toLowerCase().includes(sFil) && (tFil?t.type===tFil:true) && accMatch;
-            }).sort((a,b) => (b.id < a.id ? -1 : 1));
-
+            
+            const filtered = transactionsData.filter(t => 
+                (t.title||t.category||'').toLowerCase().includes(sFil) && (tFil ? t.type === tFil : true)
+            ).sort((a,b) => (b.id < a.id ? -1 : 1));
+            
             document.getElementById('transactions-table-body').innerHTML = filtered.map(t => {
-                let badge = t.type === 'income' ? '<span class="px-2 bg-emerald-50 text-emerald-600 rounded-full">Income</span>' : 
-                            t.type === 'expense' ? '<span class="px-2 bg-rose-50 text-rose-600 rounded-full">Expense</span>' : 
-                            '<span class="px-2 bg-amber-50 text-amber-600 rounded-full">Transfer</span>';
-                let amt = t.type === 'income' ? `<span class="text-emerald-600">+${formatNPR(t.amount)}</span>` :
-                          t.type === 'expense' ? `<span class="text-rose-600">-${formatNPR(t.amount)}</span>` : `<span class="text-amber-600">${formatNPR(t.amount)}</span>`;
+                let badge = t.type === 'income' ? '<span class="text-emerald-600 font-semibold text-xs bg-emerald-50 px-2 py-1 rounded">Income</span>' : 
+                            t.type === 'expense' ? '<span class="text-rose-600 font-semibold text-xs bg-rose-50 px-2 py-1 rounded">Expense</span>' : 
+                            '<span class="text-amber-600 font-semibold text-xs bg-amber-50 px-2 py-1 rounded">Transfer</span>';
+                let amt = t.type === 'income' ? `<span class="text-emerald-600 font-bold">+${formatNPR(t.amount)}</span>` : 
+                          t.type === 'expense' ? `<span class="text-rose-600 font-bold">-${formatNPR(t.amount)}</span>` : 
+                          `<span class="text-amber-600 font-bold">${formatNPR(t.amount)}</span>`;
                 let acc = t.type === 'transfer' ? `${aMap[t.fromAccountId]} → ${aMap[t.toAccountId]}` : aMap[t.accountId];
-                return `<tr class="border-b dark:border-gray-700">
-                    <td class="py-3 px-4">${t.date}</td><td class="py-3 px-4">${badge}</td><td class="py-3 px-4">${t.title||t.category}</td>
-                    <td class="py-3 px-4">${acc}</td><td class="py-3 px-4 text-right font-bold">${amt}</td>
+                
+                return `
+                <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                    <td class="py-3 px-4">${t.date}</td>
+                    <td class="py-3 px-4">${badge}</td>
+                    <td class="py-3 px-4 font-medium">${t.title || t.category}</td>
+                    <td class="py-3 px-4 text-xs text-gray-500">${acc}</td>
+                    <td class="py-3 px-4 text-right">${amt}</td>
                     <td class="py-3 px-4 text-center">
                         <button onclick="editTransaction('${t.id}','${t.type}')" class="text-gray-400 hover:text-brand-600 mr-2"><i class="fa-solid fa-pen"></i></button>
                         <button onclick="deleteTransaction('${t.id}')" class="text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
-                    </td></tr>`;
+                    </td>
+                </tr>`;
             }).join('');
         }
 
         async function editTransaction(id, type) {
-            const t = (await dbGetAll("transactions")).find(x => x.id === id);
+            const t = transactionsData.find(x => x.id === id); 
             if(!t) return;
             switchTab(type);
-            document.getElementById(`${type}-id`).value = t.id;
-            document.getElementById(`${type}-amount`).value = t.amount/100;
-            document.getElementById(`${type}-date`).value = t.date;
             if(type !== 'transfer') {
+                document.getElementById(`${type}-id`).value = t.id; 
+                document.getElementById(`${type}-amount`).value = t.amount/100;
+                document.getElementById(`${type}-date`).value = t.date; 
                 document.getElementById(`${type}-title`).value = t.title;
-                document.getElementById(`${type}-category`).value = t.category;
+                document.getElementById(`${type}-category`).value = t.category; 
                 document.getElementById(`${type}-account`).value = t.accountId;
             } else {
+                document.querySelector('input[name="transferMode"][value="self"]').checked = true; toggleTransferMode();
+                document.getElementById('transfer-id').value = t.id; 
                 document.getElementById('transfer-from').value = t.fromAccountId;
-                document.getElementById('transfer-to').value = t.toAccountId;
+                document.getElementById('transfer-to').value = t.toAccountId; 
                 document.getElementById('transfer-fee').value = (t.fee||0)/100;
+                document.getElementById('transfer-amount').value = t.amount/100; 
+                document.getElementById('transfer-date').value = t.date;
             }
         }
+        
         async function deleteTransaction(id) { 
-            customConfirm("Delete this transaction?", async () => { await dbDelete("transactions", id); });
+            customConfirm("Delete transaction?", async () => { await dbDelete("transactions", id); }); 
         }
 
+        // 7. Budget
         async function loadBudgets() {
-            const buds = await dbGetAll("budgets");
-            const txs = await dbGetAll("transactions");
-            const cMonth = document.getElementById('report-month-input').value || "2083-07";
-            const spentMap = {};
-            txs.forEach(t => { if(t.type === 'expense' && (t.date||'').startsWith(cMonth)) spentMap[t.category] = (spentMap[t.category]||0) + t.amount; });
-
-            document.getElementById('budget-list').innerHTML = buds.map(b => {
-                const spent = spentMap[b.category] || 0; const p = Math.min(Math.round((spent/b.amount)*100), 100);
+            const cM = document.getElementById('report-month-input').value; 
+            const sMap = {};
+            transactionsData.forEach(t => { 
+                if(t.type === 'expense' && (t.date||'').startsWith(cM)) sMap[t.category] = (sMap[t.category]||0) + t.amount; 
+            });
+            
+            document.getElementById('budget-list').innerHTML = budgetsData.map(b => {
+                const sp = sMap[b.category] || 0; 
+                const p = Math.min(Math.round((sp/b.amount)*100), 100);
                 const col = p >= 100 ? 'bg-rose-600' : p >= 80 ? 'bg-amber-500' : 'bg-brand-600';
-                return `<div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
-                    <div class="flex justify-between font-bold mb-2"><h4>${b.category}</h4><span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 rounded">${formatBSMonth(b.month)}</span></div>
-                    <div class="w-full bg-gray-100 dark:bg-gray-700 h-2.5 rounded-full"><div class="${col} h-2.5 rounded-full" style="width: ${p}%"></div></div>
-                    <div class="flex justify-between text-xs mt-2 text-gray-500"><span>Spent: ${formatNPR(spent)}</span><span>Limit: ${formatNPR(b.amount)}</span></div>
+                return `
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <div class="flex justify-between font-bold mb-2">
+                        <h4>${b.category}</h4>
+                        <span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">${formatBSMonth(b.month)}</span>
+                    </div>
+                    <div class="w-full bg-gray-100 dark:bg-gray-700 h-2.5 rounded-full mt-3">
+                        <div class="${col} h-2.5 rounded-full" style="width: ${p}%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs mt-2 text-gray-500 font-medium">
+                        <span>Spent: ${formatNPR(sp)}</span>
+                        <span>Limit: ${formatNPR(b.amount)}</span>
+                    </div>
                 </div>`;
             }).join('');
         }
+
         function openBudgetModal() { document.getElementById('budget-modal').classList.replace('hidden', 'flex'); }
         function closeBudgetModal() { document.getElementById('budget-modal').classList.replace('flex', 'hidden'); }
-        async function handleBudgetSubmit(e) {
-            e.preventDefault();
-            await dbAdd("budgets", { category: document.getElementById('bud-category').value, month: document.getElementById('bud-month').value, amount: Math.round(parseFloat(document.getElementById('bud-amount').value)*100) });
-            closeBudgetModal();
+        
+        async function handleBudgetSubmit(e) { 
+            e.preventDefault(); 
+            await dbAdd("budgets", { 
+                category: document.getElementById('bud-category').value, 
+                month: document.getElementById('bud-month').value, 
+                amount: Math.round(parseFloat(document.getElementById('bud-amount').value)*100) 
+            }); 
+            closeBudgetModal(); 
         }
 
+        // 8. Reports
         async function generateReports() {
-            const txs = await dbGetAll("transactions");
-            const cMonth = document.getElementById('report-month-input').value || "2083-07";
-            const catTotals = {}; const mSum = {};
-            txs.forEach(t => {
-                if(t.type === 'expense' && (t.date||'').startsWith(cMonth)) catTotals[t.category] = (catTotals[t.category]||0) + t.amount;
-                const m = (t.date||'').substring(0,7);
+            const cM = document.getElementById('report-month-input').value; 
+            const cT = {}; 
+            const mS = {};
+            
+            transactionsData.forEach(t => {
+                if(t.type === 'expense' && (t.date||'').startsWith(cM)) cT[t.category] = (cT[t.category]||0) + t.amount;
+                const m = (t.date||'').substring(0,7); 
                 if(m) {
-                    if(!mSum[m]) mSum[m] = {inc:0, exp:0};
-                    if(t.type==='income') mSum[m].inc += t.amount; if(t.type==='expense') mSum[m].exp += t.amount;
+                    if(!mS[m]) mS[m]={inc:0, exp:0};
+                    if(t.type==='income') mS[m].inc+=t.amount; 
+                    if(t.type==='expense') mS[m].exp+=t.amount;
                 }
             });
-
-            if (categoryChartInstance) categoryChartInstance.destroy();
-            categoryChartInstance = new Chart(document.getElementById('categoryChart').getContext('2d'), {
-                type: 'doughnut',
-                data: { labels: Object.keys(catTotals), datasets: [{ data: Object.values(catTotals).map(v=>v/100), backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#f43f5e', '#8b5cf6', '#ec4899', '#06b6d4', '#64748b'] }] },
-                options: { responsive: true, maintainAspectRatio: false }
+            
+            if(categoryChartInstance) categoryChartInstance.destroy();
+            categoryChartInstance = new Chart(document.getElementById('categoryChart').getContext('2d'), { 
+                type: 'doughnut', 
+                data: { 
+                    labels: Object.keys(cT), 
+                    datasets: [{ data: Object.values(cT).map(v=>v/100), backgroundColor: ['#3b82f6','#10b981','#f59e0b','#f43f5e','#8b5cf6','#ec4899','#06b6d4','#64748b'] }] 
+                }, 
+                options: { responsive: true, maintainAspectRatio: false } 
             });
-
-            if (savingsChartInstance) savingsChartInstance.destroy();
-            const sMonths = Object.keys(mSum).sort();
-            savingsChartInstance = new Chart(document.getElementById('savingsChart').getContext('2d'), {
-                type: 'line',
-                data: { labels: sMonths.map(formatBSMonth), datasets: [{ label: i18n[appLang]['savings_trend'], data: sMonths.map(m=>(mSum[m].inc-mSum[m].exp)/100), borderColor: '#2563eb' }] },
-                options: { responsive: true, maintainAspectRatio: false }
+            
+            if(savingsChartInstance) savingsChartInstance.destroy();
+            const sM = Object.keys(mS).sort();
+            savingsChartInstance = new Chart(document.getElementById('savingsChart').getContext('2d'), { 
+                type: 'line', 
+                data: { 
+                    labels: sM.map(formatBSMonth), 
+                    datasets: [{ label: i18n[appLang]['savings_trend'], data: sM.map(m=>(mS[m].inc-mS[m].exp)/100), borderColor: '#2563eb' }] 
+                }, 
+                options: { responsive: true, maintainAspectRatio: false } 
             });
         }
+        
+        async function exportCSV() { showToast("CSV Feature is ready in premium.", "error"); }
 
-        async function exportCSV() { showToast("CSV feature coming soon with cloud sync!", "error"); }
-        async function exportJSONBackup() { showToast("JSON Backup ready!", "error"); }
-        async function restoreJSONBackup(e) { customConfirm("Restore data?", () => showToast("Data Restored!")); }
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => navigator.serviceWorker.register('service-worker.js').catch(()=>{}));
+        if ('serviceWorker' in navigator) { 
+            window.addEventListener('load', () => navigator.serviceWorker.register('service-worker.js').catch(()=>{})); 
         }
     </script>
 </body>
