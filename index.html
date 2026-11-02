@@ -94,24 +94,20 @@
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 flex flex-col min-h-screen">
+    <main class="flex-1 flex flex-col min-h-screen relative z-10">
         <!-- Top Header -->
         <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-20">
             <div class="flex items-center gap-3">
-                <!-- Hamburger Menu for Mobile -->
                 <button onclick="toggleMobileSidebar()" class="md:hidden text-xl text-gray-600 dark:text-gray-300 focus:outline-none hover:text-brand-600 transition">
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <h2 id="page-title" class="text-lg font-bold" data-i18n="nav_dashboard">Dashboard</h2>
             </div>
             <div class="flex items-center gap-3">
-                <!-- Sync Indicator -->
                 <div id="sync-status" class="hidden sm:flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 text-gray-500">
                     <i class="fa-solid fa-cloud-slash"></i> <span id="sync-text" data-i18n="offline">Offline</span>
                 </div>
-                <!-- Auth Section -->
                 <div id="auth-section"></div>
-                <!-- Language Toggle -->
                 <button onclick="toggleLang()" class="text-sm font-medium px-3 py-1.5 bg-brand-50 text-brand-600 dark:bg-gray-700 dark:text-brand-400 rounded-lg shadow-sm border border-brand-100 dark:border-gray-600 hover:bg-brand-100 transition">
                     <i class="fa-solid fa-language"></i> <span id="lang-text">नेपाली</span>
                 </button>
@@ -235,7 +231,7 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-1" data-i18n="date">Date (B.S.) *</label>
-                                <input type="text" id="income-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="YYYY-MM-DD">
+                                <input type="text" id="income-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" data-i18n-placeholder="date_placeholder">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -286,7 +282,7 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-1" data-i18n="date">Date (B.S.) *</label>
-                                <input type="text" id="expense-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="YYYY-MM-DD">
+                                <input type="text" id="expense-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" data-i18n-placeholder="date_placeholder">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -350,7 +346,7 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-1" data-i18n="date">Date (B.S.) *</label>
-                                <input type="text" id="transfer-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="YYYY-MM-DD">
+                                <input type="text" id="transfer-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" data-i18n-placeholder="date_placeholder">
                             </div>
                         </div>
                         <div>
@@ -420,7 +416,8 @@
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <h3 class="text-lg font-bold" data-i18n="financial_reports">Financial Analytics & Reports</h3>
                         <div class="flex items-center gap-2">
-                            <input type="month" id="report-month-input" onchange="generateReports()" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-3 py-2 text-sm">
+                            <!-- Changed to text input for BS month format -->
+                            <input type="text" id="report-month-input" onchange="generateReports()" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-3 py-2 text-sm" data-i18n-placeholder="month_placeholder">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -468,9 +465,36 @@
         </div>
     </main>
 
-   <!-- Mobile Bottom Navigation
+    <!-- Mobile Bottom Navigation (FIXED z-index & positioning) -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-2 py-2 flex items-center justify-around z-[9999] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <a href="#dashboard" onclick="switchTab('dashboard')" class="mobile-nav-link flex flex-col items-center text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[10000]">
+            <i class="fa-solid fa-chart-pie text-xl mb-1"></i>
+            <span data-i18n="nav_dashboard">Home</span>
+        </a>
+        <a href="#accounts" onclick="switchTab('accounts')" class="mobile-nav-link flex flex-col items-center text-gray-500 hover:text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[10000]">
+            <i class="fa-solid fa-vault text-xl mb-1"></i>
+            <span data-i18n="nav_accounts">Accounts</span>
+        </a>
+
+        <!-- Big Center + Button -->
+        <div class="relative -top-6 z-[10010]">
+            <button onclick="toggleAddMenu()" class="w-14 h-14 bg-brand-600 hover:bg-brand-700 text-white rounded-full flex items-center justify-center text-2xl shadow-lg border-4 border-white dark:border-gray-800 transition-transform transform hover:scale-105 active:scale-95 focus:outline-none pointer-events-auto">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+
+        <a href="#transfer" onclick="switchTab('transfer')" class="mobile-nav-link flex flex-col items-center text-gray-500 hover:text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[10000]">
+            <i class="fa-solid fa-right-left text-xl mb-1 text-amber-500"></i>
+            <span data-i18n="nav_transfer">Transfer</span>
+        </a>
+        <a href="#transactions" onclick="switchTab('transactions')" class="mobile-nav-link flex flex-col items-center text-gray-500 hover:text-brand-600 text-xs font-medium py-2 px-1 w-16 relative z-[10000]">
+            <i class="fa-solid fa-list-ul text-xl mb-1"></i>
+            <span data-i18n="nav_history">History</span>
+        </a>
+    </nav>
+
     <!-- Mobile Add Menu (Popup) -->
-    <div id="mobile-add-menu" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden items-end justify-center pb-24 px-4" onclick="toggleAddMenu()">
+    <div id="mobile-add-menu" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[10020] hidden items-end justify-center pb-24 px-4" onclick="toggleAddMenu()">
         <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-3xl p-6 shadow-2xl flex flex-col gap-4 transform translate-y-full transition-transform duration-300" id="mobile-add-menu-content" onclick="event.stopPropagation()">
             <div class="flex justify-between items-center mb-2">
                 <h3 class="font-bold text-gray-700 dark:text-gray-200 text-lg" data-i18n="add_new">Add New</h3>
@@ -490,7 +514,7 @@
     </div>
 
     <!-- Account Modal -->
-    <div id="account-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div id="account-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[10030] p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4">
             <div class="flex items-center justify-between">
                 <h3 id="account-modal-title" class="text-lg font-bold" data-i18n="manage_accounts">Manage Account</h3>
@@ -526,7 +550,7 @@
     </div>
 
     <!-- Budget Modal -->
-    <div id="budget-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div id="budget-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[10030] p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4">
             <div class="flex items-center justify-between">
                 <h3 class="text-lg font-bold" data-i18n="set_budget">Set Budget</h3>
@@ -550,7 +574,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium mb-1">Month (YYYY-MM)</label>
-                        <input type="text" id="bud-month" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <input type="text" id="bud-month" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500" data-i18n-placeholder="month_placeholder">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1">Limit (रु.)</label>
@@ -566,7 +590,7 @@
     </div>
 
     <!-- Confirm Modal -->
-    <div id="confirm-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div id="confirm-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[10030] p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-xl space-y-4">
             <h3 class="text-lg font-bold" data-i18n="confirm_title">Confirm Action</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400" id="confirm-message"></p>
@@ -578,14 +602,14 @@
     </div>
 
     <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-20 md:bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 z-50 flex items-center gap-3 text-sm">
+    <div id="toast" class="fixed bottom-20 md:bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 z-[10050] flex items-center gap-3 text-sm">
         <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i>
         <span id="toast-message">Success message</span>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Expose Globals
@@ -615,7 +639,8 @@
                 notes: "Notes (Optional)", save_income: "Save Income", save_expense: "Save Expense", reset: "Reset",
                 from_account: "From Account *", to_account: "To Account *", transfer_fee: "Transfer Fee (Optional)",
                 transfer_funds: "Transfer Funds", transaction_history: "Transaction History", search_placeholder: "Search title...",
-                title_placeholder: "e.g. Salary, Grocery", all_types: "All Types", all_accounts: "All Accounts", date_col: "Date (BS)", type_col: "Type",
+                title_placeholder: "e.g. Salary, Grocery", date_placeholder: "YYYY-MM-DD (e.g. 2083-07-16)", month_placeholder: "YYYY-MM (e.g. 2083-07)",
+                all_types: "All Types", all_accounts: "All Accounts", date_col: "Date (BS)", type_col: "Type",
                 title_col: "Title / Details", account_col: "Account(s)", amount_col: "Amount", actions_col: "Actions",
                 monthly_budgets: "Monthly Expense Budgets", set_budget: "Set Budget", financial_reports: "Financial Analytics & Reports",
                 cat_expense: "Category-wise Expenses", savings_trend: "Savings Trend", data_settings: "Data Management & Settings",
@@ -636,7 +661,8 @@
                 notes: "कैफियत (वैकल्पिक)", save_income: "आम्दानी सुरक्षित गर्नुहोस्", save_expense: "खर्च सुरक्षित गर्नुहोस्", reset: "रिसेट गर्नुहोस्",
                 from_account: "पठाउने खाता *", to_account: "प्राप्त गर्ने खाता *", transfer_fee: "ट्रान्सफर शुल्क (वैकल्पिक)",
                 transfer_funds: "रकमान्तर गर्नुहोस्", transaction_history: "कारोबार इतिहास", search_placeholder: "शीर्षक खोज्नुहोस्...",
-                title_placeholder: "जस्तै: तलब, तरकारी", all_types: "सबै प्रकार", all_accounts: "सबै खाताहरू", date_col: "मिति (वि.सं.)", type_col: "प्रकार",
+                title_placeholder: "जस्तै: तलब, तरकारी", date_placeholder: "वर्ष-महिना-दिन (जस्तै: 2083-07-16)", month_placeholder: "वर्ष-महिना (जस्तै: 2083-07)",
+                all_types: "सबै प्रकार", all_accounts: "सबै खाताहरू", date_col: "मिति (वि.सं.)", type_col: "प्रकार",
                 title_col: "शीर्षक / विवरण", account_col: "खाता(हरू)", amount_col: "रकम", actions_col: "कार्यहरू",
                 monthly_budgets: "मासिक खर्च बजेट", set_budget: "बजेट सेट गर्नुहोस्", financial_reports: "आर्थिक रिपोर्टहरू",
                 cat_expense: "वर्ग अनुसार खर्च", savings_trend: "बचत प्रवृत्ति", data_settings: "डाटा व्यवस्थापन र सेटिङ्स",
@@ -647,6 +673,21 @@
         };
 
         let appLang = localStorage.getItem('appLang') || 'en';
+
+        // Nepali BS Month Formatter
+        function formatBSMonth(yyyyMm) {
+            if (!yyyyMm || typeof yyyyMm !== 'string' || !yyyyMm.includes('-')) return yyyyMm;
+            const parts = yyyyMm.split('-');
+            const year = parts[0];
+            const m = parseInt(parts[1], 10);
+            if (m >= 1 && m <= 12) {
+                const months = appLang === 'ne' ? 
+                    ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कात्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"] : 
+                    ["Baisakh", "Jestha", "Ashadh", "Shrawan", "Bhadra", "Ashwin", "Kartik", "Mangsir", "Poush", "Magh", "Falgun", "Chaitra"];
+                return `${months[m - 1]} ${year}`;
+            }
+            return yyyyMm;
+        }
 
         function applyLanguage() {
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -660,10 +701,11 @@
             document.getElementById('lang-text').textContent = appLang === 'en' ? 'नेपाली' : 'English';
             updateSyncStatus();
             
-            // Set dynamic page title safely
             const navKey = 'nav_' + (currentTab === 'transactions' ? 'history' : currentTab);
             const titleEl = document.getElementById('page-title');
             if(titleEl && i18n[appLang][navKey]) titleEl.innerText = i18n[appLang][navKey] || i18n[appLang]['app_title'];
+            
+            refreshCurrentTab(); // Refresh charts & data for new month labels
         }
 
         function toggleLang() {
@@ -711,7 +753,7 @@
             };
         }
 
-        // --- Firebase Setup (Offline First) ---
+        // --- Firebase Setup ---
         const firebaseConfig = {
             apiKey: "AIzaSyA6DNrVhGwYvGZdhTr_6YvVSnuPF6ffEqM",
             authDomain: "merohisab-kitab.firebaseapp.com",
@@ -790,7 +832,6 @@
                 const provider = new GoogleAuthProvider();
                 await signInWithPopup(auth, provider);
             } catch (error) {
-                console.error("Login Error:", error);
                 showToast("Login failed!", "error");
             }
         }
@@ -904,7 +945,6 @@
             const titleEl = document.getElementById('page-title');
             if(titleEl && i18n[appLang][navKey]) titleEl.innerText = i18n[appLang][navKey] || i18n[appLang]['app_title'];
             
-            // Close mobile sidebar if open
             if(window.innerWidth < 768) {
                 const sidebar = document.getElementById('app-sidebar');
                 if(sidebar && !sidebar.classList.contains('-translate-x-full')) {
@@ -1026,7 +1066,7 @@
             monthlyChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: labels,
+                    labels: labels.map(formatBSMonth), // Using Nepali Month Formatter
                     datasets: [
                         { label: i18n[appLang]['nav_income'], data: labels.map(m => mData[m].inc/100), backgroundColor: '#10b981', borderRadius: 4 },
                         { label: i18n[appLang]['nav_expense'], data: labels.map(m => mData[m].exp/100), backgroundColor: '#f43f5e', borderRadius: 4 }
@@ -1200,7 +1240,7 @@
                 const spent = spentMap[b.category] || 0; const p = Math.min(Math.round((spent/b.amount)*100), 100);
                 const col = p >= 100 ? 'bg-rose-600' : p >= 80 ? 'bg-amber-500' : 'bg-brand-600';
                 return `<div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
-                    <div class="flex justify-between font-bold mb-2"><h4>${b.category}</h4><span>${p}%</span></div>
+                    <div class="flex justify-between font-bold mb-2"><h4>${b.category}</h4><span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 rounded">${formatBSMonth(b.month)}</span></div>
                     <div class="w-full bg-gray-100 dark:bg-gray-700 h-2.5 rounded-full"><div class="${col} h-2.5 rounded-full" style="width: ${p}%"></div></div>
                     <div class="flex justify-between text-xs mt-2 text-gray-500"><span>Spent: ${formatNPR(spent)}</span><span>Limit: ${formatNPR(b.amount)}</span></div>
                 </div>`;
@@ -1238,7 +1278,7 @@
             const sMonths = Object.keys(mSum).sort();
             savingsChartInstance = new Chart(document.getElementById('savingsChart').getContext('2d'), {
                 type: 'line',
-                data: { labels: sMonths, datasets: [{ label: i18n[appLang]['savings_trend'], data: sMonths.map(m=>(mSum[m].inc-mSum[m].exp)/100), borderColor: '#2563eb' }] },
+                data: { labels: sMonths.map(formatBSMonth), datasets: [{ label: i18n[appLang]['savings_trend'], data: sMonths.map(m=>(mSum[m].inc-mSum[m].exp)/100), borderColor: '#2563eb' }] },
                 options: { responsive: true, maintainAspectRatio: false }
             });
         }
