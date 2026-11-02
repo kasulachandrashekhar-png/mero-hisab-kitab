@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Expense Tracker V3.1</title>
+    <title>Mero Hisab - Final Version</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2563eb">
     <link rel="apple-touch-icon" href="icon-192.png">
@@ -32,10 +32,12 @@
     <!-- Mobile Sidebar Backdrop -->
     <div id="sidebar-backdrop" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden" onclick="toggleMobileSidebar()"></div>
 
-    <!-- Desktop & Mobile Sidebar Navigation -->
+    <!-- Sidebar Navigation -->
     <aside id="app-sidebar" class="fixed md:sticky top-0 left-0 h-screen w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl md:shadow-sm">
         <div class="p-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
-            <h1 class="text-xl font-bold text-brand-600 dark:text-brand-500 flex items-center gap-2"><i class="fa-solid fa-wallet"></i> <span data-i18n="app_title">Mero Hisab</span></h1>
+            <h1 class="text-xl font-bold text-brand-600 dark:text-brand-500 flex items-center gap-2">
+                <i class="fa-solid fa-wallet"></i> <span data-i18n="app_title">Mero Hisab</span>
+            </h1>
             <button onclick="toggleMobileSidebar()" class="md:hidden text-gray-500 hover:text-rose-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
@@ -43,9 +45,15 @@
             <button onclick="switchTab('insight')" id="nav-insight" class="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"><i class="fa-solid fa-lightbulb w-5"></i> <span data-i18n="nav_insight">Insight</span></button>
             <button onclick="switchTab('accounts')" id="nav-accounts" class="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"><i class="fa-solid fa-vault w-5"></i> <span data-i18n="nav_accounts">Accounts</span></button>
             <button onclick="switchTab('contacts')" id="nav-contacts" class="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"><i class="fa-solid fa-users w-5"></i> <span data-i18n="nav_contacts">Contacts</span></button>
+            
+            <div class="my-2 border-t border-gray-100 dark:border-gray-700"></div>
+            
             <button onclick="switchTab('income')" id="nav-income" class="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"><i class="fa-solid fa-circle-arrow-down w-5 text-emerald-500"></i> <span data-i18n="nav_income">Income</span></button>
             <button onclick="switchTab('expense')" id="nav-expense" class="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"><i class="fa-solid fa-circle-arrow-up w-5 text-rose-500"></i> <span data-i18n="nav_expense">Expense</span></button>
             <button onclick="switchTab('transfer')" id="nav-transfer" class="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"><i class="fa-solid fa-right-left w-5 text-amber-500"></i> <span data-i18n="nav_transfer">Transfer</span></button>
+            
+            <div class="my-2 border-t border-gray-100 dark:border-gray-700"></div>
+            
             <button onclick="switchTab('transactions')" id="nav-transactions" class="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"><i class="fa-solid fa-list-ul w-5"></i> <span data-i18n="nav_history">History</span></button>
             <button onclick="switchTab('budget')" id="nav-budget" class="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"><i class="fa-solid fa-bullseye w-5"></i> <span data-i18n="nav_budget">Budgets</span></button>
             <button onclick="switchTab('reports')" id="nav-reports" class="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"><i class="fa-solid fa-chart-line w-5"></i> <span data-i18n="nav_reports">Reports</span></button>
@@ -56,8 +64,8 @@
         </div>
     </aside>
 
+    <!-- Main Content -->
     <main class="flex-1 flex flex-col min-h-screen relative z-10">
-        <!-- Header -->
         <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-20">
             <div class="flex items-center gap-3">
                 <button onclick="toggleMobileSidebar()" class="md:hidden text-xl text-gray-600 dark:text-gray-300 focus:outline-none hover:text-brand-600"><i class="fa-solid fa-bars"></i></button>
@@ -76,238 +84,469 @@
 
         <div class="p-4 md:p-8 flex-1 max-w-7xl w-full mx-auto space-y-6 pb-12">
             
-            <!-- 1. DASHBOARD -->
+            <!-- 1. DASHBOARD TAB -->
             <section id="tab-dashboard" class="tab-content space-y-6">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 flex justify-between items-center"><div><p class="text-sm text-gray-500" data-i18n="total_balance">Total Balance</p><h3 id="dash-total-balance" class="text-2xl font-bold mt-1">रु. 0</h3></div><div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-wallet"></i></div></div>
-                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 flex justify-between items-center"><div><p class="text-sm text-gray-500" data-i18n="total_income_all">Total Income</p><h3 id="dash-total-income" class="text-2xl font-bold mt-1 text-emerald-600">रु. 0</h3></div><div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl"><i class="fa-solid fa-arrow-down-long"></i></div></div>
-                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 flex justify-between items-center"><div><p class="text-sm text-gray-500" data-i18n="total_expense_all">Total Expenses</p><h3 id="dash-total-expense" class="text-2xl font-bold mt-1 text-rose-600">रु. 0</h3></div><div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl"><i class="fa-solid fa-arrow-up-long"></i></div></div>
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 flex justify-between items-center">
+                        <div><p class="text-sm text-gray-500" data-i18n="total_balance">Total Balance</p><h3 id="dash-total-balance" class="text-2xl font-bold mt-1">रु. 0</h3></div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-wallet"></i></div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 flex justify-between items-center">
+                        <div><p class="text-sm text-gray-500" data-i18n="total_income_all">Total Income</p><h3 id="dash-total-income" class="text-2xl font-bold mt-1 text-emerald-600">रु. 0</h3></div>
+                        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl"><i class="fa-solid fa-arrow-down-long"></i></div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 flex justify-between items-center">
+                        <div><p class="text-sm text-gray-500" data-i18n="total_expense_all">Total Expenses</p><h3 id="dash-total-expense" class="text-2xl font-bold mt-1 text-rose-600">रु. 0</h3></div>
+                        <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl"><i class="fa-solid fa-arrow-up-long"></i></div>
+                    </div>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700"><h3 class="text-md font-bold mb-4" data-i18n="monthly_chart_title">Income vs Expense</h3><div class="h-64 relative"><canvas id="monthlyChart"></canvas></div></div>
                     <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
-                        <div class="flex justify-between items-center mb-4"><h3 class="text-md font-bold" data-i18n="recent_trans_title">Recent Transactions</h3><button onclick="switchTab('transactions')" class="text-sm text-brand-600 font-semibold" data-i18n="view_all">View All</button></div>
-                        <div id="dash-recent-list" class="divide-y divide-gray-100 dark:divide-gray-700"></div>
+                        <h3 class="text-md font-bold mb-4" data-i18n="monthly_chart_title">Income vs Expense</h3>
+                        <div class="h-64 relative"><canvas id="monthlyChart"></canvas></div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
+                        <h3 class="text-md font-bold mb-4" data-i18n="acc_balances_title">Account Balances</h3>
+                        <div id="dash-account-list" class="space-y-2 max-h-64 overflow-y-auto pr-2"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- 2. INSIGHT -->
+            <!-- 2. INSIGHT TAB (Udharo/Sapat Tracking) -->
             <section id="tab-insight" class="tab-content hidden space-y-6">
                 <h3 class="text-lg font-bold mb-4" data-i18n="nav_insight">Insights & Totals</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl shadow-sm text-white"><p class="text-emerald-100 text-sm" data-i18n="total_bank">Bank Total</p><h3 id="insight-bank" class="text-2xl font-bold mt-1">रु. 0</h3></div>
-                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-5 rounded-2xl shadow-sm text-white"><p class="text-blue-100 text-sm" data-i18n="total_cash">Cash Total</p><h3 id="insight-cash" class="text-2xl font-bold mt-1">रु. 0</h3></div>
-                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-2xl shadow-sm text-white"><p class="text-purple-100 text-sm" data-i18n="total_wallet">Wallet Total</p><h3 id="insight-wallet" class="text-2xl font-bold mt-1">रु. 0</h3></div>
-                    <div class="bg-gradient-to-br from-amber-500 to-amber-600 p-5 rounded-2xl shadow-sm text-white"><p class="text-amber-100 text-sm" data-i18n="total_sapat">Total Lent (Sapat)</p><h3 id="insight-sapat" class="text-2xl font-bold mt-1">रु. 0</h3></div>
+                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl shadow-sm text-white">
+                        <p class="text-emerald-100 text-sm" data-i18n="total_bank">Bank Total</p>
+                        <h3 id="insight-bank" class="text-2xl font-bold mt-1">रु. 0</h3>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-5 rounded-2xl shadow-sm text-white">
+                        <p class="text-blue-100 text-sm" data-i18n="total_cash">Cash Total</p>
+                        <h3 id="insight-cash" class="text-2xl font-bold mt-1">रु. 0</h3>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-2xl shadow-sm text-white">
+                        <p class="text-purple-100 text-sm" data-i18n="total_wallet">Wallet Total</p>
+                        <h3 id="insight-wallet" class="text-2xl font-bold mt-1">रु. 0</h3>
+                    </div>
+                    <div class="bg-gradient-to-br from-rose-500 to-rose-600 p-5 rounded-2xl shadow-sm text-white">
+                        <p class="text-rose-100 text-sm" data-i18n="total_udharo">Payable (Udharo)</p>
+                        <h3 id="insight-udharo" class="text-2xl font-bold mt-1">रु. 0</h3>
+                    </div>
                 </div>
                 <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
-                    <h3 class="text-md font-bold mb-4" data-i18n="sapat_history">Sapat History (Lent/Repaid)</h3>
-                    <div class="overflow-x-auto"><table class="w-full text-left text-sm"><tbody id="sapat-history-list" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody></table></div>
+                    <h3 class="text-md font-bold mb-4" data-i18n="sapat_history">Sapat / Peer History</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm"><tbody id="sapat-history-list" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody></table>
+                    </div>
                 </div>
             </section>
-
-            <!-- 3. CONTACTS -->
+<!-- 3. CONTACTS TAB -->
             <section id="tab-contacts" class="tab-content hidden space-y-6">
-                <div class="flex items-center justify-between"><h3 class="text-lg font-bold" data-i18n="nav_contacts">Manage Contacts</h3><button onclick="openContactModal()" class="bg-brand-600 text-white px-4 py-2.5 rounded-xl shadow-sm flex gap-2 items-center"><i class="fa-solid fa-plus"></i> <span data-i18n="add_new">Add New</span></button></div>
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold" data-i18n="nav_contacts">Manage Contacts</h3>
+                    <button onclick="openContactModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-2.5 rounded-xl shadow-sm transition flex gap-2 items-center">
+                        <i class="fa-solid fa-plus"></i> <span data-i18n="add_new">Add New</span>
+                    </button>
+                </div>
                 <div id="contacts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </section>
 
-            <!-- 4. ACCOUNTS -->
+            <!-- 4. ACCOUNTS TAB -->
             <section id="tab-accounts" class="tab-content hidden space-y-6">
-                <div class="flex items-center justify-between"><h3 class="text-lg font-bold" data-i18n="manage_accounts">Manage Accounts</h3><button onclick="openAccountModal()" class="bg-brand-600 text-white px-4 py-2.5 rounded-xl shadow-sm flex gap-2 items-center"><i class="fa-solid fa-plus"></i> <span data-i18n="add_account">Add Account</span></button></div>
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold" data-i18n="manage_accounts">Manage Accounts</h3>
+                    <button onclick="openAccountModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-2.5 rounded-xl shadow-sm transition flex gap-2 items-center">
+                        <i class="fa-solid fa-plus"></i> <span data-i18n="add_account">Add Account</span>
+                    </button>
+                </div>
                 <div id="accounts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </section>
 
-            <!-- 5. INCOME -->
+            <!-- 5. INCOME TAB -->
             <section id="tab-income" class="tab-content hidden space-y-6 max-w-2xl mx-auto">
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border dark:border-gray-700">
-                    <h3 class="text-lg font-bold mb-4 text-emerald-600"><i class="fa-solid fa-circle-arrow-down"></i> <span data-i18n="record_income">Record Income</span></h3>
+                    <h3 class="text-lg font-bold mb-4 text-emerald-600 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-arrow-down"></i> <span data-i18n="record_income">Record Income</span>
+                    </h3>
                     <form id="income-form" onsubmit="handleIncomeSubmit(event)" class="space-y-4">
                         <input type="hidden" id="income-id">
-                        <div><label class="block text-sm mb-1" data-i18n="title_source">Title *</label><input type="text" id="income-title" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><label class="block text-sm mb-1" data-i18n="amount">Amount *</label><input type="number" step="0.01" id="income-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></div>
-                            <div><label class="block text-sm mb-1" data-i18n="date">Date *</label><input type="text" id="income-date" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1" data-i18n="title_source">Title *</label>
+                            <input type="text" id="income-title" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
-                            <div><label class="block text-sm mb-1" data-i18n="category">Category *</label><select id="income-category" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"><option value="Salary">Salary</option><option value="Business">Business</option><option value="Interest">Interest</option><option value="Other">Other</option></select></div>
-                            <div><label class="block text-sm mb-1" data-i18n="receive_account">Account *</label><select id="income-account" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></select></div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-i18n="amount">Amount *</label>
+                                <input type="number" step="0.01" id="income-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-i18n="date">Date *</label>
+                                <input type="text" id="income-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500">
+                            </div>
                         </div>
-                        <div><label class="block text-sm mb-1" data-i18n="notes">Notes</label><textarea id="income-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></textarea></div>
-                        <div class="flex justify-end gap-3"><button type="button" onclick="resetIncomeForm()" class="px-5 py-2.5 rounded-xl border dark:border-gray-600" data-i18n="reset">Reset</button><button type="submit" class="bg-emerald-600 text-white px-6 py-2.5 rounded-xl" data-i18n="save_income">Save</button></div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-i18n="category">Category *</label>
+                                <select id="income-category" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500">
+                                    <option value="Salary">Salary</option>
+                                    <option value="Business">Business</option>
+                                    <option value="Interest">Interest</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-i18n="receive_account">Account *</label>
+                                <select id="income-account" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1" data-i18n="notes">Notes</label>
+                            <textarea id="income-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></textarea>
+                        </div>
+                        <div class="flex justify-end gap-3 pt-2">
+                            <button type="button" onclick="resetIncomeForm()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition" data-i18n="reset">Reset</button>
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition" data-i18n="save_income">Save</button>
+                        </div>
                     </form>
                 </div>
             </section>
 
-            <!-- 6. EXPENSE -->
+            <!-- 6. EXPENSE TAB (With Udharo support) -->
             <section id="tab-expense" class="tab-content hidden space-y-6 max-w-2xl mx-auto">
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border dark:border-gray-700">
-                    <h3 class="text-lg font-bold mb-4 text-rose-600"><i class="fa-solid fa-circle-arrow-up"></i> <span data-i18n="record_expense">Record Expense</span></h3>
+                    <h3 class="text-lg font-bold mb-4 text-rose-600 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-arrow-up"></i> <span data-i18n="record_expense">Record Expense</span>
+                    </h3>
                     <form id="expense-form" onsubmit="handleExpenseSubmit(event)" class="space-y-4">
                         <input type="hidden" id="expense-id">
-                        <div><label class="block text-sm mb-1" data-i18n="title_source">Title *</label><input type="text" id="expense-title" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><label class="block text-sm mb-1" data-i18n="amount">Amount *</label><input type="number" step="0.01" id="expense-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></div>
-                            <div><label class="block text-sm mb-1" data-i18n="date">Date *</label><input type="text" id="expense-date" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1" data-i18n="title_source">Title *</label>
+                            <input type="text" id="expense-title" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
-                            <div><label class="block text-sm mb-1" data-i18n="category">Category *</label><select id="expense-category" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"><option value="Food">Food</option><option value="Transportation">Transportation</option><option value="Education">Education</option><option value="Bills">Bills</option><option value="Other">Other</option></select></div>
-                            <div><label class="block text-sm mb-1" data-i18n="payment_account">Account *</label><select id="expense-account" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></select></div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-i18n="amount">Amount *</label>
+                                <input type="number" step="0.01" id="expense-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-i18n="date">Date *</label>
+                                <input type="text" id="expense-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500">
+                            </div>
                         </div>
-                        <div><label class="block text-sm mb-1" data-i18n="notes">Notes</label><textarea id="expense-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none"></textarea></div>
-                        <div class="flex justify-end gap-3"><button type="button" onclick="resetExpenseForm()" class="px-5 py-2.5 rounded-xl border dark:border-gray-600" data-i18n="reset">Reset</button><button type="submit" class="bg-rose-600 text-white px-6 py-2.5 rounded-xl" data-i18n="save_expense">Save</button></div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-i18n="category">Category *</label>
+                                <select id="expense-category" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500">
+                                    <option value="Food">Food</option>
+                                    <option value="Transportation">Transportation</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Bills">Bills</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-i18n="payment_account">Account *</label>
+                                <!-- Udharo will be dynamically added here by JS so user can select it to buy on credit -->
+                                <select id="expense-account" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1" data-i18n="notes">Notes</label>
+                            <textarea id="expense-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></textarea>
+                        </div>
+                        <div class="flex justify-end gap-3 pt-2">
+                            <button type="button" onclick="resetExpenseForm()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition" data-i18n="reset">Reset</button>
+                            <button type="submit" class="bg-rose-600 hover:bg-rose-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition" data-i18n="save_expense">Save</button>
+                        </div>
                     </form>
                 </div>
             </section>
-
-            <!-- 7. TRANSFER -->
+<!-- 7. TRANSFER TAB -->
             <section id="tab-transfer" class="tab-content hidden space-y-6 max-w-2xl mx-auto">
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border dark:border-gray-700">
-                    <h3 class="text-lg font-bold mb-4 text-amber-600"><i class="fa-solid fa-right-left"></i> <span data-i18n="account_transfer">Transfer Money</span></h3>
+                    <h3 class="text-lg font-bold mb-4 text-amber-600 flex items-center gap-2">
+                        <i class="fa-solid fa-right-left"></i> <span data-i18n="account_transfer">Transfer Money</span>
+                    </h3>
                     
                     <div class="flex gap-4 mb-6 border-b border-gray-200 dark:border-gray-700 pb-4">
-                        <label class="flex items-center gap-2 cursor-pointer font-semibold text-sm"><input type="radio" name="transferMode" value="self" checked onchange="toggleTransferMode()" class="accent-brand-600 w-4 h-4"> <span data-i18n="self_transfer">आफ्नै खातामा (Self)</span></label>
-                        <label class="flex items-center gap-2 cursor-pointer font-semibold text-sm"><input type="radio" name="transferMode" value="friend" onchange="toggleTransferMode()" class="accent-brand-600 w-4 h-4"> <span data-i18n="friend_transfer">साथी/परिवारलाई (Contact)</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer font-semibold text-sm text-gray-700 dark:text-gray-300">
+                            <input type="radio" name="transferMode" value="self" checked onchange="toggleTransferMode()" class="accent-brand-600 w-4 h-4"> 
+                            <span data-i18n="self_transfer">आफ्नै खातामा (Self)</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer font-semibold text-sm text-gray-700 dark:text-gray-300">
+                            <input type="radio" name="transferMode" value="friend" onchange="toggleTransferMode()" class="accent-brand-600 w-4 h-4"> 
+                            <span data-i18n="friend_transfer">साथी/परिवारलाई (Contact)</span>
+                        </label>
                     </div>
 
                     <!-- Transfer Self -->
                     <form id="transfer-form-self" onsubmit="handleTransferSubmit(event)" class="space-y-4">
                         <input type="hidden" id="transfer-id">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><label class="block text-sm mb-1" data-i18n="from_account">From *</label><select id="transfer-from" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5"></select></div>
-                            <div><label class="block text-sm mb-1" data-i18n="to_account">To *</label><select id="transfer-to" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5"></select></div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-i18n="from_account">From *</label>
+                                <select id="transfer-from" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-i18n="to_account">To *</label>
+                                <!-- Udharo will be dynamically added here to pay off debt -->
+                                <select id="transfer-to" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></select>
+                            </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><label class="block text-sm mb-1" data-i18n="amount">Amount *</label><input type="number" step="0.01" id="transfer-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5"></div>
-                            <div><label class="block text-sm mb-1" data-i18n="date">Date *</label><input type="text" id="transfer-date" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5"></div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="amount">Amount *</label><input type="number" step="0.01" id="transfer-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></div>
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="transfer_fee">Fee</label><input type="number" step="0.01" id="transfer-fee" value="0" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></div>
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="date">Date *</label><input type="text" id="transfer-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></div>
                         </div>
-                        <div><label class="block text-sm mb-1" data-i18n="notes">Notes</label><textarea id="transfer-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5"></textarea></div>
-                        <div class="flex justify-end"><button type="submit" class="bg-amber-600 text-white px-6 py-2.5 rounded-xl" data-i18n="transfer_funds">Transfer</button></div>
+                        <div><label class="block text-sm font-medium mb-1" data-i18n="notes">Notes</label><textarea id="transfer-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></textarea></div>
+                        <div class="flex justify-end gap-3 pt-2">
+                            <button type="button" onclick="resetTransferForm()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition" data-i18n="reset">Reset</button>
+                            <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition" data-i18n="transfer_funds">Transfer</button>
+                        </div>
                     </form>
 
-                    <!-- Transfer Friend (With Sapat) -->
+                    <!-- Transfer Friend (With Sapat and Datalist) -->
                     <form id="transfer-form-friend" onsubmit="handleFriendTransferSubmit(event)" class="space-y-4 hidden">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><label class="block text-sm mb-1" data-i18n="from_account">From Account *</label><select id="friend-transfer-from" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5"></select></div>
+                        <div class="p-3 mb-4 bg-amber-50 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200 rounded-xl text-xs flex gap-2">
+                            <i class="fa-solid fa-circle-info text-base mt-0.5"></i>
+                            <span data-i18n="friend_transfer_info">यसबाट पठाएको रकम तुरुन्तै खाताबाट घट्नेछ र साथीलाई Notification जानेछ।</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="from_account">From Account *</label><select id="friend-transfer-from" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></select></div>
                             <div>
-                                <label class="block text-sm mb-1" data-i18n="friend_email">Contact / Email *</label>
-                                <select id="friend-transfer-email" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5">
-                                    <option value="" disabled selected>Select Contact</option>
-                                </select>
+                                <label class="block text-sm font-medium mb-1" data-i18n="friend_email">Contact / Email *</label>
+                                <!-- Using Input + Datalist so users can manually type or select -->
+                                <input type="email" id="friend-transfer-email" list="contacts-list" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500" placeholder="Select or type email">
+                                <datalist id="contacts-list"></datalist>
                             </div>
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-brand-600 dark:text-brand-400 mb-1" data-i18n="sapat_type">Transfer Type (सापट/लेनदेन) *</label>
-                            <select id="friend-transfer-sapat" required class="w-full bg-brand-50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800 rounded-xl px-4 py-2.5 font-medium outline-none">
+                            <select id="friend-transfer-sapat" required class="w-full bg-brand-50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800 rounded-xl px-4 py-2.5 font-medium outline-none focus:border-brand-500">
                                 <option value="none">Normal Transfer (सामान्य लेनदेन)</option>
                                 <option value="lent">Lent (सापट दिएको)</option>
                                 <option value="repaid">Repaid (सापट फिर्ता गरेको)</option>
                             </select>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><label class="block text-sm mb-1" data-i18n="amount">Amount *</label><input type="number" step="0.01" id="friend-transfer-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5"></div>
-                            <div><label class="block text-sm mb-1" data-i18n="date">Date *</label><input type="text" id="friend-transfer-date" required class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5"></div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="amount">Amount *</label><input type="number" step="0.01" id="friend-transfer-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></div>
+                            <div><label class="block text-sm font-medium mb-1" data-i18n="date">Date *</label><input type="text" id="friend-transfer-date" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></div>
                         </div>
-                        <div><label class="block text-sm mb-1" data-i18n="notes">Message</label><textarea id="friend-transfer-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-4 py-2.5"></textarea></div>
-                        <div class="flex justify-end pt-2"><button type="submit" class="bg-brand-600 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm" data-i18n="send_money">Send Money</button></div>
+                        <div><label class="block text-sm font-medium mb-1" data-i18n="notes">Message</label><textarea id="friend-transfer-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></textarea></div>
+                        <div class="flex justify-end gap-3 pt-2">
+                            <button type="button" onclick="saveContact()" class="px-4 py-2.5 rounded-xl text-sm border border-brand-200 dark:border-brand-800 text-brand-600 dark:text-brand-400 hover:bg-brand-50 dark:hover:bg-brand-900/30 transition font-medium"><i class="fa-solid fa-user-plus"></i> Save Contact</button>
+                            <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition" data-i18n="send_money">Send Money</button>
+                        </div>
                     </form>
                 </div>
             </section>
 
-            <!-- 8. TRANSACTIONS -->
+            <!-- 8. TRANSACTIONS TAB -->
             <section id="tab-transactions" class="tab-content hidden space-y-6">
                 <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 space-y-4">
-                    <div class="flex justify-between"><h3 class="text-lg font-bold" data-i18n="transaction_history">History</h3><input type="text" id="filter-search" oninput="renderTransactions()" class="bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl px-3 py-1.5 text-sm" placeholder="Search..."></div>
-                    <div class="overflow-x-auto"><table class="w-full text-left text-sm"><tbody id="transactions-table-body" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody></table></div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <h3 class="text-lg font-bold" data-i18n="transaction_history">History</h3>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" id="filter-search" oninput="renderTransactions()" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-500" placeholder="Search...">
+                            <select id="filter-type" onchange="renderTransactions()" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-500">
+                                <option value="" data-i18n="all_types">All Types</option>
+                                <option value="income">Income</option>
+                                <option value="expense">Expense</option>
+                                <option value="transfer">Transfer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm whitespace-nowrap">
+                            <thead>
+                                <tr class="border-b border-gray-100 dark:border-gray-700 text-xs font-semibold text-gray-500 uppercase">
+                                    <th class="py-3 px-2" data-i18n="date_col">Date</th>
+                                    <th class="py-3 px-2" data-i18n="type_col">Type</th>
+                                    <th class="py-3 px-2" data-i18n="title_col">Title</th>
+                                    <th class="py-3 px-2" data-i18n="account_col">Account</th>
+                                    <th class="py-3 px-2 text-right" data-i18n="amount_col">Amount</th>
+                                    <th class="py-3 px-2 text-center" data-i18n="actions_col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactions-table-body" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
-            <!-- 9. BUDGET -->
-            <section id="tab-budget" class="tab-content hidden space-y-6"><div class="flex justify-between"><h3 class="text-lg font-bold" data-i18n="nav_budget">Budgets</h3><button onclick="openBudgetModal()" class="bg-brand-600 text-white px-4 py-2 rounded-xl"><i class="fa-solid fa-plus"></i></button></div><div id="budget-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div></section>
+            <!-- 9. BUDGET TAB -->
+            <section id="tab-budget" class="tab-content hidden space-y-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold" data-i18n="nav_budget">Budgets</h3>
+                    <button onclick="openBudgetModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-2.5 rounded-xl shadow-sm transition flex gap-2 items-center"><i class="fa-solid fa-plus"></i> <span data-i18n="set_budget">Set Budget</span></button>
+                </div>
+                <div id="budget-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </section>
             
-            <!-- 10. REPORTS -->
+            <!-- 10. REPORTS TAB -->
             <section id="tab-reports" class="tab-content hidden space-y-6">
                 <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 space-y-6">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-bold" data-i18n="financial_reports">Reports</h3>
-                        <div class="flex items-center gap-4 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-xl">
-                            <button onclick="changeReportMonth(-1)" class="p-2"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <h3 class="text-lg font-bold" data-i18n="financial_reports">Financial Reports</h3>
+                        
+                        <!-- Swipeable Month Selector -->
+                        <div class="flex items-center gap-4 bg-gray-100 dark:bg-gray-700 px-2 py-1.5 rounded-xl">
+                            <button onclick="changeReportMonth(-1)" class="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition text-gray-600 dark:text-gray-300"><i class="fa-solid fa-chevron-left"></i></button>
                             <input type="hidden" id="report-month-input" value="2083-07">
-                            <span id="report-month-display" class="font-bold text-brand-600 dark:text-brand-400 min-w-[100px] text-center">Kartik 2083</span>
-                            <button onclick="changeReportMonth(1)" class="p-2"><i class="fa-solid fa-chevron-right"></i></button>
+                            <span id="report-month-display" class="font-bold text-brand-600 dark:text-brand-400 min-w-[110px] text-center">Kartik 2083</span>
+                            <button onclick="changeReportMonth(1)" class="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition text-gray-600 dark:text-gray-300"><i class="fa-solid fa-chevron-right"></i></button>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="h-64 relative"><canvas id="categoryChart"></canvas></div><div class="h-64 relative"><canvas id="savingsChart"></canvas></div></div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="p-4 border border-gray-100 dark:border-gray-700 rounded-xl">
+                            <h4 class="font-semibold mb-3 text-sm text-gray-500" data-i18n="cat_expense">Category Expenses</h4>
+                            <div class="h-64 relative"><canvas id="categoryChart"></canvas></div>
+                        </div>
+                        <div class="p-4 border border-gray-100 dark:border-gray-700 rounded-xl">
+                            <h4 class="font-semibold mb-3 text-sm text-gray-500" data-i18n="savings_trend">Savings Trend</h4>
+                            <div class="h-64 relative"><canvas id="savingsChart"></canvas></div>
+                        </div>
+                    </div>
                 </div>
             </section>
             
-            <!-- 11. SETTINGS -->
-            <section id="tab-settings" class="tab-content hidden space-y-6 max-w-2xl mx-auto"><div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border dark:border-gray-700"><h3 class="text-lg font-bold mb-4" data-i18n="data_settings">Settings</h3><button onclick="exportCSV()" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-sm"><i class="fa-solid fa-file-csv"></i> Export CSV</button></div></section>
+            <!-- 11. SETTINGS TAB -->
+            <section id="tab-settings" class="tab-content hidden space-y-6 max-w-2xl mx-auto">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border dark:border-gray-700 space-y-6">
+                    <h3 class="text-lg font-bold" data-i18n="data_settings">Data Management & Settings</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2.5 rounded-xl text-sm shadow-sm transition flex gap-2 items-center"><i class="fa-solid fa-file-csv"></i> <span data-i18n="export_csv">Export CSV</span></button>
+                    </div>
+                    <div class="border-t border-gray-100 dark:border-gray-700 pt-6 space-y-3">
+                        <h4 class="font-semibold text-sm text-gray-500" data-i18n="storage_notice">Storage & Offline Notice</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Data is securely stored locally and synced to the cloud.</p>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 
-    <!-- PERFECT BOTTOM NAVIGATION (Button based for reliable clicks) -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-2 py-1 flex items-center justify-around z-[9999] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] pb-[env(safe-area-inset-bottom)]">
-        <button onclick="switchTab('dashboard')" id="mob-nav-dashboard" class="mobile-nav-link flex flex-col items-center text-brand-600 text-xs font-medium py-2 px-1 w-16 outline-none bg-transparent">
-            <i class="fa-solid fa-chart-pie text-xl mb-1"></i><span data-i18n="nav_dashboard">Home</span>
+    <!-- PERFECT BOTTOM NAVIGATION (Button based for zero delay clicks) -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-2 flex items-center justify-around z-[9999] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] pb-[env(safe-area-inset-bottom)] h-16">
+        <button onclick="switchTab('dashboard')" id="mob-nav-dashboard" class="mobile-nav-link flex flex-col items-center justify-center text-brand-600 text-[10px] font-medium w-16 h-full outline-none bg-transparent">
+            <i class="fa-solid fa-chart-pie text-xl mb-1 pointer-events-none"></i><span class="pointer-events-none" data-i18n="nav_dashboard">Home</span>
         </button>
-        <button onclick="switchTab('insight')" id="mob-nav-insight" class="mobile-nav-link flex flex-col items-center text-gray-500 text-xs font-medium py-2 px-1 w-16 outline-none bg-transparent">
-            <i class="fa-solid fa-lightbulb text-xl mb-1"></i><span data-i18n="nav_insight">Insight</span>
+        <button onclick="switchTab('insight')" id="mob-nav-insight" class="mobile-nav-link flex flex-col items-center justify-center text-gray-500 text-[10px] font-medium w-16 h-full outline-none bg-transparent">
+            <i class="fa-solid fa-lightbulb text-xl mb-1 pointer-events-none"></i><span class="pointer-events-none" data-i18n="nav_insight">Insight</span>
         </button>
         
         <!-- Center Big + Button -->
-        <div class="relative -top-6 z-[10000]">
+        <div class="relative -top-5 z-[10000]">
             <button onclick="toggleAddMenu()" class="w-14 h-14 bg-brand-600 text-white rounded-full flex items-center justify-center text-2xl shadow-[0_4px_10px_rgba(37,99,235,0.4)] border-4 border-white dark:border-gray-800 outline-none active:scale-95 transition-transform">
-                <i class="fa-solid fa-plus"></i>
+                <i class="fa-solid fa-plus pointer-events-none"></i>
             </button>
         </div>
         
-        <button onclick="switchTab('reports')" id="mob-nav-reports" class="mobile-nav-link flex flex-col items-center text-gray-500 text-xs font-medium py-2 px-1 w-16 outline-none bg-transparent">
-            <i class="fa-solid fa-chart-line text-xl mb-1"></i><span data-i18n="nav_reports">Reports</span>
+        <button onclick="switchTab('reports')" id="mob-nav-reports" class="mobile-nav-link flex flex-col items-center justify-center text-gray-500 text-[10px] font-medium w-16 h-full outline-none bg-transparent">
+            <i class="fa-solid fa-chart-line text-xl mb-1 pointer-events-none"></i><span class="pointer-events-none" data-i18n="nav_reports">Reports</span>
         </button>
-        <button onclick="switchTab('settings')" id="mob-nav-settings" class="mobile-nav-link flex flex-col items-center text-gray-500 text-xs font-medium py-2 px-1 w-16 outline-none bg-transparent">
-            <i class="fa-solid fa-gear text-xl mb-1"></i><span data-i18n="nav_settings">Settings</span>
+        <button onclick="switchTab('settings')" id="mob-nav-settings" class="mobile-nav-link flex flex-col items-center justify-center text-gray-500 text-[10px] font-medium w-16 h-full outline-none bg-transparent">
+            <i class="fa-solid fa-gear text-xl mb-1 pointer-events-none"></i><span class="pointer-events-none" data-i18n="nav_settings">Settings</span>
         </button>
     </nav>
 
     <!-- Mobile Add Menu Popup -->
     <div id="mobile-add-menu" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[10050] hidden items-end justify-center pb-24 px-4" onclick="toggleAddMenu()">
         <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-3xl p-6 shadow-2xl flex flex-col gap-4 transform translate-y-full transition-transform duration-300" id="mobile-add-menu-content" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-2">
+            <div class="flex justify-between items-center mb-4">
                 <h3 class="font-bold text-lg text-gray-800 dark:text-gray-100" data-i18n="add_new">Add New</h3>
-                <button onclick="toggleAddMenu()" class="text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="toggleAddMenu()" class="text-gray-400 hover:text-gray-600 bg-gray-100 dark:bg-gray-700 rounded-full w-8 h-8 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="grid grid-cols-3 gap-3">
-                <button onclick="switchTab('income'); toggleAddMenu()" class="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 rounded-2xl p-4 flex flex-col items-center gap-2"><i class="fa-solid fa-arrow-down text-2xl"></i><span class="font-bold text-xs" data-i18n="nav_income">Income</span></button>
-                <button onclick="switchTab('expense'); toggleAddMenu()" class="bg-rose-50 dark:bg-rose-900/30 text-rose-600 rounded-2xl p-4 flex flex-col items-center gap-2"><i class="fa-solid fa-arrow-up text-2xl"></i><span class="font-bold text-xs" data-i18n="nav_expense">Expense</span></button>
-                <button onclick="switchTab('transfer'); toggleAddMenu()" class="bg-amber-50 dark:bg-amber-900/30 text-amber-600 rounded-2xl p-4 flex flex-col items-center gap-2"><i class="fa-solid fa-right-left text-2xl"></i><span class="font-bold text-xs" data-i18n="nav_transfer">Transfer</span></button>
+                <button onclick="switchTab('income'); toggleAddMenu()" class="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 rounded-2xl p-4 flex flex-col items-center gap-2 transition outline-none">
+                    <i class="fa-solid fa-arrow-down text-2xl pointer-events-none"></i><span class="font-bold text-xs pointer-events-none" data-i18n="nav_income">Income</span>
+                </button>
+                <button onclick="switchTab('expense'); toggleAddMenu()" class="bg-rose-50 dark:bg-rose-900/30 text-rose-600 hover:bg-rose-100 dark:hover:bg-rose-900/50 rounded-2xl p-4 flex flex-col items-center gap-2 transition outline-none">
+                    <i class="fa-solid fa-arrow-up text-2xl pointer-events-none"></i><span class="font-bold text-xs pointer-events-none" data-i18n="nav_expense">Expense</span>
+                </button>
+                <button onclick="switchTab('transfer'); toggleAddMenu()" class="bg-amber-50 dark:bg-amber-900/30 text-amber-600 hover:bg-amber-100 dark:hover:bg-amber-900/50 rounded-2xl p-4 flex flex-col items-center gap-2 transition outline-none">
+                    <i class="fa-solid fa-right-left text-2xl pointer-events-none"></i><span class="font-bold text-xs pointer-events-none" data-i18n="nav_transfer">Transfer</span>
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Modals -->
     <!-- Contact Modal -->
-    <div id="contact-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4"><div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6"><div class="flex justify-between mb-4"><h3 class="font-bold text-lg">Add Contact</h3><button onclick="closeContactModal()" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button></div><form onsubmit="handleContactSubmit(event)" class="space-y-4"><input type="hidden" id="cont-id"><div><label class="block text-sm mb-1">Name</label><input type="text" id="cont-name" required class="w-full border rounded-xl px-4 py-2 dark:bg-gray-700 dark:border-gray-600"></div><div><label class="block text-sm mb-1">Email (Gmail)</label><input type="email" id="cont-email" required class="w-full border rounded-xl px-4 py-2 dark:bg-gray-700 dark:border-gray-600"></div><div><label class="block text-sm mb-1">Relation</label><input type="text" id="cont-relation" placeholder="e.g. Son, Friend" required class="w-full border rounded-xl px-4 py-2 dark:bg-gray-700 dark:border-gray-600"></div><div class="flex justify-end pt-2"><button type="submit" class="bg-brand-600 text-white px-5 py-2 rounded-xl">Save Contact</button></div></form></div></div>
+    <div id="contact-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-xl">
+            <div class="flex justify-between items-center mb-4"><h3 class="font-bold text-lg">Add Contact</h3><button onclick="closeContactModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark"></i></button></div>
+            <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                <input type="hidden" id="cont-id">
+                <div><label class="block text-sm mb-1">Name</label><input type="text" id="cont-name" required class="w-full border rounded-xl px-4 py-2.5 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:border-brand-500"></div>
+                <div><label class="block text-sm mb-1">Email (Gmail)</label><input type="email" id="cont-email" required class="w-full border rounded-xl px-4 py-2.5 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:border-brand-500"></div>
+                <div><label class="block text-sm mb-1">Relation</label><input type="text" id="cont-relation" placeholder="e.g. Son, Friend" required class="w-full border rounded-xl px-4 py-2.5 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:border-brand-500"></div>
+                <div class="flex justify-end pt-2"><button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-5 py-2.5 rounded-xl shadow-sm transition">Save Contact</button></div>
+            </form>
+        </div>
+    </div>
     
     <!-- Account Modal -->
-    <div id="account-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4"><div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6"><div class="flex justify-between mb-4"><h3 class="font-bold text-lg">Manage Account</h3><button onclick="closeAccountModal()" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button></div><form onsubmit="handleAccountSubmit(event)" class="space-y-4"><input type="hidden" id="acc-id"><div><label class="block text-sm mb-1">Name</label><input type="text" id="acc-name" required class="w-full border rounded-xl px-4 py-2 dark:bg-gray-700 dark:border-gray-600"></div><div class="grid grid-cols-2 gap-4"><div><label class="block text-sm mb-1">Type</label><select id="acc-type" required class="w-full border rounded-xl px-4 py-2 dark:bg-gray-700 dark:border-gray-600"><option value="Cash">Cash</option><option value="Bank Account">Bank Account</option><option value="Mobile Wallet">Mobile Wallet</option></select></div><div><label class="block text-sm mb-1">Balance</label><input type="number" step="0.01" id="acc-opening" required class="w-full border rounded-xl px-4 py-2 dark:bg-gray-700 dark:border-gray-600"></div></div><div class="flex justify-end pt-2"><button type="submit" class="bg-brand-600 text-white px-5 py-2 rounded-xl">Save</button></div></form></div></div>
+    <div id="account-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-xl">
+            <div class="flex justify-between items-center mb-4"><h3 class="font-bold text-lg">Manage Account</h3><button onclick="closeAccountModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark"></i></button></div>
+            <form onsubmit="handleAccountSubmit(event)" class="space-y-4">
+                <input type="hidden" id="acc-id">
+                <div><label class="block text-sm mb-1">Name</label><input type="text" id="acc-name" required class="w-full border rounded-xl px-4 py-2.5 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:border-brand-500"></div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="block text-sm mb-1">Type</label><select id="acc-type" required class="w-full border rounded-xl px-4 py-2.5 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:border-brand-500"><option value="Cash">Cash</option><option value="Bank Account">Bank Account</option><option value="Mobile Wallet">Mobile Wallet</option></select></div>
+                    <div><label class="block text-sm mb-1">Balance</label><input type="number" step="0.01" id="acc-opening" required class="w-full border rounded-xl px-4 py-2.5 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:border-brand-500"></div>
+                </div>
+                <div class="flex justify-end pt-2"><button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition">Save</button></div>
+            </form>
+        </div>
+    </div>
 
     <!-- Budget Modal -->
-    <div id="budget-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4"><div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6"><div class="flex justify-between mb-4"><h3 class="font-bold text-lg">Set Budget</h3><button onclick="closeBudgetModal()" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button></div><form onsubmit="handleBudgetSubmit(event)" class="space-y-4"><div><label class="block text-sm mb-1">Category</label><select id="bud-category" class="w-full border rounded-xl px-4 py-2 dark:bg-gray-700 dark:border-gray-600"><option value="Food">Food</option><option value="Transportation">Transportation</option><option value="Education">Education</option><option value="Other">Other</option></select></div><div class="grid grid-cols-2 gap-4"><div><label class="block text-sm mb-1">Month</label><input type="text" id="bud-month" class="w-full border rounded-xl px-4 py-2 dark:bg-gray-700 dark:border-gray-600"></div><div><label class="block text-sm mb-1">Limit</label><input type="number" id="bud-amount" class="w-full border rounded-xl px-4 py-2 dark:bg-gray-700 dark:border-gray-600"></div></div><div class="flex justify-end"><button type="submit" class="bg-brand-600 text-white px-5 py-2 rounded-xl">Save</button></div></form></div></div>
+    <div id="budget-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-xl">
+            <div class="flex justify-between items-center mb-4"><h3 class="font-bold text-lg">Set Budget</h3><button onclick="closeBudgetModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark"></i></button></div>
+            <form onsubmit="handleBudgetSubmit(event)" class="space-y-4">
+                <div><label class="block text-sm mb-1">Category</label><select id="bud-category" class="w-full border rounded-xl px-4 py-2.5 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:border-brand-500"><option value="Food">Food</option><option value="Transportation">Transportation</option><option value="Education">Education</option><option value="Other">Other</option></select></div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="block text-sm mb-1">Month</label><input type="text" id="bud-month" class="w-full border rounded-xl px-4 py-2.5 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:border-brand-500"></div>
+                    <div><label class="block text-sm mb-1">Limit</label><input type="number" id="bud-amount" class="w-full border rounded-xl px-4 py-2.5 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:border-brand-500"></div>
+                </div>
+                <div class="flex justify-end pt-2"><button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition">Save</button></div>
+            </form>
+        </div>
+    </div>
     
     <!-- Notification & Confirm Modals -->
-    <div id="notification-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4" onclick="closeNotificationModal()"><div class="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 flex flex-col max-h-[80vh]" onclick="event.stopPropagation()"><div class="flex justify-between border-b dark:border-gray-700 pb-3"><h3 class="font-bold"><i class="fa-solid fa-bell text-brand-500"></i> Notifications</h3><button onclick="closeNotificationModal()" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button></div><div id="notifications-list" class="overflow-y-auto space-y-4 pt-4 text-sm text-gray-500 text-center">No new notifications.</div></div></div>
-    <div id="confirm-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4"><div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 space-y-4"><h3 class="font-bold text-lg">Confirm Action</h3><p class="text-sm" id="confirm-message"></p><div class="flex justify-end gap-3 pt-2"><button id="confirm-cancel" class="px-4 py-2 border rounded-xl">Cancel</button><button id="confirm-ok" class="bg-rose-600 text-white px-4 py-2 rounded-xl">Confirm</button></div></div></div>
-    <div id="toast" class="fixed bottom-24 md:bottom-20 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl transition-transform duration-300 transform translate-y-24 opacity-0 z-[99999] flex gap-3 text-sm pointer-events-none"><i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i><span id="toast-message">Success message</span></div>
-
-    <!-- SCRIPTS -->
+    <div id="notification-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4" onclick="closeNotificationModal()">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 flex flex-col max-h-[80vh] shadow-xl" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center border-b dark:border-gray-700 pb-3"><h3 class="font-bold text-lg"><i class="fa-solid fa-bell text-brand-500"></i> Notifications</h3><button onclick="closeNotificationModal()" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button></div>
+            <div id="notifications-list" class="overflow-y-auto space-y-4 pt-4 text-sm text-gray-500 text-center">No new notifications.</div>
+        </div>
+    </div>
+    <div id="confirm-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 space-y-4 shadow-xl">
+            <h3 class="font-bold text-lg">Confirm Action</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300" id="confirm-message"></p>
+            <div class="flex justify-end gap-3 pt-2">
+                <button id="confirm-cancel" class="px-5 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition">Cancel</button>
+                <button id="confirm-ok" class="bg-rose-600 hover:bg-rose-700 text-white font-medium px-5 py-2.5 rounded-xl transition">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="toast" class="fixed bottom-24 md:bottom-20 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl transition-transform duration-300 transform translate-y-24 opacity-0 z-[99999] flex gap-3 items-center text-sm pointer-events-none">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toast-message" class="font-medium">Success message</span>
+    </div>
+<!-- SCRIPTS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, initializeFirestore, persistentLocalCache, persistentMultipleTabManager, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Globals setup
+        // Globals setup for HTML inline onclick
         window.switchTab = switchTab; window.toggleLang = toggleLang; window.toggleTheme = toggleTheme; window.toggleMobileSidebar = toggleMobileSidebar; window.toggleAddMenu = toggleAddMenu;
         window.openAccountModal = openAccountModal; window.closeAccountModal = closeAccountModal; window.handleAccountSubmit = handleAccountSubmit; window.editAccount = editAccount; window.deleteAccount = deleteAccount;
         window.handleIncomeSubmit = handleIncomeSubmit; window.resetIncomeForm = resetIncomeForm; window.handleExpenseSubmit = handleExpenseSubmit; window.resetExpenseForm = resetExpenseForm;
@@ -316,13 +555,13 @@
         window.generateReports = generateReports; window.changeReportMonth = changeReportMonth;
         window.signInWithGoogle = signInWithGoogle; window.signOutUser = signOutUser;
         window.openNotificationModal = openNotificationModal; window.closeNotificationModal = closeNotificationModal; window.acceptPeerTransfer = acceptPeerTransfer;
-        window.openContactModal = openContactModal; window.closeContactModal = closeContactModal; window.handleContactSubmit = handleContactSubmit; window.deleteContact = deleteContact;
+        window.openContactModal = openContactModal; window.closeContactModal = closeContactModal; window.handleContactSubmit = handleContactSubmit; window.deleteContact = deleteContact; window.saveContact = saveContact;
         window.openBudgetModal = openBudgetModal; window.closeBudgetModal = closeBudgetModal; window.handleBudgetSubmit = handleBudgetSubmit; window.exportCSV = exportCSV;
 
-        // Locales
+        // Translation Dict (Including Udharo)
         const i18n = {
-            en: { app_title: "Expense Tracker", nav_dashboard: "Dashboard", nav_insight: "Insight", nav_contacts: "Contacts", nav_accounts: "Accounts", nav_income: "Income", nav_expense: "Expense", nav_transfer: "Transfer", nav_history: "History", nav_reports: "Reports", nav_settings: "Settings", nav_budget: "Budgets", dark_mode: "Dark Mode", light_mode: "Light Mode", total_balance: "Total Balance", total_income_all: "Total Income", total_expense_all: "Total Expenses", total_bank: "Bank Total", total_cash: "Cash Total", total_wallet: "Wallet Total", total_sapat: "Total Lent (Sapat)", sapat_history: "Sapat History (Lent/Repaid)", monthly_chart_title: "Income vs Expense", acc_balances_title: "Account Balances", recent_trans_title: "Recent Transactions", view_all: "View All", manage_accounts: "Manage Accounts", add_account: "Add Account", add_new: "Add New", record_income: "Record Income", record_expense: "Record Expense", account_transfer: "Transfer Money", title_source: "Title *", amount: "Amount *", date: "Date *", category: "Category *", receive_account: "Account *", payment_account: "Account *", notes: "Notes", save_income: "Save", save_expense: "Save", reset: "Reset", from_account: "From *", to_account: "To *", transfer_fee: "Fee", transfer_funds: "Transfer", self_transfer: "Own Accounts", friend_transfer: "To Contact", friend_email: "Contact / Email *", sapat_type: "Transfer Type *", send_money: "Send Money", friend_transfer_info: "Amount deducts immediately. Recipient gets notified.", transaction_history: "Transaction History", all_types: "All Types", all_accounts: "All Accounts", search_placeholder: "Search...", date_col: "Date", type_col: "Type", title_col: "Title", account_col: "Account", amount_col: "Amount", actions_col: "Action", monthly_budgets: "Monthly Budgets", set_budget: "Set Budget", financial_reports: "Financial Reports", cat_expense: "Category Expenses", savings_trend: "Savings Trend", data_settings: "Settings", logout: "Logout", login: "Login", offline: "Offline", synced: "Synced", pending: "Pending Sync", confirm_title: "Confirm Action", cancel: "Cancel", confirm_btn: "Confirm" },
-            ne: { app_title: "मेरो हिसाब", nav_dashboard: "ड्यासबोर्ड", nav_insight: "इनसाइट", nav_contacts: "सम्पर्कहरू", nav_accounts: "खाताहरू", nav_income: "आम्दानी", nav_expense: "खर्च", nav_transfer: "रकमान्तर", nav_history: "इतिहास", nav_reports: "रिपोर्टहरू", nav_settings: "सेटिङ्स", nav_budget: "बजेट", dark_mode: "गाढा मोड", light_mode: "उज्यालो मोड", total_balance: "कुल ब्यालेन्स", total_income_all: "कुल आम्दानी", total_expense_all: "कुल खर्च", total_bank: "बैंक ब्यालेन्स", total_cash: "नगद ब्यालेन्स", total_wallet: "वालेट ब्यालेन्स", total_sapat: "लिन बाँकी सापट", sapat_history: "सापट विवरण (दिएको/फिर्ता)", monthly_chart_title: "आम्दानी र खर्च", acc_balances_title: "खाता अनुसार ब्यालेन्स", recent_trans_title: "भर्खरैका कारोबारहरू", view_all: "सबै हेर्नुहोस्", manage_accounts: "खाताहरू व्यवस्थापन", add_account: "खाता थप्नुहोस्", add_new: "नयाँ थप्नुहोस्", record_income: "नयाँ आम्दानी", record_expense: "नयाँ खर्च", account_transfer: "रकमान्तर गर्नुहोस्", title_source: "शीर्षक *", amount: "रकम *", date: "मिति *", category: "वर्ग *", receive_account: "खाता *", payment_account: "खाता *", notes: "कैफियत", save_income: "सेभ", save_expense: "सेभ", reset: "रिसेट", from_account: "पठाउने खाता *", to_account: "प्राप्त गर्ने खाता *", transfer_fee: "शुल्क", transfer_funds: "पठाउनुहोस्", self_transfer: "आफ्नै खातामा", friend_transfer: "साथी/परिवारलाई", friend_email: "सम्पर्क / इमेल *", sapat_type: "लेनदेन प्रकार *", send_money: "रकम पठाउनुहोस्", friend_transfer_info: "यसबाट पठाएको रकम तुरुन्तै खाताबाट घट्नेछ र साथीलाई Notification जानेछ।", transaction_history: "कारोबार इतिहास", all_types: "सबै प्रकार", all_accounts: "सबै खाताहरू", search_placeholder: "खोज्नुहोस्...", date_col: "मिति", type_col: "प्रकार", title_col: "शीर्षक", account_col: "खाता", amount_col: "रकम", actions_col: "कार्य", monthly_budgets: "मासिक बजेट", set_budget: "बजेट सेट", financial_reports: "आर्थिक रिपोर्टहरू", cat_expense: "वर्ग अनुसार खर्च", savings_trend: "बचत प्रवृत्ति", data_settings: "सेटिङ्स", logout: "लगआउट", login: "लगइन", offline: "अफलाइन", synced: "सिंक भयो", pending: "सिंक बाँकी", confirm_title: "प्रमाणीकरण", cancel: "रद्द", confirm_btn: "निश्चित" }
+            en: { app_title: "Expense Tracker", nav_dashboard: "Dashboard", nav_insight: "Insight", nav_contacts: "Contacts", nav_accounts: "Accounts", nav_income: "Income", nav_expense: "Expense", nav_transfer: "Transfer", nav_history: "History", nav_reports: "Reports", nav_settings: "Settings", nav_budget: "Budgets", dark_mode: "Dark Mode", light_mode: "Light Mode", total_balance: "Total Balance", total_income_all: "Total Income", total_expense_all: "Total Expenses", total_bank: "Bank Total", total_cash: "Cash Total", total_wallet: "Wallet Total", total_sapat: "Total Lent (Sapat)", total_udharo: "Payable (Udharo)", sapat_history: "Sapat/Peer History", monthly_chart_title: "Income vs Expense", acc_balances_title: "Account Balances", recent_trans_title: "Recent Transactions", view_all: "View All", manage_accounts: "Manage Accounts", add_account: "Add Account", add_new: "Add New", record_income: "Record Income", record_expense: "Record Expense", account_transfer: "Transfer Money", title_source: "Title *", amount: "Amount *", date: "Date *", category: "Category *", receive_account: "Account *", payment_account: "Account *", notes: "Notes", save_income: "Save", save_expense: "Save", reset: "Reset", from_account: "From *", to_account: "To *", transfer_fee: "Fee", transfer_funds: "Transfer", self_transfer: "Own Accounts", friend_transfer: "To Contact", friend_email: "Contact / Email *", sapat_type: "Transfer Type *", send_money: "Send Money", friend_transfer_info: "Amount deducts immediately. Recipient gets notified.", transaction_history: "Transaction History", all_types: "All Types", all_accounts: "All Accounts", search_placeholder: "Search...", date_col: "Date", type_col: "Type", title_col: "Title", account_col: "Account", amount_col: "Amount", actions_col: "Action", monthly_budgets: "Monthly Budgets", set_budget: "Set Budget", financial_reports: "Financial Reports", cat_expense: "Category Expenses", savings_trend: "Savings Trend", data_settings: "Settings", logout: "Logout", login: "Login", offline: "Offline", synced: "Synced", pending: "Pending Sync", confirm_title: "Confirm Action", cancel: "Cancel", confirm_btn: "Confirm", udharo_acc: "Payable (Udharo)" },
+            ne: { app_title: "मेरो हिसाब", nav_dashboard: "ड्यासबोर्ड", nav_insight: "इनसाइट", nav_contacts: "सम्पर्कहरू", nav_accounts: "खाताहरू", nav_income: "आम्दानी", nav_expense: "खर्च", nav_transfer: "रकमान्तर", nav_history: "इतिहास", nav_reports: "रिपोर्टहरू", nav_settings: "सेटिङ्स", nav_budget: "बजेट", dark_mode: "गाढा मोड", light_mode: "उज्यालो मोड", total_balance: "कुल ब्यालेन्स", total_income_all: "कुल आम्दानी", total_expense_all: "कुल खर्च", total_bank: "बैंक ब्यालेन्स", total_cash: "नगद ब्यालेन्स", total_wallet: "वालेट ब्यालेन्स", total_sapat: "लिन बाँकी सापट", total_udharo: "तिर्न बाँकी उधारो", sapat_history: "सापट/लेनदेन विवरण", monthly_chart_title: "आम्दानी र खर्च", acc_balances_title: "खाता अनुसार ब्यालेन्स", recent_trans_title: "भर्खरैका कारोबारहरू", view_all: "सबै हेर्नुहोस्", manage_accounts: "खाताहरू व्यवस्थापन", add_account: "खाता थप्नुहोस्", add_new: "नयाँ थप्नुहोस्", record_income: "नयाँ आम्दानी", record_expense: "नयाँ खर्च", account_transfer: "रकमान्तर गर्नुहोस्", title_source: "शीर्षक *", amount: "रकम *", date: "मिति *", category: "वर्ग *", receive_account: "खाता *", payment_account: "खाता *", notes: "कैफियत", save_income: "सेभ", save_expense: "सेभ", reset: "रिसेट", from_account: "पठाउने खाता *", to_account: "प्राप्त गर्ने खाता *", transfer_fee: "शुल्क", transfer_funds: "पठाउनुहोस्", self_transfer: "आफ्नै खातामा", friend_transfer: "साथी/परिवारलाई", friend_email: "सम्पर्क / इमेल *", sapat_type: "लेनदेन प्रकार *", send_money: "रकम पठाउनुहोस्", friend_transfer_info: "यसबाट पठाएको रकम तुरुन्तै खाताबाट घट्नेछ र साथीलाई Notification जानेछ।", transaction_history: "कारोबार इतिहास", all_types: "सबै प्रकार", all_accounts: "सबै खाताहरू", search_placeholder: "खोज्नुहोस्...", date_col: "मिति", type_col: "प्रकार", title_col: "शीर्षक", account_col: "खाता", amount_col: "रकम", actions_col: "कार्य", monthly_budgets: "मासिक बजेट", set_budget: "बजेट सेट", financial_reports: "आर्थिक रिपोर्टहरू", cat_expense: "वर्ग अनुसार खर्च", savings_trend: "बचत प्रवृत्ति", data_settings: "सेटिङ्स", logout: "लगआउट", login: "लगइन", offline: "अफलाइन", synced: "सिंक भयो", pending: "सिंक बाँकी", confirm_title: "प्रमाणीकरण", cancel: "रद्द", confirm_btn: "निश्चित", udharo_acc: "उधारो (Unpaid)" }
         };
 
         let appLang = localStorage.getItem('appLang') || 'en';
@@ -335,6 +574,7 @@
             if (m >= 1 && m <= 12) return `${(appLang === 'ne' ? neMonths : enMonths)[m - 1]} ${p[0]}`;
             return yyyyMm;
         }
+
         function changeReportMonth(offset) {
             const inp = document.getElementById('report-month-input'); let [y, m] = inp.value.split('-').map(Number);
             m += offset; if (m > 12) { m = 1; y += 1; } else if (m < 1) { m = 12; y -= 1; }
@@ -344,11 +584,19 @@
         }
 
         function applyLanguage() {
-            document.querySelectorAll('[data-i18n]').forEach(el => { if(i18n[appLang][el.getAttribute('data-i18n')]) el.textContent = i18n[appLang][el.getAttribute('data-i18n')]; });
+            document.querySelectorAll('[data-i18n]').forEach(el => { 
+                const key = el.getAttribute('data-i18n');
+                if(i18n[appLang][key]) el.textContent = i18n[appLang][key]; 
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { 
+                const key = el.getAttribute('data-i18n-placeholder');
+                if(i18n[appLang][key]) el.placeholder = i18n[appLang][key]; 
+            });
             document.getElementById('lang-text').textContent = appLang === 'en' ? 'नेपाली' : 'English';
             document.getElementById('report-month-display').innerText = formatBSMonth(document.getElementById('report-month-input').value);
-            updateSyncStatus(); refreshCurrentTab();
+            updateSyncStatus(); refreshCurrentTab(); populateAccountDropdowns();
         }
+
         function toggleLang() { appLang = appLang === 'en' ? 'ne' : 'en'; localStorage.setItem('appLang', appLang); applyLanguage(); }
 
         // Touch & UI Safeties
@@ -377,17 +625,21 @@
 
         let userId = null, userEmail = null, accountsData = [], transactionsData = [], budgetsData = [], contactsData = [], peerTransfersData = [];
         let pendingWritesCount = { accounts: 0, transactions: 0, budgets: 0, contacts: 0 }; let unsubscribers = [];
+        let currentTab = 'dashboard', monthlyChartInstance = null, categoryChartInstance = null, savingsChartInstance = null;
 
         async function dbAdd(s, d) { if (!userId) return showToast("Login required!", "error"); await addDoc(collection(db, 'artifacts', appId, 'users', userId, s), d); }
         async function dbPut(s, d) { if (!userId) return; const c = {...d}; delete c.id; await updateDoc(doc(db, 'artifacts', appId, 'users', userId, s, d.id), c); }
         async function dbDelete(s, id) { if (!userId) return; await deleteDoc(doc(db, 'artifacts', appId, 'users', userId, s, id)); }
 
-        let currentTab = 'dashboard', monthlyChartInstance = null, categoryChartInstance = null, savingsChartInstance = null;
-
         window.addEventListener('DOMContentLoaded', async () => {
             const today = "2083-07-16"; 
             ['income-date','expense-date','transfer-date','friend-transfer-date'].forEach(id => document.getElementById(id).value = today);
             document.getElementById('report-month-input').value = "2083-07"; document.getElementById('bud-month').value = "2083-07";
+            
+            // Load local contacts initially
+            contactsData = JSON.parse(localStorage.getItem('appContacts') || '[]');
+            populateContactsList();
+
             if (typeof __initial_auth_token !== 'undefined') await signInWithCustomToken(auth, __initial_auth_token);
             applyLanguage();
         });
@@ -410,8 +662,8 @@
                 setupListeners();
             } else {
                 userId = null; userEmail = null;
-                document.getElementById('auth-section').innerHTML = `<button onclick="signInWithGoogle()" class="bg-brand-600 text-white px-3 py-1.5 rounded-lg text-sm flex gap-2"><i class="fa-brands fa-google"></i> ${i18n[appLang]['login']}</button>`;
-                unsubscribers.forEach(u => u()); unsubscribers = []; accountsData = []; transactionsData = []; contactsData = []; peerTransfersData = [];
+                document.getElementById('auth-section').innerHTML = `<button onclick="signInWithGoogle()" class="bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-sm flex gap-2 transition"><i class="fa-brands fa-google"></i> ${i18n[appLang]['login']}</button>`;
+                unsubscribers.forEach(u => u()); unsubscribers = []; accountsData = []; transactionsData = []; peerTransfersData = [];
                 switchTab('dashboard'); updateSyncStatus(); updateNotificationBadge();
             }
             applyLanguage();
@@ -423,157 +675,435 @@
                 arrRef.length = 0; snap.docs.forEach(d => arrRef.push({id: d.id, ...d.data()}));
                 pendingWritesCount[pendKey] = snap.docs.filter(d => d.metadata.hasPendingWrites).length; updateSyncStatus(); if(cb) cb();
             });
-            const uA = mkSnap('accounts', accountsData, 'accounts', () => { populateAccountDropdowns(); refreshCurrentTab(); });
-            const uT = mkSnap('transactions', transactionsData, 'transactions', () => refreshCurrentTab());
-            const uB = mkSnap('budgets', budgetsData, 'budgets', () => refreshCurrentTab());
-            const uC = mkSnap('contacts', contactsData, 'contacts', () => { populateContactsList(); if(currentTab==='contacts') loadContacts(); });
             
-            const uP = onSnapshot(query(collection(db, 'artifacts', appId, 'peer_transfers'), where("toEmail", "==", userEmail), where("status", "==", "pending")), (snap) => { peerTransfersData = snap.docs.map(d => ({id: d.id, ...d.data()})); updateNotificationBadge(); });
+            // Re-render dashboard whenever accounts or transactions change
+            const uA = mkSnap('accounts', accountsData, 'accounts', () => { populateAccountDropdowns(); refreshCurrentTab(); });
+            const uT = mkSnap('transactions', transactionsData, 'transactions', () => { populateAccountDropdowns(); refreshCurrentTab(); });
+            const uB = mkSnap('budgets', budgetsData, 'budgets', () => refreshCurrentTab());
+            
+            // Cloud contacts
+            const uC = mkSnap('contacts', contactsData, 'contacts', () => { 
+                localStorage.setItem('appContacts', JSON.stringify(contactsData));
+                populateContactsList(); 
+                if(currentTab==='contacts') loadContacts(); 
+            });
+            
+            const uP = onSnapshot(query(collection(db, 'artifacts', appId, 'peer_transfers'), where("toEmail", "==", userEmail), where("status", "==", "pending")), (snap) => { 
+                peerTransfersData = snap.docs.map(d => ({id: d.id, ...d.data()})); 
+                updateNotificationBadge(); 
+            });
             unsubscribers = [uA, uT, uB, uC, uP];
         }
 
         function refreshCurrentTab() {
-            if(currentTab==='dashboard') loadDashboard(); if(currentTab==='insight') loadInsight(); if(currentTab==='accounts') loadAccounts(); 
-            if(currentTab==='contacts') loadContacts(); if(currentTab==='transactions') renderTransactions(); if(currentTab==='reports') generateReports(); if(currentTab==='budget') loadBudgets();
+            if(currentTab==='dashboard') loadDashboard(); 
+            if(currentTab==='insight') loadInsight(); 
+            if(currentTab==='accounts') loadAccounts(); 
+            if(currentTab==='contacts') loadContacts(); 
+            if(currentTab==='transactions') renderTransactions(); 
+            if(currentTab==='reports') generateReports(); 
+            if(currentTab==='budget') loadBudgets();
         }
+        
         function switchTab(tabId) {
             currentTab = tabId;
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden')); document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden')); 
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
             
-            document.querySelectorAll('.nav-link').forEach(el => { el.classList.remove('active-tab', 'text-brand-600'); el.classList.add('text-gray-600'); if(el.id === `nav-${tabId}`) { el.classList.add('active-tab'); el.classList.remove('text-gray-600'); } });
-            document.querySelectorAll('.mobile-nav-link').forEach(el => { el.classList.remove('text-brand-600'); el.classList.add('text-gray-500'); if(el.id === `mob-nav-${tabId}`) { el.classList.add('text-brand-600'); el.classList.remove('text-gray-500'); } });
+            // Desktop active state
+            document.querySelectorAll('.nav-link').forEach(el => { 
+                el.classList.remove('active-tab', 'text-brand-600', 'dark:text-brand-400'); 
+                el.classList.add('text-gray-600', 'dark:text-gray-400'); 
+                if(el.id === `nav-${tabId}`) { el.classList.add('active-tab'); el.classList.remove('text-gray-600', 'dark:text-gray-400'); } 
+            });
+            // Mobile active state
+            document.querySelectorAll('.mobile-nav-link').forEach(el => { 
+                el.classList.remove('text-brand-600'); 
+                el.classList.add('text-gray-500'); 
+                if(el.id === `mob-nav-${tabId}`) { el.classList.add('text-brand-600'); el.classList.remove('text-gray-500'); } 
+                else if (el.id) {
+                    // Make icons clickable looking
+                    el.querySelector('i').classList.remove('text-brand-600');
+                }
+            });
             
-            const navKey = 'nav_' + (tabId === 'transactions' ? 'history' : tabId); const titleEl = document.getElementById('page-title'); if(titleEl && i18n[appLang][navKey]) titleEl.innerText = i18n[appLang][navKey] || i18n[appLang]['app_title'];
+            const navKey = 'nav_' + (tabId === 'transactions' ? 'history' : tabId); 
+            const titleEl = document.getElementById('page-title'); 
+            if(titleEl && i18n[appLang][navKey]) titleEl.innerText = i18n[appLang][navKey] || i18n[appLang]['app_title'];
+            
             if(window.innerWidth < 768) { const sb = document.getElementById('app-sidebar'); if(sb && !sb.classList.contains('-translate-x-full')) toggleMobileSidebar(); }
-            refreshCurrentTab(); if (['income','expense','transfer','transactions'].includes(tabId)) populateAccountDropdowns();
+            
+            refreshCurrentTab(); 
+            if (['income','expense','transfer','transactions'].includes(tabId)) populateAccountDropdowns();
         }
 
+        // --- Core Logic: Account Balances including Udharo ---
         async function calculateAccountBalances() {
-            const b = {}; accountsData.forEach(a => { b[a.id] = {...a, currentBalance: a.openingBalance}; });
-            transactionsData.forEach(t => { if(t.type==="income"&&b[t.accountId]) b[t.accountId].currentBalance+=t.amount; else if(t.type==="expense"&&b[t.accountId]) b[t.accountId].currentBalance-=t.amount; else if(t.type==="transfer"){ if(b[t.fromAccountId]) b[t.fromAccountId].currentBalance-=t.amount; if(b[t.toAccountId]) b[t.toAccountId].currentBalance+=t.amount; if(t.fee&&b[t.fromAccountId]) b[t.fromAccountId].currentBalance-=t.fee; } });
+            const b = {}; 
+            accountsData.forEach(a => { b[a.id] = {...a, currentBalance: a.openingBalance}; });
+            
+            // Add Udharo (Payable) Virtual Account
+            b['udharo'] = { id: 'udharo', name: i18n[appLang]['udharo_acc'], type: 'Other Account', currentBalance: 0 }; 
+            
+            transactionsData.forEach(t => { 
+                if(t.type === "income" && b[t.accountId]) b[t.accountId].currentBalance += t.amount; 
+                else if(t.type === "expense"){
+                    if (t.accountId === 'udharo') b['udharo'].currentBalance += t.amount; // Udharo expands balance (debt increases)
+                    else if (b[t.accountId]) b[t.accountId].currentBalance -= t.amount; 
+                }
+                else if(t.type === "transfer"){ 
+                    if(b[t.fromAccountId]) b[t.fromAccountId].currentBalance -= t.amount; 
+                    if(b[t.toAccountId]) {
+                        if(t.toAccountId === 'udharo') b['udharo'].currentBalance -= t.amount; // Paying off udharo debt
+                        else b[t.toAccountId].currentBalance += t.amount; 
+                    }
+                    if(t.fee && b[t.fromAccountId]) b[t.fromAccountId].currentBalance -= t.fee; 
+                } 
+            });
             return Object.values(b);
         }
 
         // Dashboard
         async function loadDashboard() {
-            const accs = await calculateAccountBalances(); let tBal=0, tInc=0, tExp=0;
-            accs.forEach(a => tBal+=a.currentBalance);
-            transactionsData.forEach(t => { if(t.type==="income") tInc+=t.amount; else if(t.type==="expense") tExp+=t.amount; else if(t.type==="transfer"&&t.fee) tExp+=t.fee; });
+            const accs = await calculateAccountBalances(); 
+            let tBal=0, tInc=0, tExp=0;
             
-            document.getElementById('dash-total-balance').innerText = formatNPR(tBal); document.getElementById('dash-total-income').innerText = formatNPR(tInc); document.getElementById('dash-total-expense').innerText = formatNPR(tExp);
+            accs.forEach(a => { if(a.id !== 'udharo') tBal += a.currentBalance; }); // Exclude Udharo from Actual Cash Total
+            transactionsData.forEach(t => { 
+                if(t.type === "income") tInc += t.amount; 
+                else if(t.type === "expense") tExp += t.amount; 
+                else if(t.type === "transfer" && t.fee) tExp += t.fee; 
+            });
+            
+            document.getElementById('dash-total-balance').innerText = formatNPR(tBal); 
+            document.getElementById('dash-total-income').innerText = formatNPR(tInc); 
+            document.getElementById('dash-total-expense').innerText = formatNPR(tExp);
             
             if (monthlyChartInstance) monthlyChartInstance.destroy();
-            const mData = {}; transactionsData.forEach(tx => { if (!tx.date) return; const m = tx.date.substring(0, 7); if (!mData[m]) mData[m] = { inc: 0, exp: 0 }; if (tx.type === 'income') mData[m].inc += tx.amount; if (tx.type === 'expense') mData[m].exp += tx.amount; if (tx.type === 'transfer' && tx.fee) mData[m].exp += tx.fee; });
+            const mData = {}; 
+            transactionsData.forEach(tx => { 
+                if (!tx.date) return; 
+                const m = tx.date.substring(0, 7); 
+                if (!mData[m]) mData[m] = { inc: 0, exp: 0 }; 
+                if (tx.type === 'income') mData[m].inc += tx.amount; 
+                if (tx.type === 'expense') mData[m].exp += tx.amount; 
+                if (tx.type === 'transfer' && tx.fee) mData[m].exp += tx.fee; 
+            });
             const labels = Object.keys(mData).sort();
-            monthlyChartInstance = new Chart(document.getElementById('monthlyChart').getContext('2d'), { type: 'bar', data: { labels: labels.map(formatBSMonth), datasets: [ { label: 'Income', data: labels.map(m => mData[m].inc/100), backgroundColor: '#10b981' }, { label: 'Expense', data: labels.map(m => mData[m].exp/100), backgroundColor: '#f43f5e' } ] }, options: { responsive: true, maintainAspectRatio: false } });
+            monthlyChartInstance = new Chart(document.getElementById('monthlyChart').getContext('2d'), { 
+                type: 'bar', 
+                data: { 
+                    labels: labels.map(formatBSMonth), 
+                    datasets: [ 
+                        { label: 'Income', data: labels.map(m => mData[m].inc/100), backgroundColor: '#10b981', borderRadius: 4 }, 
+                        { label: 'Expense', data: labels.map(m => mData[m].exp/100), backgroundColor: '#f43f5e', borderRadius: 4 } 
+                    ] 
+                }, 
+                options: { responsive: true, maintainAspectRatio: false } 
+            });
             
             const sortedTx = [...transactionsData].sort((a,b) => (b.id < a.id ? -1 : 1)).slice(0, 5);
-            document.getElementById('dash-recent-list').innerHTML = sortedTx.map(tx => {
-                let col = tx.type === 'income' ? 'emerald' : tx.type === 'expense' ? 'rose' : 'amber'; let sign = tx.type === 'expense' ? '-' : tx.type === 'income' ? '+' : ''; let icon = tx.type === 'income' ? 'arrow-down' : tx.type === 'expense' ? 'arrow-up' : 'right-left';
+            document.getElementById('dash-recent-list').innerHTML = sortedTx.length ? sortedTx.map(tx => {
+                let col = tx.type === 'income' ? 'emerald' : tx.type === 'expense' ? 'rose' : 'amber'; 
+                let sign = tx.type === 'expense' ? '-' : tx.type === 'income' ? '+' : ''; 
+                let icon = tx.type === 'income' ? 'arrow-down' : tx.type === 'expense' ? 'arrow-up' : 'right-left';
                 return `<div class="py-3 flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-${col}-50 text-${col}-600 dark:bg-${col}-900/30 flex items-center justify-center font-bold"><i class="fa-solid fa-${icon}"></i></div><div><p class="font-semibold text-sm">${tx.title || tx.category || 'Transfer'}</p><p class="text-xs text-gray-500">${tx.date}</p></div></div><p class="font-bold text-sm text-${col}-600">${sign} ${formatNPR(tx.amount)}</p></div>`;
-            }).join('');
+            }).join('') : `<p class="text-sm text-gray-500 text-center py-4">No transactions yet.</p>`;
+            
+            document.getElementById('dash-account-list').innerHTML = accs.filter(a => a.id !== 'udharo' || a.currentBalance > 0).map(a => `
+                <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl mb-2">
+                    <div><p class="font-semibold text-sm">${a.name}</p></div>
+                    <p class="font-bold text-sm ${a.id==='udharo' ? 'text-rose-500' : ''}">${formatNPR(a.currentBalance)}</p>
+                </div>`).join('');
         }
 
         // Insight
         async function loadInsight() {
             const accs = await calculateAccountBalances();
-            let b=0, c=0, w=0, sLent=0;
-            accs.forEach(a => { if(a.type==="Bank Account") b+=a.currentBalance; else if(a.type==="Cash") c+=a.currentBalance; else if(a.type==="Mobile Wallet") w+=a.currentBalance; });
+            let b=0, c=0, w=0, u=0, sLent=0;
             
-            // Calculate Sapat (Lent vs Repaid)
+            accs.forEach(a => { 
+                if(a.type==="Bank Account") b+=a.currentBalance; 
+                else if(a.type==="Cash") c+=a.currentBalance; 
+                else if(a.type==="Mobile Wallet") w+=a.currentBalance; 
+                else if(a.id==="udharo") u+=a.currentBalance;
+            });
+            
             const sHistory = [];
             transactionsData.forEach(t => {
                 if(t.sapatType === 'lent') { sLent += t.amount; sHistory.push({...t, sapatSign: '+'}); }
                 else if(t.sapatType === 'repaid') { sLent -= t.amount; sHistory.push({...t, sapatSign: '-'}); }
             });
             
-            document.getElementById('insight-bank').innerText = formatNPR(b); document.getElementById('insight-cash').innerText = formatNPR(c); document.getElementById('insight-wallet').innerText = formatNPR(w); document.getElementById('insight-sapat').innerText = formatNPR(sLent);
+            document.getElementById('insight-bank').innerText = formatNPR(b); 
+            document.getElementById('insight-cash').innerText = formatNPR(c); 
+            document.getElementById('insight-wallet').innerText = formatNPR(w); 
+            
+            // Udharo display
+            document.getElementById('insight-udharo').innerText = formatNPR(u);
+            
+            // Sapat tracking
+            document.getElementById('insight-sapat').innerText = formatNPR(sLent);
             
             sHistory.sort((a,b) => (b.id < a.id ? -1 : 1));
             document.getElementById('sapat-history-list').innerHTML = sHistory.length === 0 ? `<tr><td class="py-4 text-gray-500 text-center">No Sapat Records.</td></tr>` : sHistory.map(t => `<tr class="border-b dark:border-gray-700"><td class="py-3 px-2">${t.date}</td><td class="py-3 px-2">${t.title}</td><td class="py-3 px-2 font-bold ${t.sapatSign==='+'?'text-rose-500':'text-emerald-500'}">${t.sapatSign==='+'?'Lent':'Repaid'} ${formatNPR(t.amount)}</td></tr>`).join('');
         }
 
-        // Contacts
-        function loadContacts() { document.getElementById('contacts-grid').innerHTML = contactsData.map(c => `<div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700"><div class="flex justify-between items-start"><div><h3 class="font-bold text-lg">${c.name}</h3><p class="text-sm text-gray-500">${c.email}</p><span class="text-xs bg-brand-50 text-brand-600 px-2 rounded-full mt-2 inline-block">${c.relation}</span></div><button onclick="deleteContact('${c.id}')" class="text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button></div></div>`).join(''); }
+        // Contacts Logic
+        function loadContacts() { 
+            document.getElementById('contacts-grid').innerHTML = contactsData.map(c => `
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold text-lg">${c.name || 'Friend'}</h3>
+                            <p class="text-sm text-gray-500">${c.email || c}</p>
+                            ${c.relation ? `<span class="text-xs bg-brand-50 text-brand-600 px-2 rounded-full mt-2 inline-block">${c.relation}</span>` : ''}
+                        </div>
+                        <button onclick="deleteContact('${c.id}')" class="text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join(''); 
+        }
         function openContactModal() { document.getElementById('contact-modal').classList.replace('hidden', 'flex'); }
         function closeContactModal() { document.getElementById('contact-modal').classList.replace('flex', 'hidden'); }
-        async function handleContactSubmit(e) { e.preventDefault(); const d = { name: document.getElementById('cont-name').value, email: document.getElementById('cont-email').value.toLowerCase(), relation: document.getElementById('cont-relation').value }; await dbAdd("contacts", d); closeContactModal(); showToast("Contact Saved!"); }
+        async function handleContactSubmit(e) { 
+            e.preventDefault(); 
+            const d = { name: document.getElementById('cont-name').value, email: document.getElementById('cont-email').value.toLowerCase(), relation: document.getElementById('cont-relation').value }; 
+            await dbAdd("contacts", d); 
+            closeContactModal(); showToast("Contact Saved!"); 
+        }
         async function deleteContact(id) { customConfirm("Delete this contact?", async () => { await dbDelete("contacts", id); }); }
-        function populateContactsList() { document.getElementById('friend-transfer-email').innerHTML = `<option value="" disabled selected>Select Contact</option>` + contactsData.map(c => `<option value="${c.email}">${c.name} (${c.email})</option>`).join(''); }
-
-        // Accounts
-        function loadAccounts() { document.getElementById('accounts-grid').innerHTML = accountsData.map(a => `<div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700"><div class="flex items-start justify-between"><div><span class="text-xs bg-brand-50 text-brand-600 px-2.5 py-1 rounded-full font-semibold">${a.type}</span><h3 class="text-lg font-bold mt-2">${a.name}</h3></div><div class="flex gap-1"><button onclick="editAccount('${a.id}')" class="p-2 text-gray-400"><i class="fa-solid fa-pen"></i></button><button onclick="deleteAccount('${a.id}')" class="p-2 text-gray-400"><i class="fa-solid fa-trash"></i></button></div></div><div class="mt-3"><p class="text-xs text-gray-500">Balance</p><p class="text-xl font-bold">${formatNPR(a.currentBalance || a.openingBalance)}</p></div></div>`).join(''); }
-        function openAccountModal(acc=null) { document.getElementById('account-modal').classList.replace('hidden', 'flex'); if(acc){ document.getElementById('acc-id').value=acc.id; document.getElementById('acc-name').value=acc.name; document.getElementById('acc-type').value=acc.type; document.getElementById('acc-opening').value=acc.openingBalance/100; } else { document.getElementById('acc-id').value=""; document.getElementById('acc-name').value=""; document.getElementById('acc-opening').value=""; } }
-        function closeAccountModal() { document.getElementById('account-modal').classList.replace('flex', 'hidden'); }
-        async function handleAccountSubmit(e) { e.preventDefault(); const d = { name: document.getElementById('acc-name').value, type: document.getElementById('acc-type').value, openingBalance: Math.round(parseFloat(document.getElementById('acc-opening').value)*100) }; const id = document.getElementById('acc-id').value; if(id) { d.id=id; await dbPut("accounts",d); } else await dbAdd("accounts",d); closeAccountModal(); showToast("Account Saved!"); }
-        async function editAccount(id) { openAccountModal(accountsData.find(a => a.id === id)); }
-        async function deleteAccount(id) { customConfirm("Delete this account?", async () => { await dbDelete("accounts", id); }); }
-        function populateAccountDropdowns() { const opts = accountsData.map(a => `<option value="${a.id}">${a.name}</option>`).join(''); ['income-account', 'expense-account', 'transfer-from', 'transfer-to', 'friend-transfer-from'].forEach(id => { const el = document.getElementById(id); if(el){ const v=el.value; el.innerHTML=opts; el.value=v; } }); }
-
-        // Forms
-        async function handleIncomeSubmit(e) { e.preventDefault(); const d = { type: "income", title: document.getElementById('income-title').value, amount: Math.round(parseFloat(document.getElementById('income-amount').value)*100), date: document.getElementById('income-date').value, category: document.getElementById('income-category').value, accountId: document.getElementById('income-account').value, notes: document.getElementById('income-notes').value }; const id = document.getElementById('income-id').value; if(id) { d.id=id; await dbPut("transactions",d); } else await dbAdd("transactions",d); resetIncomeForm(); switchTab('transactions'); showToast("Income Saved!"); }
-        function resetIncomeForm() { document.getElementById('income-id').value=""; document.getElementById('income-title').value=""; document.getElementById('income-amount').value=""; }
-        async function handleExpenseSubmit(e) { e.preventDefault(); const d = { type: "expense", title: document.getElementById('expense-title').value, amount: Math.round(parseFloat(document.getElementById('expense-amount').value)*100), date: document.getElementById('expense-date').value, category: document.getElementById('expense-category').value, accountId: document.getElementById('expense-account').value, notes: document.getElementById('expense-notes').value }; const id = document.getElementById('expense-id').value; if(id) { d.id=id; await dbPut("transactions",d); } else await dbAdd("transactions",d); resetExpenseForm(); switchTab('transactions'); showToast("Expense Saved!"); }
-        function resetExpenseForm() { document.getElementById('expense-id').value=""; document.getElementById('expense-title').value=""; document.getElementById('expense-amount').value=""; }
-
-        function toggleTransferMode() { const m = document.querySelector('input[name="transferMode"]:checked').value; if(m==='self'){ document.getElementById('transfer-form-self').classList.remove('hidden'); document.getElementById('transfer-form-friend').classList.add('hidden'); } else { document.getElementById('transfer-form-self').classList.add('hidden'); document.getElementById('transfer-form-friend').classList.remove('hidden'); } }
-        async function handleTransferSubmit(e) { e.preventDefault(); const d = { type: "transfer", fromAccountId: document.getElementById('transfer-from').value, toAccountId: document.getElementById('transfer-to').value, amount: Math.round(parseFloat(document.getElementById('transfer-amount').value)*100), fee: Math.round(parseFloat(document.getElementById('transfer-fee').value||0)*100), date: document.getElementById('transfer-date').value, notes: document.getElementById('transfer-notes').value }; await dbAdd("transactions",d); resetTransferForm(); switchTab('transactions'); showToast("Transfer Saved!"); }
-        function resetTransferForm() { document.getElementById('transfer-id').value=""; document.getElementById('transfer-amount').value=""; }
-
-        async function handleFriendTransferSubmit(e) {
-            e.preventDefault(); if(!userEmail) return showToast("Login required.", "error");
-            const fId = document.getElementById('friend-transfer-from').value, tEmail = document.getElementById('friend-transfer-email').value, amt = Math.round(parseFloat(document.getElementById('friend-transfer-amount').value)*100), dt = document.getElementById('friend-transfer-date').value, sapatType = document.getElementById('friend-transfer-sapat').value;
-            // Expense out
-            await dbAdd("transactions", { type: "expense", title: `Sent to ${tEmail}`, amount: amt, date: dt, category: "Transfer Out", accountId: fId, sapatType: sapatType });
-            // Peer PUSH
-            await addDoc(collection(db, 'artifacts', appId, 'peer_transfers'), { fromEmail: userEmail, toEmail: tEmail, amount: amt, date: dt, sapatType: sapatType, status: 'pending' });
-            document.getElementById('friend-transfer-amount').value=""; showToast("Sent to contact!"); switchTab('insight');
+        
+        function populateContactsList() { 
+            // Handles both string objects (local) and DB objects
+            document.getElementById('contacts-list').innerHTML = contactsData.map(c => {
+                const em = typeof c === 'string' ? c : c.email;
+                const nm = typeof c === 'string' ? '' : c.name;
+                return `<option value="${em}">${nm}</option>`;
+            }).join(''); 
+        }
+        
+        async function saveContact() {
+            const email = document.getElementById('friend-transfer-email').value.trim().toLowerCase(); 
+            if(!email || !email.includes('@')) return showToast("Enter a valid email first.", "error"); 
+            
+            // Local fallback logic
+            const exists = contactsData.some(c => (typeof c === 'string' ? c : c.email) === email);
+            if(!exists) { 
+                await dbAdd("contacts", {name: email.split('@')[0], email: email, relation: 'Added from Transfer'});
+                showToast("Contact added!"); 
+            } else {
+                showToast("Contact already exists.");
+            }
         }
 
-        function updateNotificationBadge() { const b = document.getElementById('notif-badge'); if(peerTransfersData.length>0){ b.innerText=peerTransfersData.length; b.classList.remove('hidden'); } else b.classList.add('hidden'); }
+        // Accounts Logic
+        function loadAccounts() { 
+            document.getElementById('accounts-grid').innerHTML = accountsData.map(a => `
+            <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-xs bg-brand-50 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 px-2.5 py-1 rounded-full font-semibold">${a.type}</span>
+                        <h3 class="text-lg font-bold mt-2">${a.name}</h3>
+                    </div>
+                    <div class="flex gap-1">
+                        <button onclick="editAccount('${a.id}')" class="p-2 text-gray-400 hover:text-brand-600"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteAccount('${a.id}')" class="p-2 text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+                <div class="mt-3 border-t border-gray-100 dark:border-gray-700 pt-3">
+                    <p class="text-xs text-gray-500">Opening Balance</p>
+                    <p class="text-xl font-bold">${formatNPR(a.openingBalance)}</p>
+                </div>
+            </div>`).join(''); 
+        }
+        function openAccountModal(acc=null) { 
+            document.getElementById('account-modal').classList.replace('hidden', 'flex'); 
+            if(acc){ 
+                document.getElementById('acc-id').value=acc.id; 
+                document.getElementById('acc-name').value=acc.name; 
+                document.getElementById('acc-type').value=acc.type; 
+                document.getElementById('acc-opening').value=acc.openingBalance/100; 
+            } else { 
+                document.getElementById('acc-id').value=""; document.getElementById('acc-name').value=""; document.getElementById('acc-opening').value=""; 
+            } 
+        }
+        function closeAccountModal() { document.getElementById('account-modal').classList.replace('flex', 'hidden'); }
+        async function handleAccountSubmit(e) { 
+            e.preventDefault(); 
+            const d = { name: document.getElementById('acc-name').value, type: document.getElementById('acc-type').value, openingBalance: Math.round(parseFloat(document.getElementById('acc-opening').value)*100) }; 
+            const id = document.getElementById('acc-id').value; 
+            if(id) { d.id=id; await dbPut("accounts",d); } else await dbAdd("accounts",d); 
+            closeAccountModal(); showToast("Account Saved!"); 
+        }
+        async function editAccount(id) { openAccountModal(accountsData.find(a => a.id === id)); }
+        async function deleteAccount(id) { customConfirm("Delete this account?", async () => { await dbDelete("accounts", id); }); }
+        
+        // Add Udharo explicitly to dropdowns
+        function populateAccountDropdowns() { 
+            const opts = accountsData.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+            const udharoOpt = `<option value="udharo" class="font-bold text-rose-600 bg-rose-50 dark:bg-gray-800">${i18n[appLang]['udharo_acc']}</option>`;
+            
+            ['income-account', 'transfer-from', 'friend-transfer-from'].forEach(id => { 
+                const el = document.getElementById(id); 
+                if(el){ const v=el.value; el.innerHTML=opts; el.value=v; } 
+            });
+            
+            // Udharo is valid for paying from in expense, and transferring to (repaying)
+            const elExp = document.getElementById('expense-account'); 
+            if(elExp) { const v=elExp.value; elExp.innerHTML=opts + udharoOpt; elExp.value=v; }
+            
+            const elTo = document.getElementById('transfer-to'); 
+            if(elTo) { const v=elTo.value; elTo.innerHTML=opts + udharoOpt; elTo.value=v; }
+        }
+
+        // Transactions Form Handlers
+        async function handleIncomeSubmit(e) { 
+            e.preventDefault(); 
+            const d = { type: "income", title: document.getElementById('income-title').value, amount: Math.round(parseFloat(document.getElementById('income-amount').value)*100), date: document.getElementById('income-date').value, category: document.getElementById('income-category').value, accountId: document.getElementById('income-account').value, notes: document.getElementById('income-notes').value }; 
+            const id = document.getElementById('income-id').value; 
+            if(id) { d.id=id; await dbPut("transactions",d); } else await dbAdd("transactions",d); 
+            resetIncomeForm(); switchTab('transactions'); showToast("Income Saved!"); 
+        }
+        function resetIncomeForm() { document.getElementById('income-id').value=""; document.getElementById('income-title').value=""; document.getElementById('income-amount').value=""; document.getElementById('income-notes').value=""; }
+        
+        async function handleExpenseSubmit(e) { 
+            e.preventDefault(); 
+            const d = { type: "expense", title: document.getElementById('expense-title').value, amount: Math.round(parseFloat(document.getElementById('expense-amount').value)*100), date: document.getElementById('expense-date').value, category: document.getElementById('expense-category').value, accountId: document.getElementById('expense-account').value, notes: document.getElementById('expense-notes').value }; 
+            const id = document.getElementById('expense-id').value; 
+            if(id) { d.id=id; await dbPut("transactions",d); } else await dbAdd("transactions",d); 
+            resetExpenseForm(); switchTab('transactions'); showToast("Expense Saved!"); 
+        }
+        function resetExpenseForm() { document.getElementById('expense-id').value=""; document.getElementById('expense-title').value=""; document.getElementById('expense-amount').value=""; document.getElementById('expense-notes').value=""; }
+
+        function toggleTransferMode() { 
+            const m = document.querySelector('input[name="transferMode"]:checked').value; 
+            if(m==='self'){ document.getElementById('transfer-form-self').classList.remove('hidden'); document.getElementById('transfer-form-friend').classList.add('hidden'); } 
+            else { document.getElementById('transfer-form-self').classList.add('hidden'); document.getElementById('transfer-form-friend').classList.remove('hidden'); } 
+        }
+        
+        async function handleTransferSubmit(e) { 
+            e.preventDefault(); 
+            const d = { type: "transfer", fromAccountId: document.getElementById('transfer-from').value, toAccountId: document.getElementById('transfer-to').value, amount: Math.round(parseFloat(document.getElementById('transfer-amount').value)*100), fee: Math.round(parseFloat(document.getElementById('transfer-fee').value||0)*100), date: document.getElementById('transfer-date').value, notes: document.getElementById('transfer-notes').value }; 
+            await dbAdd("transactions",d); resetTransferForm(); switchTab('transactions'); showToast("Transfer Saved!"); 
+        }
+        function resetTransferForm() { document.getElementById('transfer-id').value=""; document.getElementById('transfer-amount').value=""; document.getElementById('transfer-fee').value="0"; document.getElementById('transfer-notes').value=""; }
+
+        async function handleFriendTransferSubmit(e) {
+            e.preventDefault(); 
+            if(!userEmail) return showToast("Login required.", "error");
+            
+            const fId = document.getElementById('friend-transfer-from').value;
+            const tEmail = document.getElementById('friend-transfer-email').value.trim().toLowerCase();
+            const amt = Math.round(parseFloat(document.getElementById('friend-transfer-amount').value)*100);
+            const dt = document.getElementById('friend-transfer-date').value;
+            const sapatType = document.getElementById('friend-transfer-sapat').value;
+            const nt = document.getElementById('friend-transfer-notes').value;
+
+            // Save to my transactions as expense out
+            await dbAdd("transactions", { type: "expense", title: `Sent to ${tEmail}`, amount: amt, date: dt, category: "Transfer Out", accountId: fId, sapatType: sapatType, notes: nt });
+            
+            // Push to peer DB
+            await addDoc(collection(db, 'artifacts', appId, 'peer_transfers'), { fromEmail: userEmail, toEmail: tEmail, amount: amt, date: dt, sapatType: sapatType, status: 'pending', notes: nt });
+            
+            // Auto add contact if new
+            const exists = contactsData.some(c => (typeof c === 'string' ? c : c.email) === tEmail);
+            if(!exists) { await dbAdd("contacts", {name: tEmail.split('@')[0], email: tEmail, relation: 'Auto Saved'}); }
+
+            document.getElementById('friend-transfer-amount').value=""; 
+            document.getElementById('friend-transfer-notes').value="";
+            showToast("Sent to contact!"); switchTab('insight');
+        }
+
+        // Notification System
+        function updateNotificationBadge() { 
+            const b = document.getElementById('notif-badge'); 
+            if(peerTransfersData.length>0){ b.innerText=peerTransfersData.length; b.classList.remove('hidden'); } else b.classList.add('hidden'); 
+        }
         function openNotificationModal() {
             const l = document.getElementById('notifications-list');
             if(peerTransfersData.length===0) l.innerHTML=`<p>No new transfers.</p>`;
-            else { const opts = accountsData.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
-                l.innerHTML = peerTransfersData.map(t => `<div class="p-4 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl border border-emerald-100 dark:border-emerald-800 text-left"><div class="flex justify-between"><div><p class="font-bold text-emerald-700 dark:text-emerald-400">Received Money</p><p class="text-xs">From: ${t.fromEmail}</p></div><p class="font-bold text-emerald-600">+${formatNPR(t.amount)}</p></div><div class="mt-3 flex gap-2"><select id="acc-${t.id}" class="flex-1 text-xs p-1.5 rounded dark:bg-gray-700 border"><option disabled selected value="">Select Account</option>${opts}</select><button onclick="acceptPeerTransfer('${t.id}')" class="bg-emerald-600 text-white px-3 rounded text-xs">Accept</button></div></div>`).join(''); }
+            else { 
+                const opts = accountsData.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+                l.innerHTML = peerTransfersData.map(t => `
+                <div class="p-4 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl border border-emerald-100 dark:border-emerald-800 text-left">
+                    <div class="flex justify-between">
+                        <div><p class="font-bold text-emerald-700 dark:text-emerald-400">Received Money</p><p class="text-xs">From: ${t.fromEmail}</p></div>
+                        <p class="font-bold text-emerald-600">+${formatNPR(t.amount)}</p>
+                    </div>
+                    <div class="mt-3 flex gap-2">
+                        <select id="acc-${t.id}" class="flex-1 text-xs p-1.5 rounded dark:bg-gray-700 border border-emerald-200 outline-none"><option disabled selected value="">Select Account</option>${opts}</select>
+                        <button onclick="acceptPeerTransfer('${t.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 rounded text-xs">Accept</button>
+                    </div>
+                </div>`).join(''); 
+            }
             document.getElementById('notification-modal').classList.replace('hidden', 'flex');
         }
         function closeNotificationModal() { document.getElementById('notification-modal').classList.replace('flex', 'hidden'); }
+        
         async function acceptPeerTransfer(tId) {
-            const accId = document.getElementById(`acc-${tId}`).value; if(!accId) return;
-            const t = peerTransfersData.find(x => x.id === tId); if(!t) return;
-            await dbAdd("transactions", { type: "income", title: `Received from ${t.fromEmail}`, amount: t.amount, date: t.date, category: "Transfer In", accountId: accId, sapatType: t.sapatType });
-            await updateDoc(doc(db, 'artifacts', appId, 'peer_transfers', tId), { status: 'accepted' }); showToast("Accepted!"); closeNotificationModal();
+            const accId = document.getElementById(`acc-${tId}`).value; 
+            if(!accId) return alert("Select account!");
+            const t = peerTransfersData.find(x => x.id === tId); 
+            if(!t) return;
+            
+            await dbAdd("transactions", { type: "income", title: `Received from ${t.fromEmail}`, amount: t.amount, date: t.date, category: "Transfer In", accountId: accId, sapatType: t.sapatType, notes: t.notes });
+            await updateDoc(doc(db, 'artifacts', appId, 'peer_transfers', tId), { status: 'accepted' }); 
+            showToast("Accepted!"); closeNotificationModal();
         }
 
+        // Transactions List Render
         async function renderTransactions() {
-            const aMap = {}; accountsData.forEach(a => aMap[a.id] = a.name);
-            const sFil = document.getElementById('filter-search').value.toLowerCase(), tFil = document.getElementById('filter-type').value;
+            const aMap = { 'udharo': i18n[appLang]['udharo_acc'] }; 
+            accountsData.forEach(a => aMap[a.id] = a.name);
+            
+            const sFil = document.getElementById('filter-search').value.toLowerCase();
+            const tFil = document.getElementById('filter-type').value;
+            
             const filtered = transactionsData.filter(t => (t.title||t.category||'').toLowerCase().includes(sFil) && (tFil?t.type===tFil:true)).sort((a,b)=>(b.id<a.id?-1:1));
+            
             document.getElementById('transactions-table-body').innerHTML = filtered.map(t => {
-                let badge = t.type === 'income' ? '<span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded text-xs">Income</span>' : t.type === 'expense' ? '<span class="text-rose-600 bg-rose-50 px-2 py-0.5 rounded text-xs">Expense</span>' : '<span class="text-amber-600 bg-amber-50 px-2 py-0.5 rounded text-xs">Transfer</span>';
+                let badge = t.type === 'income' ? '<span class="text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded text-[10px] font-bold">IN</span>' : t.type === 'expense' ? '<span class="text-rose-600 bg-rose-50 dark:bg-rose-900/30 px-2 py-1 rounded text-[10px] font-bold">OUT</span>' : '<span class="text-amber-600 bg-amber-50 dark:bg-amber-900/30 px-2 py-1 rounded text-[10px] font-bold">TR</span>';
                 let amt = t.type === 'income' ? `<span class="text-emerald-600">+${formatNPR(t.amount)}</span>` : t.type === 'expense' ? `<span class="text-rose-600">-${formatNPR(t.amount)}</span>` : `<span class="text-amber-600">${formatNPR(t.amount)}</span>`;
                 let acc = t.type === 'transfer' ? `${aMap[t.fromAccountId]} → ${aMap[t.toAccountId]}` : aMap[t.accountId];
-                return `<tr class="border-b dark:border-gray-700"><td class="py-3 px-2">${t.date}</td><td class="py-3 px-2">${badge}</td><td class="py-3 px-2">${t.title||t.category}</td><td class="py-3 px-2">${acc}</td><td class="py-3 px-2 text-right font-bold">${amt}</td><td class="py-3 px-2 text-center"><button onclick="deleteTransaction('${t.id}')" class="text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+                return `<tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition"><td class="py-3 px-2 whitespace-nowrap text-xs">${t.date}</td><td class="py-3 px-2">${badge}</td><td class="py-3 px-2 font-medium">${t.title||t.category}</td><td class="py-3 px-2 text-xs text-gray-500">${acc}</td><td class="py-3 px-2 text-right font-bold whitespace-nowrap">${amt}</td><td class="py-3 px-2 text-center"><button onclick="deleteTransaction('${t.id}')" class="text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button></td></tr>`;
             }).join('');
         }
         async function editTransaction(id, type) {} 
         async function deleteTransaction(id) { customConfirm("Delete transaction?", async () => { await dbDelete("transactions", id); }); }
 
+        // Budgets
         function openBudgetModal() { document.getElementById('budget-modal').classList.replace('hidden', 'flex'); }
         function closeBudgetModal() { document.getElementById('budget-modal').classList.replace('flex', 'hidden'); }
         async function handleBudgetSubmit(e) { e.preventDefault(); await dbAdd("budgets", { category: document.getElementById('bud-category').value, month: document.getElementById('bud-month').value, amount: Math.round(parseFloat(document.getElementById('bud-amount').value)*100) }); closeBudgetModal(); }
-        async function loadBudgets() {}
+        async function loadBudgets() {
+            const cM = document.getElementById('report-month-input').value; const sMap = {};
+            transactionsData.forEach(t => { if(t.type === 'expense' && (t.date||'').startsWith(cM)) sMap[t.category] = (sMap[t.category]||0) + t.amount; });
+            document.getElementById('budget-list').innerHTML = budgetsData.map(b => {
+                const sp = sMap[b.category] || 0; const p = Math.min(Math.round((sp/b.amount)*100), 100);
+                const col = p >= 100 ? 'bg-rose-600' : p >= 80 ? 'bg-amber-500' : 'bg-brand-600';
+                return `<div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700"><div class="flex justify-between font-bold mb-2"><h4>${b.category}</h4><span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">${formatBSMonth(b.month)}</span></div><div class="w-full bg-gray-100 dark:bg-gray-700 h-2.5 rounded-full"><div class="${col} h-2.5 rounded-full" style="width: ${p}%"></div></div><div class="flex justify-between text-xs mt-2 text-gray-500 font-medium"><span>Spent: ${formatNPR(sp)}</span><span>Limit: ${formatNPR(b.amount)}</span></div></div>`;
+            }).join('');
+        }
 
+        // Reports
         async function generateReports() {
             const cM = document.getElementById('report-month-input').value; const cT = {}; const mS = {};
-            transactionsData.forEach(t => { if(t.type === 'expense' && (t.date||'').startsWith(cM)) cT[t.category] = (cT[t.category]||0) + t.amount; const m = (t.date||'').substring(0,7); if(m) { if(!mS[m]) mS[m]={inc:0, exp:0}; if(t.type==='income') mS[m].inc+=t.amount; if(t.type==='expense') mS[m].exp+=t.amount; } });
-            if(categoryChartInstance) categoryChartInstance.destroy(); categoryChartInstance = new Chart(document.getElementById('categoryChart').getContext('2d'), { type: 'doughnut', data: { labels: Object.keys(cT), datasets: [{ data: Object.values(cT).map(v=>v/100), backgroundColor: ['#3b82f6','#10b981','#f59e0b','#f43f5e','#8b5cf6','#ec4899','#06b6d4','#64748b'] }] }, options: { responsive: true, maintainAspectRatio: false } });
-            if(savingsChartInstance) savingsChartInstance.destroy(); const sM = Object.keys(mS).sort(); savingsChartInstance = new Chart(document.getElementById('savingsChart').getContext('2d'), { type: 'line', data: { labels: sM.map(formatBSMonth), datasets: [{ label: i18n[appLang]['savings_trend'], data: sM.map(m=>(mS[m].inc-mS[m].exp)/100), borderColor: '#2563eb' }] }, options: { responsive: true, maintainAspectRatio: false } });
+            transactionsData.forEach(t => { 
+                if(t.type === 'expense' && (t.date||'').startsWith(cM)) cT[t.category] = (cT[t.category]||0) + t.amount; 
+                const m = (t.date||'').substring(0,7); 
+                if(m) { if(!mS[m]) mS[m]={inc:0, exp:0}; if(t.type==='income') mS[m].inc+=t.amount; if(t.type==='expense') mS[m].exp+=t.amount; } 
+            });
+            if(categoryChartInstance) categoryChartInstance.destroy(); 
+            categoryChartInstance = new Chart(document.getElementById('categoryChart').getContext('2d'), { type: 'doughnut', data: { labels: Object.keys(cT), datasets: [{ data: Object.values(cT).map(v=>v/100), backgroundColor: ['#3b82f6','#10b981','#f59e0b','#f43f5e','#8b5cf6','#ec4899','#06b6d4','#64748b'] }] }, options: { responsive: true, maintainAspectRatio: false } });
+            if(savingsChartInstance) savingsChartInstance.destroy(); 
+            const sM = Object.keys(mS).sort(); 
+            savingsChartInstance = new Chart(document.getElementById('savingsChart').getContext('2d'), { type: 'line', data: { labels: sM.map(formatBSMonth), datasets: [{ label: i18n[appLang]['savings_trend'], data: sM.map(m=>(mS[m].inc-mS[m].exp)/100), borderColor: '#2563eb' }] }, options: { responsive: true, maintainAspectRatio: false } });
         }
         
         async function exportCSV() { showToast("CSV Export coming soon", "error"); }
 
+        // Progressive Web App Service Worker
         if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('service-worker.js').catch(()=>{})); }
     </script>
 </body>
