@@ -66,23 +66,25 @@
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col min-h-screen relative z-10">
-        <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-20">
-            <div class="flex items-center gap-3">
-                <button onclick="toggleMobileSidebar()" class="md:hidden text-xl text-gray-600 dark:text-gray-300 focus:outline-none hover:text-brand-600"><i class="fa-solid fa-bars"></i></button>
-                <!-- Global Back Button -->
-                <button id="global-back-btn" onclick="goBackTab()" class="hidden text-xl text-gray-600 dark:text-gray-300 focus:outline-none hover:text-brand-600 transition">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
-                <h2 id="page-title" class="text-lg font-bold" data-i18n="nav_dashboard">Dashboard</h2>
-            </div>
-            <div class="flex items-center gap-3">
-                <button onclick="openNotificationModal()" class="relative p-2 text-gray-600 dark:text-gray-300 hover:text-brand-600 transition">
-                    <i class="fa-solid fa-bell text-xl"></i>
-                    <span id="notif-badge" class="hidden absolute top-0 right-0 w-4 h-4 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white dark:border-gray-800">0</span>
-                </button>
-                <div id="sync-status" class="hidden sm:flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 text-gray-500"><i class="fa-solid fa-cloud-slash"></i></div>
-                <div id="auth-section"></div>
-                <button onclick="toggleLang()" class="text-sm font-medium px-3 py-1.5 bg-brand-50 text-brand-600 dark:bg-gray-700 dark:text-brand-400 rounded-lg shadow-sm border border-brand-100 dark:border-gray-600"><i class="fa-solid fa-language"></i> <span id="lang-text">नेपाली</span></button>
+        <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 shadow-sm sticky top-0 z-20">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex flex-col items-center">
+                        <button onclick="toggleMobileSidebar()" class="md:hidden text-xl text-gray-600 dark:text-gray-300 focus:outline-none hover:text-brand-600"><i class="fa-solid fa-bars"></i></button>
+                        <!-- Back Button under Hamburger -->
+                        <button id="global-back-btn" onclick="goBackTab()" class="hidden text-sm text-gray-500 dark:text-gray-400 focus:outline-none hover:text-brand-600 transition mt-1">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <h2 id="page-title" class="text-lg font-bold" data-i18n="nav_dashboard">Dashboard</h2>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="openNotificationModal()" class="relative p-2 text-gray-600 dark:text-gray-300 hover:text-brand-600 transition">
+                        <i class="fa-solid fa-bell text-xl"></i>
+                        <span id="notif-badge" class="hidden absolute top-0 right-0 w-4 h-4 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white dark:border-gray-800">0</span>
+                    </button>
+                    <div id="sync-status" class="hidden sm:flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 text-gray-500"><i class="fa-solid fa-cloud-slash"></i></div>
+                </div>
             </div>
         </header>
 
@@ -120,18 +122,22 @@
             <section id="tab-insight" class="tab-content hidden space-y-6">
                 <h3 class="text-lg font-bold mb-4" data-i18n="nav_insight">Insights & Totals</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl shadow-sm text-white">
+                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition" onclick="showBreakdown('Bank Account', 'Bank Breakdown')">
                         <p class="text-emerald-100 text-sm" data-i18n="total_bank">Bank Total</p>
                         <h3 id="insight-bank" class="text-2xl font-bold mt-1">रु. 0</h3>
+                        <p class="text-xs text-emerald-200 mt-2 flex items-center gap-1"><i class="fa-solid fa-circle-info"></i> View Details</p>
                     </div>
-                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-5 rounded-2xl shadow-sm text-white">
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition" onclick="showBreakdown('Cash', 'Cash Breakdown')">
                         <p class="text-blue-100 text-sm" data-i18n="total_cash">Cash Total</p>
                         <h3 id="insight-cash" class="text-2xl font-bold mt-1">रु. 0</h3>
+                        <p class="text-xs text-blue-200 mt-2 flex items-center gap-1"><i class="fa-solid fa-circle-info"></i> View Details</p>
                     </div>
-                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-2xl shadow-sm text-white">
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition" onclick="showBreakdown('Mobile Wallet', 'Wallet Breakdown')">
                         <p class="text-purple-100 text-sm" data-i18n="total_wallet">Wallet</p>
                         <h3 id="insight-wallet" class="text-2xl font-bold mt-1">रु. 0</h3>
+                        <p class="text-xs text-purple-200 mt-2 flex items-center gap-1"><i class="fa-solid fa-circle-info"></i> View Details</p>
                     </div>
+                    <!-- सापट दिएको र लिएको -->
                     <div class="bg-gradient-to-br from-amber-500 to-amber-600 p-5 rounded-2xl shadow-sm text-white">
                         <p class="text-amber-100 text-sm">सापट दिएको (Lent)</p>
                         <h3 id="insight-sapat-diyako" class="text-2xl font-bold mt-1">रु. 0</h3>
@@ -140,9 +146,11 @@
                         <p class="text-indigo-100 text-sm">सापट लिएको (Borrowed)</p>
                         <h3 id="insight-sapat-liyako" class="text-2xl font-bold mt-1">रु. 0</h3>
                     </div>
-                    <div class="bg-gradient-to-br from-rose-500 to-rose-600 p-5 rounded-2xl shadow-sm text-white">
+                    <!-- उधारो (Payable) -->
+                    <div class="bg-gradient-to-br from-rose-500 to-rose-600 p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition" onclick="viewAccountTransactions('udharo')">
                         <p class="text-rose-100 text-sm" data-i18n="total_udharo">Payable (उधारो)</p>
                         <h3 id="insight-udharo" class="text-2xl font-bold mt-1">रु. 0</h3>
+                        <p class="text-xs text-rose-200 mt-2 flex items-center gap-1"><i class="fa-solid fa-clock-rotate-left"></i> View History</p>
                     </div>
                 </div>
                 <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
@@ -153,6 +161,17 @@
                 </div>
             </section>
             
+            <!-- Breakdown Modal for Insight -->
+            <div id="breakdown-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4" onclick="closeBreakdown()">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-xl" onclick="event.stopPropagation()">
+                    <div class="flex justify-between items-center mb-4 border-b dark:border-gray-700 pb-2">
+                        <h3 class="font-bold text-lg text-gray-800 dark:text-gray-100" id="breakdown-title">Breakdown</h3>
+                        <button onclick="closeBreakdown()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div id="breakdown-list" class="space-y-3 max-h-64 overflow-y-auto"></div>
+                </div>
+            </div>
+
             <!-- 3. CONTACTS TAB -->
             <section id="tab-contacts" class="tab-content hidden space-y-6">
                 <div class="flex items-center justify-between">
@@ -224,7 +243,7 @@
                 </div>
             </section>
 
-            <!-- 6. EXPENSE TAB (With Udharo support) -->
+            <!-- 6. EXPENSE TAB -->
             <section id="tab-expense" class="tab-content hidden space-y-6 max-w-2xl mx-auto">
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border dark:border-gray-700">
                     <h3 class="text-lg font-bold mb-4 text-rose-600 flex items-center gap-2">
@@ -318,7 +337,7 @@
                         </div>
                     </form>
 
-                    <!-- Transfer Friend (With Sapat and Datalist) -->
+                    <!-- Transfer Friend -->
                     <form id="transfer-form-friend" onsubmit="handleFriendTransferSubmit(event)" class="space-y-4 hidden">
                         <div class="p-3 mb-4 bg-amber-50 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200 rounded-xl text-xs flex gap-2">
                             <i class="fa-solid fa-circle-info text-base mt-0.5"></i>
@@ -430,6 +449,13 @@
             <section id="tab-settings" class="tab-content hidden space-y-6 max-w-2xl mx-auto">
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border dark:border-gray-700 space-y-6">
                     <h3 class="text-lg font-bold" data-i18n="data_settings">Data Management & Settings</h3>
+                    
+                    <!-- Login/Logout and Language moved here -->
+                    <div class="flex flex-col sm:flex-row gap-4 border-b border-gray-100 dark:border-gray-700 pb-6 mb-6">
+                        <div id="settings-auth-section" class="flex-1"></div>
+                        <button onclick="toggleLang()" class="text-sm font-medium px-4 py-2.5 bg-brand-50 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 rounded-xl shadow-sm border border-brand-100 dark:border-brand-800 transition"><i class="fa-solid fa-language"></i> <span id="settings-lang-text">नेपाली</span></button>
+                    </div>
+
                     <div class="flex flex-wrap gap-3">
                         <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2.5 rounded-xl text-sm shadow-sm transition flex gap-2 items-center"><i class="fa-solid fa-file-csv"></i> <span data-i18n="export_csv">Export CSV</span></button>
                     </div>
@@ -442,7 +468,7 @@
         </div>
     </main>
 
-    <!-- PERFECT BOTTOM NAVIGATION (Button based for zero delay clicks) -->
+    <!-- PERFECT BOTTOM NAVIGATION -->
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-2 flex items-center justify-around z-[9999] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] pb-[env(safe-area-inset-bottom)] h-16">
         <button onclick="switchTab('dashboard')" id="mob-nav-dashboard" class="mobile-nav-link flex flex-col items-center justify-center text-brand-600 text-[10px] font-medium w-16 h-full outline-none bg-transparent">
             <i class="fa-solid fa-chart-pie text-xl mb-1 pointer-events-none"></i><span class="pointer-events-none" data-i18n="nav_dashboard">Home</span>
@@ -451,7 +477,6 @@
             <i class="fa-solid fa-lightbulb text-xl mb-1 pointer-events-none"></i><span class="pointer-events-none" data-i18n="nav_insight">Insight</span>
         </button>
         
-        <!-- Center Big + Button -->
         <div class="relative -top-5 z-[10000]">
             <button onclick="toggleAddMenu()" class="w-14 h-14 bg-brand-600 text-white rounded-full flex items-center justify-center text-2xl shadow-[0_4px_10px_rgba(37,99,235,0.4)] border-4 border-white dark:border-gray-800 outline-none active:scale-95 transition-transform">
                 <i class="fa-solid fa-plus pointer-events-none"></i>
@@ -577,7 +602,7 @@
         window.openNotificationModal = openNotificationModal; window.closeNotificationModal = closeNotificationModal; window.acceptPeerTransfer = acceptPeerTransfer;
         window.openContactModal = openContactModal; window.closeContactModal = closeContactModal; window.handleContactSubmit = handleContactSubmit; window.deleteContact = deleteContact; window.saveContact = saveContact;
         window.openBudgetModal = openBudgetModal; window.closeBudgetModal = closeBudgetModal; window.handleBudgetSubmit = handleBudgetSubmit; window.exportCSV = exportCSV;
-        window.viewAccountTransactions = viewAccountTransactions; window.goBackTab = goBackTab;
+        window.viewAccountTransactions = viewAccountTransactions; window.goBackTab = goBackTab; window.showBreakdown = showBreakdown; window.closeBreakdown = closeBreakdown;
 
         // Translation Dict (Including Udharo)
         const i18n = {
@@ -614,6 +639,7 @@
                 if(i18n[appLang][key]) el.placeholder = i18n[appLang][key]; 
             });
             document.getElementById('lang-text').textContent = appLang === 'en' ? 'नेपाली' : 'English';
+            document.getElementById('settings-lang-text').textContent = appLang === 'en' ? 'नेपाली' : 'English';
             document.getElementById('report-month-display').innerText = formatBSMonth(document.getElementById('report-month-input').value);
             updateSyncStatus(); refreshCurrentTab(); populateAccountDropdowns();
         }
@@ -680,11 +706,20 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 userId = user.uid; userEmail = user.email;
-                document.getElementById('auth-section').innerHTML = `<div class="cursor-pointer" onclick="signOutUser()"><img src="${user.photoURL}" class="w-8 h-8 rounded-full border shadow-sm" title="${userEmail}"></div>`;
+                document.getElementById('auth-section').innerHTML = `<img src="${user.photoURL}" class="w-8 h-8 rounded-full border shadow-sm" title="${userEmail}">`;
+                document.getElementById('settings-auth-section').innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${user.photoURL}" class="w-12 h-12 rounded-full border shadow-sm">
+                        <div>
+                            <p class="font-bold text-gray-800 dark:text-gray-100">${userEmail}</p>
+                            <button onclick="signOutUser()" class="text-xs text-rose-500 hover:underline font-medium mt-1"><i class="fa-solid fa-arrow-right-from-bracket"></i> ${i18n[appLang]['logout']}</button>
+                        </div>
+                    </div>`;
                 setupListeners();
             } else {
                 userId = null; userEmail = null;
-                document.getElementById('auth-section').innerHTML = `<button onclick="signInWithGoogle()" class="bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-sm flex gap-2 transition"><i class="fa-brands fa-google"></i> ${i18n[appLang]['login']}</button>`;
+                document.getElementById('auth-section').innerHTML = ``;
+                document.getElementById('settings-auth-section').innerHTML = `<button onclick="signInWithGoogle()" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2.5 rounded-xl font-medium shadow-sm transition w-full flex items-center justify-center gap-2"><i class="fa-brands fa-google"></i> ${i18n[appLang]['login']}</button>`;
                 unsubscribers.forEach(u => u()); unsubscribers = []; accountsData = []; transactionsData = []; peerTransfersData = [];
                 switchTab('dashboard'); updateSyncStatus(); updateNotificationBadge();
             }
@@ -698,12 +733,10 @@
                 pendingWritesCount[pendKey] = snap.docs.filter(d => d.metadata.hasPendingWrites).length; updateSyncStatus(); if(cb) cb();
             });
             
-            // Re-render dashboard whenever accounts or transactions change
             const uA = mkSnap('accounts', accountsData, 'accounts', () => { populateAccountDropdowns(); refreshCurrentTab(); });
             const uT = mkSnap('transactions', transactionsData, 'transactions', () => { populateAccountDropdowns(); refreshCurrentTab(); });
             const uB = mkSnap('budgets', budgetsData, 'budgets', () => refreshCurrentTab());
             
-            // Cloud contacts
             const uC = mkSnap('contacts', contactsData, 'contacts', () => { 
                 localStorage.setItem('appContacts', JSON.stringify(contactsData));
                 populateContactsList(); 
@@ -728,13 +761,11 @@
         }
 
         function switchTab(tabId, isBack = false) {
-            // नयाँ ट्याबमा जाँदा पुरानो ट्याबलाई History मा सेभ गर्ने
             if (!isBack && currentTab && currentTab !== tabId) {
                 tabHistory.push(currentTab);
             }
             currentTab = tabId;
             
-            // Back बटन देखाउने वा लुकाउने
             const backBtn = document.getElementById('global-back-btn');
             if(backBtn) {
                 if(tabHistory.length > 0) backBtn.classList.remove('hidden');
@@ -744,13 +775,11 @@
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden')); 
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
             
-            // Desktop active state
             document.querySelectorAll('.nav-link').forEach(el => { 
                 el.classList.remove('active-tab', 'text-brand-600', 'dark:text-brand-400'); 
                 el.classList.add('text-gray-600', 'dark:text-gray-400'); 
                 if(el.id === `nav-${tabId}`) { el.classList.add('active-tab'); el.classList.remove('text-gray-600', 'dark:text-gray-400'); } 
             });
-            // Mobile active state
             document.querySelectorAll('.mobile-nav-link').forEach(el => { 
                 el.classList.remove('text-brand-600'); 
                 el.classList.add('text-gray-500'); 
@@ -772,15 +801,12 @@
 
         function goBackTab() {
             if (tabHistory.length > 0) {
-                const prevTab = tabHistory.pop(); // सबैभन्दा पछिल्लो ट्याब निकाल्ने
-                
-                // यदि transactions बाट ब्याक जाँदै हुनुहुन्छ भने फिल्टर खाली गरिदिने
+                const prevTab = tabHistory.pop();
                 if (currentTab === 'transactions') {
                     const filterAcc = document.getElementById('filter-account');
                     if(filterAcc) filterAcc.value = "";
                 }
-                
-                switchTab(prevTab, true); // true पठाउँदा नयाँ History थपिँदैन
+                switchTab(prevTab, true);
             }
         }
 
@@ -788,34 +814,33 @@
         async function calculateAccountBalances() {
             const b = {}; 
             accountsData.forEach(a => { b[a.id] = {...a, currentBalance: a.openingBalance}; });
-            
-            // Add Udharo (Payable) Virtual Account
             b['udharo'] = { id: 'udharo', name: i18n[appLang]['udharo_acc'], type: 'Other Account', currentBalance: 0 }; 
             
             transactionsData.forEach(t => { 
                 if(t.type === "income" && b[t.accountId]) b[t.accountId].currentBalance += t.amount; 
                 else if(t.type === "expense"){
-                    if (t.accountId === 'udharo') b['udharo'].currentBalance += t.amount; // Udharo expands balance (debt increases)
+                    if (t.accountId === 'udharo') b['udharo'].currentBalance += t.amount; 
                     else if (b[t.accountId]) b[t.accountId].currentBalance -= t.amount; 
                 }
                 else if(t.type === "transfer"){ 
                     if(b[t.fromAccountId]) b[t.fromAccountId].currentBalance -= t.amount; 
                     if(b[t.toAccountId]) {
-                        if(t.toAccountId === 'udharo') b['udharo'].currentBalance -= t.amount; // Paying off udharo debt
+                        if(t.toAccountId === 'udharo') b['udharo'].currentBalance -= t.amount; 
                         else b[t.toAccountId].currentBalance += t.amount; 
                     }
                     if(t.fee && b[t.fromAccountId]) b[t.fromAccountId].currentBalance -= t.fee; 
                 } 
             });
-            return Object.values(b);
+            return b;
         }
 
         // Dashboard
         async function loadDashboard() {
-            const accs = await calculateAccountBalances(); 
+            const b = await calculateAccountBalances(); 
+            const accs = Object.values(b);
             let tBal=0, tInc=0, tExp=0;
             
-            accs.forEach(a => { if(a.id !== 'udharo') tBal += a.currentBalance; }); // Exclude Udharo from Actual Cash Total
+            accs.forEach(a => { if(a.id !== 'udharo') tBal += a.currentBalance; }); 
             transactionsData.forEach(t => { 
                 if(t.type === "income") tInc += t.amount; 
                 else if(t.type === "expense") tExp += t.amount; 
@@ -849,14 +874,6 @@
                 options: { responsive: true, maintainAspectRatio: false } 
             });
             
-            const sortedTx = [...transactionsData].sort((a,b) => (b.id < a.id ? -1 : 1)).slice(0, 5);
-            document.getElementById('dash-recent-list').innerHTML = sortedTx.length ? sortedTx.map(tx => {
-                let col = tx.type === 'income' ? 'emerald' : tx.type === 'expense' ? 'rose' : 'amber'; 
-                let sign = tx.type === 'expense' ? '-' : tx.type === 'income' ? '+' : ''; 
-                let icon = tx.type === 'income' ? 'arrow-down' : tx.type === 'expense' ? 'arrow-up' : 'right-left';
-                return `<div class="py-3 flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-${col}-50 text-${col}-600 dark:bg-${col}-900/30 flex items-center justify-center font-bold"><i class="fa-solid fa-${icon}"></i></div><div><p class="font-semibold text-sm">${tx.title || tx.category || 'Transfer'}</p><p class="text-xs text-gray-500">${tx.date}</p></div></div><p class="font-bold text-sm text-${col}-600">${sign} ${formatNPR(tx.amount)}</p></div>`;
-            }).join('') : `<p class="text-sm text-gray-500 text-center py-4">No transactions yet.</p>`;
-            
             document.getElementById('dash-account-list').innerHTML = accs.filter(a => a.id !== 'udharo' || a.currentBalance > 0).map(a => `
                 <div onclick="viewAccountTransactions('${a.id}')" class="flex justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl mb-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition">
                     <div><p class="font-semibold text-sm">${a.name}</p></div>
@@ -864,9 +881,10 @@
                 </div>`).join('');
         }
 
-        // Insight
+        // Insight & Breakdown
         async function loadInsight() {
-            const accs = await calculateAccountBalances();
+            const bMap = await calculateAccountBalances();
+            const accs = Object.values(bMap);
             let b=0, c=0, w=0, u=0, sLent=0, sBorrowed=0;
             
             accs.forEach(a => { 
@@ -894,6 +912,27 @@
             sHistory.sort((a,b) => (b.id < a.id ? -1 : 1));
             document.getElementById('sapat-history-list').innerHTML = sHistory.length === 0 ? `<tr><td class="py-4 text-gray-500 text-center">No Sapat Records.</td></tr>` : sHistory.map(t => `<tr class="border-b dark:border-gray-700"><td class="py-3 px-2">${t.date}</td><td class="py-3 px-2">${t.title}</td><td class="py-3 px-2 font-bold ${t.sapatSign==='+'?'text-rose-500': t.sapatSign==='B'?'text-indigo-500' : 'text-emerald-500'}">${t.sapatSign==='+'?'Lent': t.sapatSign==='B'?'Borrowed':'Repaid'} ${formatNPR(t.amount)}</td></tr>`).join('');
         }
+
+        async function showBreakdown(accountType, title) {
+            const bMap = await calculateAccountBalances();
+            const accs = Object.values(bMap).filter(a => a.type === accountType);
+            
+            document.getElementById('breakdown-title').innerText = title;
+            const list = document.getElementById('breakdown-list');
+            
+            if(accs.length === 0) {
+                list.innerHTML = `<p class="text-sm text-gray-500 text-center py-4">No accounts found.</p>`;
+            } else {
+                list.innerHTML = accs.map(a => `
+                    <div onclick="viewAccountTransactions('${a.id}'); closeBreakdown();" class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-xl cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition border dark:border-gray-600">
+                        <p class="font-semibold text-sm text-gray-800 dark:text-gray-100">${a.name}</p>
+                        <p class="font-bold text-sm text-brand-600 dark:text-brand-400">${formatNPR(a.currentBalance)}</p>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('breakdown-modal').classList.replace('hidden', 'flex');
+        }
+        function closeBreakdown() { document.getElementById('breakdown-modal').classList.replace('flex', 'hidden'); }
                     
         // Contacts Logic
         function loadContacts() { 
@@ -921,7 +960,6 @@
         async function deleteContact(id) { customConfirm("Delete this contact?", async () => { await dbDelete("contacts", id); }); }
         
         function populateContactsList() { 
-            // Handles both string objects (local) and DB objects
             document.getElementById('contacts-list').innerHTML = contactsData.map(c => {
                 const em = typeof c === 'string' ? c : c.email;
                 const nm = typeof c === 'string' ? '' : c.name;
@@ -1033,6 +1071,7 @@
             const nt = document.getElementById('friend-transfer-notes').value;
 
             if(sapatType === 'borrowed') {
+                // Modified: Now income correctly goes INTO the selected account (fId)
                 await dbAdd("transactions", { type: "income", title: `Borrowed from ${contactInput}`, amount: amt, date: dt, category: "Transfer In", accountId: fId, sapatType: sapatType, notes: nt });
             } else {
                 await dbAdd("transactions", { type: "expense", title: `Sent to ${contactInput}`, amount: amt, date: dt, category: "Transfer Out", accountId: fId, sapatType: sapatType, notes: nt });
@@ -1106,7 +1145,7 @@
             }
             document.getElementById('notification-modal').classList.replace('hidden', 'flex');
         }
-function closeNotificationModal() { document.getElementById('notification-modal').classList.replace('flex', 'hidden'); }
+        function closeNotificationModal() { document.getElementById('notification-modal').classList.replace('flex', 'hidden'); }
 
         async function acceptPeerTransfer(tId) {
             const accId = document.getElementById(`acc-${tId}`).value; 
