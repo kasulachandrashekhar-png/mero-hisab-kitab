@@ -327,7 +327,7 @@
                             <div>
                                 <label class="block text-sm font-medium mb-1" data-i18n="friend_email">Contact / Email *</label>
                                 <!-- Using Input + Datalist so users can manually type or select -->
-                                <input type="email" id="friend-transfer-email" list="contacts-list" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500" placeholder="Select or type email">
+                                <input type="text" id="friend-transfer-email" list="contacts-list" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500" placeholder="Type name or email">
                                 <datalist id="contacts-list"></datalist>
                             </div>
                         </div>
@@ -907,19 +907,7 @@ function loadContacts() {
             }).join(''); 
         }
         
-        async function saveContact() {
-            const email = document.getElementById('friend-transfer-email').value.trim().toLowerCase(); 
-            if(!email || !email.includes('@')) return showToast("Enter a valid email first.", "error"); 
-            
-            // Local fallback logic
-            const exists = contactsData.some(c => (typeof c === 'string' ? c : c.email) === email);
-            if(!exists) { 
-                await dbAdd("contacts", {name: email.split('@')[0], email: email, relation: 'Added from Transfer'});
-                showToast("Contact added!"); 
-            } else {
-                showToast("Contact already exists.");
-            }
-        }
+
 
         // Accounts Logic
 function loadAccounts() { 
@@ -1015,33 +1003,66 @@ const elFilter = document.getElementById('filter-account');
         }
         function resetTransferForm() { document.getElementById('transfer-id').value=""; document.getElementById('transfer-amount').value=""; document.getElementById('transfer-fee').value="0"; document.getElementById('transfer-notes').value=""; }
 
-       async function handleFriendTransferSubmit(e) {
+     
+
+
+async function handleFriendTransferSubmit(e) {
     e.preventDefault(); 
     if(!userEmail) return showToast("Login required.", "error");
     
     const fId = document.getElementById('friend-transfer-from').value;
-    const tEmail = document.getElementById('friend-transfer-email').value.trim().toLowerCase();
+    const contactInput = document.getElementById('friend-transfer-email').value.trim().toLowerCase(); 
     const amt = Math.round(parseFloat(document.getElementById('friend-transfer-amount').value)*100);
     const dt = document.getElementById('friend-transfer-date').value;
     const sapatType = document.getElementById('friend-transfer-sapat').value;
     const nt = document.getElementById('friend-transfer-notes').value;
 
-    // यदि सापट लिएको हो भने त्यो आम्दानी (Income) को रुपमा सेभ हुन्छ
     if(sapatType === 'borrowed') {
-        await dbAdd("transactions", { type: "income", title: `Borrowed from ${tEmail}`, amount: amt, date: dt, category: "Transfer In", accountId: fId, sapatType: sapatType, notes: nt });
+        await dbAdd("transactions", { type: "income", title: `Borrowed from ${contactInput}`, amount: amt, date: dt, category: "Transfer In", accountId: fId, sapatType: sapatType, notes: nt });
     } else {
-        await dbAdd("transactions", { type: "expense", title: `Sent to ${tEmail}`, amount: amt, date: dt, category: "Transfer Out", accountId: fId, sapatType: sapatType, notes: nt });
+        await dbAdd("transactions", { type: "expense", title: `Sent to ${contactInput}`, amount: amt, date: dt, category: "Transfer Out", accountId: fId, sapatType: sapatType, notes: nt });
     }
     
-    await addDoc(collection(db, 'artifacts', appId, 'peer_transfers'), { fromEmail: userEmail, toEmail: tEmail, amount: amt, date: dt, sapatType: sapatType, status: 'pending', notes: nt });
+    const isEmail = contactInput.includes('@');
+    if(isEmail) {
+        await addDoc(collection(db, 'artifacts', appId, 'peer_transfers'), { fromEmail: userEmail, toEmail: contactInput, amount: amt, date: dt, sapatType: sapatType, status: 'pending', notes: nt });
+    }
     
-    const exists = contactsData.some(c => (typeof c === 'string' ? c : c.email) === tEmail);
-    if(!exists) { await dbAdd("contacts", {name: tEmail.split('@')[0], email: tEmail, relation: 'Auto Saved'}); }
+    const exists = contactsData.some(c => (typeof c === 'string' ? c : c.email) === contactInput);
+    if(!exists) { 
+        await dbAdd("contacts", {
+            name: isEmail ? contactInput.split('@')[0] : contactInput, 
+            email: contactInput, 
+            relation: isEmail ? 'App User' : 'Offline Contact'
+        }); 
+    }
 
     document.getElementById('friend-transfer-amount').value=""; 
     document.getElementById('friend-transfer-notes').value="";
-    showToast("Transaction Saved!"); switchTab('insight');
+    
+    showToast(isEmail ? "Saved & Notification Sent!" : "Offline Record Saved!"); 
+    switchTab('insight');
 }
+
+async function saveContact() {
+    const contactInput = document.getElementById('friend-transfer-email').value.trim().toLowerCase(); 
+    if(!contactInput) return showToast("Enter a name or email first.", "error"); 
+    
+    const isEmail = contactInput.includes('@');
+    const exists = contactsData.some(c => (typeof c === 'string' ? c : c.email) === contactInput);
+    
+    if(!exists) { 
+        await dbAdd("contacts", {
+            name: isEmail ? contactInput.split('@')[0] : contactInput, 
+            email: contactInput, 
+            relation: isEmail ? 'Online Friend' : 'Offline Friend'
+        });
+        showToast("Contact added!"); 
+    } else {
+        showToast("Contact already exists.");
+    }
+}
+  
         function openNotificationModal() {
             const l = document.getElementById('notifications-list');
             if(peerTransfersData.length===0) l.innerHTML=`<p>No new transfers.</p>`;
@@ -1132,6 +1153,7 @@ function viewAccountTransactions(accId) {
             const sM = Object.keys(mS).sort(); 
             savingsChartInstance = new Chart(document.getElementById('savingsChart').getContext('2d'), { type: 'line', data: { labels: sM.map(formatBSMonth), datasets: [{ label: i18n[appLang]['savings_trend'], data: sM.map(m=>(mS[m].inc-mS[m].exp)/100), borderColor: '#2563eb' }] }, options: { responsive: true, maintainAspectRatio: false } });
         }
+
         
         async function exportCSV() { showToast("CSV Export coming soon", "error"); }
 
