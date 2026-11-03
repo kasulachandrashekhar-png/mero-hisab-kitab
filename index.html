@@ -115,25 +115,35 @@
             <!-- 2. INSIGHT TAB (Udharo/Sapat Tracking) -->
             <section id="tab-insight" class="tab-content hidden space-y-6">
                 <h3 class="text-lg font-bold mb-4" data-i18n="nav_insight">Insights & Totals</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl shadow-sm text-white">
-                        <p class="text-emerald-100 text-sm" data-i18n="total_bank">Bank Total</p>
-                        <h3 id="insight-bank" class="text-2xl font-bold mt-1">रु. 0</h3>
-                    </div>
-                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-5 rounded-2xl shadow-sm text-white">
-                        <p class="text-blue-100 text-sm" data-i18n="total_cash">Cash Total</p>
-                        <h3 id="insight-cash" class="text-2xl font-bold mt-1">रु. 0</h3>
-                    </div>
-                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-2xl shadow-sm text-white">
-                        <p class="text-purple-100 text-sm" data-i18n="total_wallet">Wallet Total</p>
-                        <h3 id="insight-wallet" class="text-2xl font-bold mt-1">रु. 0</h3>
-                    </div>
-                    <div class="bg-gradient-to-br from-rose-500 to-rose-600 p-5 rounded-2xl shadow-sm text-white">
-                        <p class="text-rose-100 text-sm" data-i18n="total_udharo">Payable (Udharo)</p>
-                        <h3 id="insight-udharo" class="text-2xl font-bold mt-1">रु. 0</h3>
-                    </div>
-                </div>
-                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+    <!-- पहिलेकै Bank, Cash, Wallet -->
+    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl shadow-sm text-white">
+        <p class="text-emerald-100 text-sm" data-i18n="total_bank">Bank Total</p>
+        <h3 id="insight-bank" class="text-2xl font-bold mt-1">रु. 0</h3>
+    </div>
+    <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-5 rounded-2xl shadow-sm text-white">
+        <p class="text-blue-100 text-sm" data-i18n="total_cash">Cash Total</p>
+        <h3 id="insight-cash" class="text-2xl font-bold mt-1">रु. 0</h3>
+    </div>
+    <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-2xl shadow-sm text-white">
+        <p class="text-purple-100 text-sm" data-i18n="total_wallet">Wallet</p>
+        <h3 id="insight-wallet" class="text-2xl font-bold mt-1">रु. 0</h3>
+    </div>
+    <!-- नयाँ: सापट दिएको र लिएको -->
+    <div class="bg-gradient-to-br from-amber-500 to-amber-600 p-5 rounded-2xl shadow-sm text-white">
+        <p class="text-amber-100 text-sm">सापट दिएको (Lent)</p>
+        <h3 id="insight-sapat-diyako" class="text-2xl font-bold mt-1">रु. 0</h3>
+    </div>
+    <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 p-5 rounded-2xl shadow-sm text-white">
+        <p class="text-indigo-100 text-sm">सापट लिएको (Borrowed)</p>
+        <h3 id="insight-sapat-liyako" class="text-2xl font-bold mt-1">रु. 0</h3>
+    </div>
+    <!-- उधारो (Payable) -->
+    <div class="bg-gradient-to-br from-rose-500 to-rose-600 p-5 rounded-2xl shadow-sm text-white">
+        <p class="text-rose-100 text-sm" data-i18n="total_udharo">Payable (उधारो)</p>
+        <h3 id="insight-udharo" class="text-2xl font-bold mt-1">रु. 0</h3>
+    </div>
+</div>                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
                     <h3 class="text-md font-bold mb-4" data-i18n="sapat_history">Sapat / Peer History</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm"><tbody id="sapat-history-list" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody></table>
@@ -324,10 +334,11 @@
                         <div>
                             <label class="block text-sm font-bold text-brand-600 dark:text-brand-400 mb-1" data-i18n="sapat_type">Transfer Type (सापट/लेनदेन) *</label>
                             <select id="friend-transfer-sapat" required class="w-full bg-brand-50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800 rounded-xl px-4 py-2.5 font-medium outline-none focus:border-brand-500">
-                                <option value="none">Normal Transfer (सामान्य लेनदेन)</option>
-                                <option value="lent">Lent (सापट दिएको)</option>
-                                <option value="repaid">Repaid (सापट फिर्ता गरेको)</option>
-                            </select>
+    <option value="none">Normal Transfer (सामान्य लेनदेन)</option>
+    <option value="lent">Lent (सापट दिएको)</option>
+    <option value="repaid">Repaid (सापट फिर्ता गरेको)</option>
+    <option value="borrowed">Borrowed (सापट लिएको)</option> 
+</select>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div><label class="block text-sm font-medium mb-1" data-i18n="amount">Amount *</label><input type="number" step="0.01" id="friend-transfer-amount" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></div>
@@ -355,6 +366,9 @@
                                 <option value="expense">Expense</option>
                                 <option value="transfer">Transfer</option>
                             </select>
+<select id="filter-account" onchange="renderTransactions()" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-500">
+    <option value="">All Accounts</option>
+</select>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
@@ -547,7 +561,8 @@
         import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, initializeFirestore, persistentLocalCache, persistentMultipleTabManager, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Globals setup for HTML inline onclick
-        window.switchTab = switchTab; window.toggleLang = toggleLang; window.toggleTheme = toggleTheme; window.toggleMobileSidebar = toggleMobileSidebar; window.toggleAddMenu = toggleAddMenu;
+        window.viewAccountTransactions = viewAccountTransactions;
+window.switchTab = switchTab; window.toggleLang = toggleLang; window.toggleTheme = toggleTheme; window.toggleMobileSidebar = toggleMobileSidebar; window.toggleAddMenu = toggleAddMenu;
         window.openAccountModal = openAccountModal; window.closeAccountModal = closeAccountModal; window.handleAccountSubmit = handleAccountSubmit; window.editAccount = editAccount; window.deleteAccount = deleteAccount;
         window.handleIncomeSubmit = handleIncomeSubmit; window.resetIncomeForm = resetIncomeForm; window.handleExpenseSubmit = handleExpenseSubmit; window.resetExpenseForm = resetExpenseForm;
         window.handleTransferSubmit = handleTransferSubmit; window.resetTransferForm = resetTransferForm; window.handleFriendTransferSubmit = handleFriendTransferSubmit; window.toggleTransferMode = toggleTransferMode;
@@ -818,7 +833,7 @@ window.formatNPR = function(amount) {
             }).join('') : `<p class="text-sm text-gray-500 text-center py-4">No transactions yet.</p>`;
             
             document.getElementById('dash-account-list').innerHTML = accs.filter(a => a.id !== 'udharo' || a.currentBalance > 0).map(a => `
-                <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl mb-2">
+                <div onclick="viewAccountTransactions('${a.id}')" class="flex justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl mb-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition">
                     <div><p class="font-semibold text-sm">${a.name}</p></div>
                     <p class="font-bold text-sm ${a.id==='udharo' ? 'text-rose-500' : ''}">${formatNPR(a.currentBalance)}</p>
                 </div>`).join('');
@@ -826,51 +841,53 @@ window.formatNPR = function(amount) {
 
         // Insight
         async function loadInsight() {
-            const accs = await calculateAccountBalances();
-            let b=0, c=0, w=0, u=0, sLent=0;
+    const accs = await calculateAccountBalances();
+    let b=0, c=0, w=0, u=0, sLent=0, sBorrowed=0;
+    
+    accs.forEach(a => { 
+        if(a.type==="Bank Account") b+=a.currentBalance; 
+        else if(a.type==="Cash") c+=a.currentBalance; 
+        else if(a.type==="Mobile Wallet") w+=a.currentBalance; 
+        else if(a.id==="udharo") u+=a.currentBalance;
+    });
+    
+    const sHistory = [];
+    transactionsData.forEach(t => {
+        if(t.sapatType === 'lent') { sLent += t.amount; sHistory.push({...t, sapatSign: '+'}); }
+        else if(t.sapatType === 'repaid') { sLent -= t.amount; sHistory.push({...t, sapatSign: '-'}); }
+        else if(t.sapatType === 'borrowed') { sBorrowed += t.amount; sHistory.push({...t, sapatSign: 'B'}); }
+    });
+    
+    document.getElementById('insight-bank').innerText = formatNPR(b); 
+    document.getElementById('insight-cash').innerText = formatNPR(c); 
+    document.getElementById('insight-wallet').innerText = formatNPR(w); 
+    document.getElementById('insight-udharo').innerText = formatNPR(u);
+    
+    // नयाँ थपिएको 
+    if(document.getElementById('insight-sapat-diyako')) document.getElementById('insight-sapat-diyako').innerText = formatNPR(sLent);
+    if(document.getElementById('insight-sapat-liyako')) document.getElementById('insight-sapat-liyako').innerText = formatNPR(sBorrowed);
+    
+    sHistory.sort((a,b) => (b.id < a.id ? -1 : 1));
+    document.getElementById('sapat-history-list').innerHTML = sHistory.length === 0 ? `<tr><td class="py-4 text-gray-500 text-center">No Sapat Records.</td></tr>` : sHistory.map(t => `<tr class="border-b dark:border-gray-700"><td class="py-3 px-2">${t.date}</td><td class="py-3 px-2">${t.title}</td><td class="py-3 px-2 font-bold ${t.sapatSign==='+'?'text-rose-500': t.sapatSign==='B'?'text-indigo-500' : 'text-emerald-500'}">${t.sapatSign==='+'?'Lent': t.sapatSign==='B'?'Borrowed':'Repaid'} ${formatNPR(t.amount)}</td></tr>`).join('');
+}
             
-            accs.forEach(a => { 
-                if(a.type==="Bank Account") b+=a.currentBalance; 
-                else if(a.type==="Cash") c+=a.currentBalance; 
-                else if(a.type==="Mobile Wallet") w+=a.currentBalance; 
-                else if(a.id==="udharo") u+=a.currentBalance;
-            });
             
-            const sHistory = [];
-            transactionsData.forEach(t => {
-                if(t.sapatType === 'lent') { sLent += t.amount; sHistory.push({...t, sapatSign: '+'}); }
-                else if(t.sapatType === 'repaid') { sLent -= t.amount; sHistory.push({...t, sapatSign: '-'}); }
-            });
-            
-            document.getElementById('insight-bank').innerText = formatNPR(b); 
-            document.getElementById('insight-cash').innerText = formatNPR(c); 
-            document.getElementById('insight-wallet').innerText = formatNPR(w); 
-            
-            // Udharo display
-            document.getElementById('insight-udharo').innerText = formatNPR(u);
-            
-            // Sapat tracking
-            document.getElementById('insight-sapat').innerText = formatNPR(sLent);
-            
-            sHistory.sort((a,b) => (b.id < a.id ? -1 : 1));
-            document.getElementById('sapat-history-list').innerHTML = sHistory.length === 0 ? `<tr><td class="py-4 text-gray-500 text-center">No Sapat Records.</td></tr>` : sHistory.map(t => `<tr class="border-b dark:border-gray-700"><td class="py-3 px-2">${t.date}</td><td class="py-3 px-2">${t.title}</td><td class="py-3 px-2 font-bold ${t.sapatSign==='+'?'text-rose-500':'text-emerald-500'}">${t.sapatSign==='+'?'Lent':'Repaid'} ${formatNPR(t.amount)}</td></tr>`).join('');
-        }
-
         // Contacts Logic
-        function loadContacts() { 
-            document.getElementById('contacts-grid').innerHTML = contactsData.map(c => `
-                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-bold text-lg">${c.name || 'Friend'}</h3>
-                            <p class="text-sm text-gray-500">${c.email || c}</p>
-                            ${c.relation ? `<span class="text-xs bg-brand-50 text-brand-600 px-2 rounded-full mt-2 inline-block">${c.relation}</span>` : ''}
-                        </div>
-                        <button onclick="deleteContact('${c.id}')" class="text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
-                    </div>
+       // Contacts Logic
+function loadContacts() { 
+    document.getElementById('contacts-grid').innerHTML = contactsData.map(c => `
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 hover:border-brand-500 transition">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-bold text-lg">${c.name || 'Friend'}</h3>
+                    <p class="text-sm text-gray-500">${c.email || c}</p>
+                    ${c.relation ? `<span class="text-xs bg-brand-50 text-brand-600 px-2 rounded-full mt-2 inline-block">${c.relation}</span>` : ''}
                 </div>
-            `).join(''); 
-        }
+                <button onclick="deleteContact('${c.id}')" class="text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
+            </div>
+        </div>
+    `).join(''); 
+}
         function openContactModal() { document.getElementById('contact-modal').classList.replace('hidden', 'flex'); }
         function closeContactModal() { document.getElementById('contact-modal').classList.replace('flex', 'hidden'); }
         async function handleContactSubmit(e) { 
@@ -905,25 +922,25 @@ window.formatNPR = function(amount) {
         }
 
         // Accounts Logic
-        function loadAccounts() { 
-            document.getElementById('accounts-grid').innerHTML = accountsData.map(a => `
-            <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
-                <div class="flex items-start justify-between">
-                    <div>
-                        <span class="text-xs bg-brand-50 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 px-2.5 py-1 rounded-full font-semibold">${a.type}</span>
-                        <h3 class="text-lg font-bold mt-2">${a.name}</h3>
-                    </div>
-                    <div class="flex gap-1">
-                        <button onclick="editAccount('${a.id}')" class="p-2 text-gray-400 hover:text-brand-600"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="deleteAccount('${a.id}')" class="p-2 text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>
-                <div class="mt-3 border-t border-gray-100 dark:border-gray-700 pt-3">
-                    <p class="text-xs text-gray-500">Opening Balance</p>
-                    <p class="text-xl font-bold">${formatNPR(a.openingBalance)}</p>
-                </div>
-            </div>`).join(''); 
-        }
+function loadAccounts() { 
+    document.getElementById('accounts-grid').innerHTML = accountsData.map(a => `
+    <div onclick="viewAccountTransactions('${a.id}')" class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 cursor-pointer hover:border-brand-500 transition">
+        <div class="flex items-start justify-between">
+            <div>
+                <span class="text-xs bg-brand-50 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 px-2.5 py-1 rounded-full font-semibold">${a.type}</span>
+                <h3 class="text-lg font-bold mt-2">${a.name}</h3>
+            </div>
+            <div class="flex gap-1" onclick="event.stopPropagation()">
+                <button onclick="editAccount('${a.id}')" class="p-2 text-gray-400 hover:text-brand-600"><i class="fa-solid fa-pen"></i></button>
+                <button onclick="deleteAccount('${a.id}')" class="p-2 text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
+            </div>
+        </div>
+        <div class="mt-3 border-t border-gray-100 dark:border-gray-700 pt-3">
+            <p class="text-xs text-gray-500">Opening Balance</p>
+            <p class="text-xl font-bold">${formatNPR(a.openingBalance)}</p>
+        </div>
+    </div>`).join(''); 
+}
         function openAccountModal(acc=null) { 
             document.getElementById('account-modal').classList.replace('hidden', 'flex'); 
             if(acc){ 
@@ -950,6 +967,8 @@ window.formatNPR = function(amount) {
         function populateAccountDropdowns() { 
             const opts = accountsData.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
             const udharoOpt = `<option value="udharo" class="font-bold text-rose-600 bg-rose-50 dark:bg-gray-800">${i18n[appLang]['udharo_acc']}</option>`;
+const elFilter = document.getElementById('filter-account');
+    if(elFilter) { const v=elFilter.value; elFilter.innerHTML= `<option value="">All Accounts</option>` + opts + udharoOpt; elFilter.value=v; }
             
             ['income-account', 'transfer-from', 'friend-transfer-from'].forEach(id => { 
                 const el = document.getElementById(id); 
@@ -996,37 +1015,33 @@ window.formatNPR = function(amount) {
         }
         function resetTransferForm() { document.getElementById('transfer-id').value=""; document.getElementById('transfer-amount').value=""; document.getElementById('transfer-fee').value="0"; document.getElementById('transfer-notes').value=""; }
 
-        async function handleFriendTransferSubmit(e) {
-            e.preventDefault(); 
-            if(!userEmail) return showToast("Login required.", "error");
-            
-            const fId = document.getElementById('friend-transfer-from').value;
-            const tEmail = document.getElementById('friend-transfer-email').value.trim().toLowerCase();
-            const amt = Math.round(parseFloat(document.getElementById('friend-transfer-amount').value)*100);
-            const dt = document.getElementById('friend-transfer-date').value;
-            const sapatType = document.getElementById('friend-transfer-sapat').value;
-            const nt = document.getElementById('friend-transfer-notes').value;
+       async function handleFriendTransferSubmit(e) {
+    e.preventDefault(); 
+    if(!userEmail) return showToast("Login required.", "error");
+    
+    const fId = document.getElementById('friend-transfer-from').value;
+    const tEmail = document.getElementById('friend-transfer-email').value.trim().toLowerCase();
+    const amt = Math.round(parseFloat(document.getElementById('friend-transfer-amount').value)*100);
+    const dt = document.getElementById('friend-transfer-date').value;
+    const sapatType = document.getElementById('friend-transfer-sapat').value;
+    const nt = document.getElementById('friend-transfer-notes').value;
 
-            // Save to my transactions as expense out
-            await dbAdd("transactions", { type: "expense", title: `Sent to ${tEmail}`, amount: amt, date: dt, category: "Transfer Out", accountId: fId, sapatType: sapatType, notes: nt });
-            
-            // Push to peer DB
-            await addDoc(collection(db, 'artifacts', appId, 'peer_transfers'), { fromEmail: userEmail, toEmail: tEmail, amount: amt, date: dt, sapatType: sapatType, status: 'pending', notes: nt });
-            
-            // Auto add contact if new
-            const exists = contactsData.some(c => (typeof c === 'string' ? c : c.email) === tEmail);
-            if(!exists) { await dbAdd("contacts", {name: tEmail.split('@')[0], email: tEmail, relation: 'Auto Saved'}); }
+    // यदि सापट लिएको हो भने त्यो आम्दानी (Income) को रुपमा सेभ हुन्छ
+    if(sapatType === 'borrowed') {
+        await dbAdd("transactions", { type: "income", title: `Borrowed from ${tEmail}`, amount: amt, date: dt, category: "Transfer In", accountId: fId, sapatType: sapatType, notes: nt });
+    } else {
+        await dbAdd("transactions", { type: "expense", title: `Sent to ${tEmail}`, amount: amt, date: dt, category: "Transfer Out", accountId: fId, sapatType: sapatType, notes: nt });
+    }
+    
+    await addDoc(collection(db, 'artifacts', appId, 'peer_transfers'), { fromEmail: userEmail, toEmail: tEmail, amount: amt, date: dt, sapatType: sapatType, status: 'pending', notes: nt });
+    
+    const exists = contactsData.some(c => (typeof c === 'string' ? c : c.email) === tEmail);
+    if(!exists) { await dbAdd("contacts", {name: tEmail.split('@')[0], email: tEmail, relation: 'Auto Saved'}); }
 
-            document.getElementById('friend-transfer-amount').value=""; 
-            document.getElementById('friend-transfer-notes').value="";
-            showToast("Sent to contact!"); switchTab('insight');
-        }
-
-        // Notification System
-        function updateNotificationBadge() { 
-            const b = document.getElementById('notif-badge'); 
-            if(peerTransfersData.length>0){ b.innerText=peerTransfersData.length; b.classList.remove('hidden'); } else b.classList.add('hidden'); 
-        }
+    document.getElementById('friend-transfer-amount').value=""; 
+    document.getElementById('friend-transfer-notes').value="";
+    showToast("Transaction Saved!"); switchTab('insight');
+}
         function openNotificationModal() {
             const l = document.getElementById('notifications-list');
             if(peerTransfersData.length===0) l.innerHTML=`<p>No new transfers.</p>`;
@@ -1058,16 +1073,26 @@ window.formatNPR = function(amount) {
             await updateDoc(doc(db, 'artifacts', appId, 'peer_transfers', tId), { status: 'accepted' }); 
             showToast("Accepted!"); closeNotificationModal();
         }
-
+function viewAccountTransactions(accId) {
+    document.getElementById('filter-account').value = accId;
+    switchTab('transactions');
+    renderTransactions(); 
+}
         // Transactions List Render
         async function renderTransactions() {
-            const aMap = { 'udharo': i18n[appLang]['udharo_acc'] }; 
-            accountsData.forEach(a => aMap[a.id] = a.name);
-            
-            const sFil = document.getElementById('filter-search').value.toLowerCase();
-            const tFil = document.getElementById('filter-type').value;
-            
-            const filtered = transactionsData.filter(t => (t.title||t.category||'').toLowerCase().includes(sFil) && (tFil?t.type===tFil:true)).sort((a,b)=>(b.id<a.id?-1:1));
+    const aMap = { 'udharo': i18n[appLang]['udharo_acc'] }; 
+    accountsData.forEach(a => aMap[a.id] = a.name);
+    
+    const sFil = document.getElementById('filter-search').value.toLowerCase();
+    const tFil = document.getElementById('filter-type').value;
+    const aFil = document.getElementById('filter-account').value; // नयाँ
+    
+    const filtered = transactionsData.filter(t => 
+        (t.title||t.category||'').toLowerCase().includes(sFil) && 
+        (tFil ? t.type === tFil : true) &&
+        (aFil ? (t.accountId === aFil || t.fromAccountId === aFil || t.toAccountId === aFil) : true)
+    ).sort((a,b)=>(b.id<a.id?-1:1));
+    
             
             document.getElementById('transactions-table-body').innerHTML = filtered.map(t => {
                 let badge = t.type === 'income' ? '<span class="text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded text-[10px] font-bold">IN</span>' : t.type === 'expense' ? '<span class="text-rose-600 bg-rose-50 dark:bg-rose-900/30 px-2 py-1 rounded text-[10px] font-bold">OUT</span>' : '<span class="text-amber-600 bg-amber-50 dark:bg-amber-900/30 px-2 py-1 rounded text-[10px] font-bold">TR</span>';
