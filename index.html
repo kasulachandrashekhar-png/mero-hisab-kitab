@@ -87,6 +87,15 @@
                 </div>
             </div>
         </header>
+<!-- यो हो Header भन्दा मुनि राखिएको नयाँ Back Button -->
+        <div class="max-w-7xl mx-auto w-full px-4 md:px-8 pt-4 -mb-2">
+            <button id="global-back-btn" onclick="goBackTab()" class="hidden inline-flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm hover:text-brand-600 transition w-max">
+                <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+            </button>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="p-4 md:p-8 flex-1 max-w-7xl w-full mx-auto space-y-6 pb-12">
         <div class="p-4 md:p-8 flex-1 max-w-7xl w-full mx-auto space-y-6 pb-12">
             
             <!-- 1. DASHBOARD TAB -->
@@ -449,10 +458,17 @@
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border dark:border-gray-700 space-y-6">
                     <h3 class="text-lg font-bold" data-i18n="data_settings">Data Management & Settings</h3>
                     
-                    <!-- Login/Logout and Language moved here -->
-                    <div class="flex flex-col sm:flex-row gap-4 border-b border-gray-100 dark:border-gray-700 pb-6 mb-6">
-                        <div id="settings-auth-section" class="flex-1"></div>
-                        <button onclick="toggleLang()" class="text-sm font-medium px-4 py-2.5 bg-brand-50 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 rounded-xl shadow-sm border border-brand-100 dark:border-brand-800 transition"><i class="fa-solid fa-language"></i> <span id="settings-lang-text">नेपाली</span></button>
+                    <!-- Login/Logout and Language -->
+                    <div class="flex flex-col gap-4 border-b border-gray-100 dark:border-gray-700 pb-6 mb-6">
+                        <div id="settings-auth-section" class="w-full">
+                            <!-- डिफल्ट लगइन बटन यहाँ छ -->
+                            <button onclick="signInWithGoogle()" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2.5 rounded-xl font-medium shadow-sm transition w-full flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-google"></i> <span data-i18n="login">Login</span>
+                            </button>
+                        </div>
+                        <button onclick="toggleLang()" class="text-sm font-medium px-4 py-2.5 bg-brand-50 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 rounded-xl shadow-sm border border-brand-100 dark:border-brand-800 transition w-full flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-language"></i> <span id="settings-lang-text">नेपाली</span>
+                        </button>
                     </div>
 
                     <div class="flex flex-wrap gap-3">
@@ -628,7 +644,7 @@
             generateReports();
         }
 
-        function applyLanguage() {
+       function applyLanguage() {
             document.querySelectorAll('[data-i18n]').forEach(el => { 
                 const key = el.getAttribute('data-i18n');
                 if(i18n[appLang][key]) el.textContent = i18n[appLang][key]; 
@@ -637,8 +653,14 @@
                 const key = el.getAttribute('data-i18n-placeholder');
                 if(i18n[appLang][key]) el.placeholder = i18n[appLang][key]; 
             });
-            document.getElementById('lang-text').textContent = appLang === 'en' ? 'नेपाली' : 'English';
-            document.getElementById('settings-lang-text').textContent = appLang === 'en' ? 'नेपाली' : 'English';
+            
+            // पुरानो हेडरको टेक्स्ट छ भने मात्र अपडेट गर्ने
+            const oldLangText = document.getElementById('lang-text');
+            if (oldLangText) oldLangText.textContent = appLang === 'en' ? 'नेपाली' : 'English';
+            
+            const settingsLangText = document.getElementById('settings-lang-text');
+            if (settingsLangText) settingsLangText.textContent = appLang === 'en' ? 'नेपाली' : 'English';
+            
             document.getElementById('report-month-display').innerText = formatBSMonth(document.getElementById('report-month-input').value);
             updateSyncStatus(); refreshCurrentTab(); populateAccountDropdowns();
         }
@@ -705,20 +727,38 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 userId = user.uid; userEmail = user.email;
-                document.getElementById('auth-section').innerHTML = `<img src="${user.photoURL}" class="w-8 h-8 rounded-full border shadow-sm" title="${userEmail}">`;
-                document.getElementById('settings-auth-section').innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <img src="${user.photoURL}" class="w-12 h-12 rounded-full border shadow-sm">
-                        <div>
-                            <p class="font-bold text-gray-800 dark:text-gray-100">${userEmail}</p>
-                            <button onclick="signOutUser()" class="text-xs text-rose-500 hover:underline font-medium mt-1"><i class="fa-solid fa-arrow-right-from-bracket"></i> ${i18n[appLang]['logout']}</button>
-                        </div>
-                    </div>`;
+                
+                const headAuth = document.getElementById('auth-section');
+                if (headAuth) headAuth.innerHTML = ``;
+                
+                const setAuth = document.getElementById('settings-auth-section');
+                if (setAuth) {
+                    setAuth.innerHTML = `
+                        <div class="flex items-center justify-between bg-gray-100 dark:bg-gray-700 p-3 rounded-xl border border-gray-200 dark:border-gray-600 w-full">
+                            <div class="flex items-center gap-3">
+                                <img src="${user.photoURL}" class="w-10 h-10 rounded-full border shadow-sm">
+                                <div class="text-left">
+                                    <p class="font-bold text-sm text-gray-800 dark:text-gray-100 truncate w-32 sm:w-auto">${userEmail}</p>
+                                    <p class="text-xs text-emerald-600 dark:text-emerald-400">Logged In</p>
+                                </div>
+                            </div>
+                            <button onclick="signOutUser()" class="text-xs bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400 px-3 py-1.5 rounded-lg font-medium hover:bg-rose-200 transition">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> ${i18n[appLang]['logout']}
+                            </button>
+                        </div>`;
+                }
                 setupListeners();
             } else {
                 userId = null; userEmail = null;
-                document.getElementById('auth-section').innerHTML = ``;
-                document.getElementById('settings-auth-section').innerHTML = `<button onclick="signInWithGoogle()" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2.5 rounded-xl font-medium shadow-sm transition w-full flex items-center justify-center gap-2"><i class="fa-brands fa-google"></i> ${i18n[appLang]['login']}</button>`;
+                
+                const headAuth = document.getElementById('auth-section');
+                if (headAuth) headAuth.innerHTML = ``;
+                
+                const setAuth = document.getElementById('settings-auth-section');
+                if (setAuth) {
+                    setAuth.innerHTML = `<button onclick="signInWithGoogle()" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2.5 rounded-xl font-medium shadow-sm transition w-full flex items-center justify-center gap-2"><i class="fa-brands fa-google"></i> ${i18n[appLang]['login']}</button>`;
+                }
+                
                 unsubscribers.forEach(u => u()); unsubscribers = []; accountsData = []; transactionsData = []; peerTransfersData = [];
                 switchTab('dashboard'); updateSyncStatus(); updateNotificationBadge();
             }
