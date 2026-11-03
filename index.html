@@ -1064,36 +1064,54 @@ async function saveContact() {
 }
   
         function openNotificationModal() {
-            const l = document.getElementById('notifications-list');
-            if(peerTransfersData.length===0) l.innerHTML=`<p>No new transfers.</p>`;
-            else { 
-                const opts = accountsData.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
-                l.innerHTML = peerTransfersData.map(t => `
-                <div class="p-4 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl border border-emerald-100 dark:border-emerald-800 text-left">
-                    <div class="flex justify-between">
-                        <div><p class="font-bold text-emerald-700 dark:text-emerald-400">Received Money</p><p class="text-xs">From: ${t.fromEmail}</p></div>
-                        <p class="font-bold text-emerald-600">+${formatNPR(t.amount)}</p>
-                    </div>
-                    <div class="mt-3 flex gap-2">
-                        <select id="acc-${t.id}" class="flex-1 text-xs p-1.5 rounded dark:bg-gray-700 border border-emerald-200 outline-none"><option disabled selected value="">Select Account</option>${opts}</select>
-                        <button onclick="acceptPeerTransfer('${t.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 rounded text-xs">Accept</button>
-                    </div>
-                </div>`).join(''); 
-            }
-            document.getElementById('notification-modal').classList.replace('hidden', 'flex');
-        }
-        function closeNotificationModal() { document.getElementById('notification-modal').classList.replace('flex', 'hidden'); }
-        
-        async function acceptPeerTransfer(tId) {
-            const accId = document.getElementById(`acc-${tId}`).value; 
-            if(!accId) return alert("Select account!");
-            const t = peerTransfersData.find(x => x.id === tId); 
-            if(!t) return;
+    const l = document.getElementById('notifications-list');
+    if(peerTransfersData.length===0) l.innerHTML=`<p>No new transfers.</p>`;
+    else { 
+        const opts = accountsData.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+        l.innerHTML = peerTransfersData.map(t => {
+            // यदि पठाउनेले "borrowed" (सापट मागेको) छ भने, यो मेरो लागि पैसा तिर्ने (OUT) रिक्वेस्ट हो
+            const isDeduction = t.sapatType === 'borrowed'; 
+            const titleText = isDeduction ? "Payment Request (सापट मागिएको)" : "Received Money (रकम प्राप्त)";
+            const amtClass = isDeduction ? "text-rose-600" : "text-emerald-600";
+            const sign = isDeduction ? "-" : "+";
+            const bgClass = isDeduction ? "bg-rose-50 dark:bg-rose-900/30 border-rose-100" : "bg-emerald-50 dark:bg-emerald-900/30 border-emerald-100";
+            const textClass = isDeduction ? "text-rose-700 dark:text-rose-400" : "text-emerald-700 dark:text-emerald-400";
             
-            await dbAdd("transactions", { type: "income", title: `Received from ${t.fromEmail}`, amount: t.amount, date: t.date, category: "Transfer In", accountId: accId, sapatType: t.sapatType, notes: t.notes });
-            await updateDoc(doc(db, 'artifacts', appId, 'peer_transfers', tId), { status: 'accepted' }); 
-            showToast("Accepted!"); closeNotificationModal();
-        }
+            return `
+            <div class="p-4 ${bgClass} rounded-xl border text-left">
+                <div class="flex justify-between">
+                    <div><p class="font-bold ${textClass}">${titleText}</p><p class="text-xs">From: ${t.fromEmail}</p></div>
+                    <p class="font-bold ${amtClass}">${sign}${formatNPR(t.amount)}</p>
+                </div>
+                <div class="mt-3 flex gap-2">
+                    <select id="acc-${t.id}" class="flex-1 text-xs p-1.5 rounded dark:bg-gray-700 border outline-none"><option disabled selected value="">Select Account</option>${opts}</select>
+                    <button onclick="acceptPeerTransfer('${t.id}')" class="bg-brand-600 hover:bg-brand-700 text-white px-3 rounded text-xs">Accept</button>
+                </div>
+            </div>`;
+        }).join(''); 
+    }
+    document.getElementById('notification-modal').classList.replace('hidden', 'flex');
+}
+
+async function acceptPeerTransfer(tId) {
+    const accId = document.getElementById(`acc-${tId}`).value; 
+    if(!accId) return alert("Select account!");
+    const t = peerTransfersData.find(x => x.id === tId); 
+    if(!t) return;
+    
+    if (t.sapatType === 'borrowed') {
+        // साथीले "borrow" रिक्वेस्ट पठाएको छ भने मेरो खाताबाट खर्च (OUT / Lent) हुन्छ
+        await dbAdd("transactions", { type: "expense", title: `Lent to ${t.fromEmail}`, amount: t.amount, date: t.date, category: "Transfer Out", accountId: accId, sapatType: 'lent', notes: t.notes });
+    } else {
+        // साथीले "lent" वा "repaid" गरेको छ भने मेरो खातामा आम्दानी (IN) हुन्छ
+        let mySapatType = t.sapatType === 'lent' ? 'borrowed' : (t.sapatType === 'repaid' ? 'none' : 'none');
+        let titlePrefix = t.sapatType === 'lent' ? 'Borrowed from' : 'Received from';
+        await dbAdd("transactions", { type: "income", title: `${titlePrefix} ${t.fromEmail}`, amount: t.amount, date: t.date, category: "Transfer In", accountId: accId, sapatType: mySapatType, notes: t.notes });
+    }
+    
+    await updateDoc(doc(db, 'artifacts', appId, 'peer_transfers', tId), { status: 'accepted' }); 
+    showToast("Accepted!"); closeNotificationModal();
+}
 function viewAccountTransactions(accId) {
     document.getElementById('filter-account').value = accId;
     switchTab('transactions');
@@ -1161,4 +1179,4 @@ function viewAccountTransactions(accId) {
         if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('service-worker.js').catch(()=>{})); }
     </script>
 </body>
-</html>
+</html> 
