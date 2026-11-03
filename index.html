@@ -1106,6 +1106,7 @@
             }
             document.getElementById('notification-modal').classList.replace('hidden', 'flex');
         }
+function closeNotificationModal() { document.getElementById('notification-modal').classList.replace('flex', 'hidden'); }
 
         async function acceptPeerTransfer(tId) {
             const accId = document.getElementById(`acc-${tId}`).value; 
