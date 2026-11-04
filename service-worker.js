@@ -1,4 +1,4 @@
-const CACHE_NAME = 'merohisab-v2'; // क्यासको नाम परिवर्तन गरियो
+const CACHE_NAME = 'merohisab-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -10,37 +10,33 @@ const ASSETS = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      // क्यास फेल नहोस् भनेर एउटा-एउटा फाइल थप्ने (error handling)
-      return Promise.allSettled(
-        ASSETS.map(url => cache.add(url).catch(err => console.warn(`Cache add failed for ${url}`, err)))
-      );
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
   );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-      );
-    })
+    caches.keys().then(keys => Promise.all(
+        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+    ))
   );
   self.claim();
 });
 
+// Network-first strategy: सधैं नयाँ कोड ल्याउने, इन्टरनेट नहुँदा मात्र पुरानो क्यास देखाउने
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      // क्यासमा छ भने दिने, नत्र इन्टरनेटबाट ल्याउने
-      return response || fetch(event.request).catch(() => {
-        // इन्टरनेट नहुँदा index.html देखाउने
-        if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
-      });
-    })
+    fetch(event.request)
+      .then(response => {
+        const resClone = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, resClone));
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request).then(cached => {
+            return cached || (event.request.mode === 'navigate' ? caches.match('./index.html') : null);
+        });
+      })
   );
 });
