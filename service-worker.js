@@ -1,8 +1,7 @@
-const CACHE_NAME = 'expense-tracker-v1';
+const CACHE_NAME = 'merohisab-v2'; // क्यासको नाम परिवर्तन गरियो
 const ASSETS = [
+  './',
   './index.html',
-  './style.css',
-  './app.js',
   './manifest.json',
   'https://cdn.tailwindcss.com',
   'https://cdn.jsdelivr.net/npm/chart.js',
@@ -12,7 +11,10 @@ const ASSETS = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(ASSETS);
+      // क्यास फेल नहोस् भनेर एउटा-एउटा फाइल थप्ने (error handling)
+      return Promise.allSettled(
+        ASSETS.map(url => cache.add(url).catch(err => console.warn(`Cache add failed for ${url}`, err)))
+      );
     })
   );
   self.skipWaiting();
@@ -32,7 +34,9 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
+      // क्यासमा छ भने दिने, नत्र इन्टरनेटबाट ल्याउने
       return response || fetch(event.request).catch(() => {
+        // इन्टरनेट नहुँदा index.html देखाउने
         if (event.request.mode === 'navigate') {
           return caches.match('./index.html');
         }
