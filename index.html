@@ -728,12 +728,40 @@
         async function signInWithGoogle() { try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch (e) { showToast("Login failed", "error"); } }
         async function signOutUser() { await signOut(auth); window.location.reload(); }
 
-        function updateSyncStatus() {
-            const total = Object.values(pendingWritesCount).reduce((a,b)=>a+b,0); const el = document.getElementById('sync-status');
-            if (!userId || !navigator.onLine) { el.className = "hidden sm:flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-500"; el.innerHTML = `<i class="fa-solid fa-cloud-slash"></i>`; } 
-            else if (total > 0) { el.className = "hidden sm:flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-700"; el.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> ${total}`; } 
-            else { el.className = "hidden sm:flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-emerald-100 text-emerald-700"; el.innerHTML = `<i class="fa-solid fa-cloud-check"></i>`; }
+function updateSyncStatus() {
+            const total = Object.values(pendingWritesCount).reduce((a,b)=>a+b,0); 
+            const el = document.getElementById('sync-status');
+            if (!userId || !navigator.onLine) { 
+                el.className = "hidden sm:flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-500"; el.innerHTML = `<i class="fa-solid fa-cloud-slash"></i>`; 
+            } 
+            else if (total > 0) { 
+                el.className = "hidden sm:flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-700"; el.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> ${total}`; 
+            } 
+            else { 
+                el.className = "hidden sm:flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-emerald-100 text-emerald-700"; el.innerHTML = `<i class="fa-solid fa-cloud-check"></i>`; 
+            }
+            updateNotificationBadge();
         }
+
+        window.updateNotificationBadge = updateNotificationBadge;
+        function updateNotificationBadge() {
+            const badge = document.getElementById('notif-badge');
+            if(!badge) return;
+            
+            const offlineCount = Object.values(pendingWritesCount).reduce((a,b)=>a+b,0);
+            const peerCount = peerTransfersData ? peerTransfersData.length : 0;
+            const total = offlineCount + peerCount;
+            
+            if (total > 0) {
+                badge.innerText = total > 9 ? '9+' : total;
+                badge.classList.remove('hidden');
+                badge.classList.add('flex');
+            } else {
+                badge.classList.remove('flex');
+                badge.classList.add('hidden');
+            }
+        }
+
         window.addEventListener('online', updateSyncStatus); window.addEventListener('offline', updateSyncStatus);
 
         onAuthStateChanged(auth, (user) => {
