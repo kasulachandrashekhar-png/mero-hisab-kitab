@@ -617,7 +617,7 @@
         window.openBudgetModal = openBudgetModal; window.closeBudgetModal = closeBudgetModal; window.handleBudgetSubmit = handleBudgetSubmit; window.exportCSV = exportCSV;
         window.viewAccountTransactions = viewAccountTransactions; window.goBackTab = goBackTab; window.showBreakdown = showBreakdown; window.closeBreakdown = closeBreakdown;
 
-        // Translation Dict (Including Udharo)
+        // Translation Dict
         const i18n = {
             en: { app_title: "Expense Tracker", nav_dashboard: "Dashboard", nav_insight: "Insight", nav_contacts: "Contacts", nav_accounts: "Accounts", nav_income: "Income", nav_expense: "Expense", nav_transfer: "Transfer", nav_history: "History", nav_reports: "Reports", nav_settings: "Settings", nav_budget: "Budgets", dark_mode: "Dark Mode", light_mode: "Light Mode", total_balance: "Total Balance", total_income_all: "Total Income", total_expense_all: "Total Expenses", total_bank: "Bank Total", total_cash: "Cash Total", total_wallet: "Wallet Total", total_sapat: "Total Lent (Sapat)", total_udharo: "Payable (Udharo)", sapat_history: "Sapat/Peer History", monthly_chart_title: "Income vs Expense", acc_balances_title: "Account Balances", recent_trans_title: "Recent Transactions", view_all: "View All", manage_accounts: "Manage Accounts", add_account: "Add Account", add_new: "Add New", record_income: "Record Income", record_expense: "Record Expense", account_transfer: "Transfer Money", title_source: "Title *", amount: "Amount *", date: "Date *", category: "Category *", receive_account: "Account *", payment_account: "Account *", notes: "Notes", save_income: "Save", save_expense: "Save", reset: "Reset", from_account: "From *", to_account: "To *", transfer_fee: "Fee", transfer_funds: "Transfer", self_transfer: "Own Accounts", friend_transfer: "To Contact", friend_email: "Contact / Email *", sapat_type: "Transfer Type *", send_money: "Send Money", friend_transfer_info: "Amount deducts immediately. Recipient gets notified.", transaction_history: "Transaction History", all_types: "All Types", all_accounts: "All Accounts", search_placeholder: "Search...", date_col: "Date", type_col: "Type", title_col: "Title", account_col: "Account", amount_col: "Amount", actions_col: "Action", monthly_budgets: "Monthly Budgets", set_budget: "Set Budget", financial_reports: "Financial Reports", cat_expense: "Category Expenses", savings_trend: "Savings Trend", data_settings: "Settings", logout: "Logout", login: "Login", offline: "Offline", synced: "Synced", pending: "Pending Sync", confirm_title: "Confirm Action", cancel: "Cancel", confirm_btn: "Confirm", udharo_acc: "Payable (Udharo)", request_money: "Request Money" },
             ne: { app_title: "मेरो हिसाब", nav_dashboard: "ड्यासबोर्ड", nav_insight: "इनसाइट", nav_contacts: "सम्पर्कहरू", nav_accounts: "खाताहरू", nav_income: "आम्दानी", nav_expense: "खर्च", nav_transfer: "रकमान्तर", nav_history: "इतिहास", nav_reports: "रिपोर्टहरू", nav_settings: "सेटिङ्स", nav_budget: "बजेट", dark_mode: "गाढा मोड", light_mode: "उज्यालो मोड", total_balance: "कुल ब्यालेन्स", total_income_all: "कुल आम्दानी", total_expense_all: "कुल खर्च", total_bank: "बैंक ब्यालेन्स", total_cash: "नगद ब्यालेन्स", total_wallet: "वालेट ब्यालेन्स", total_sapat: "लिन बाँकी सापट", total_udharo: "तिर्न बाँकी उधारो", sapat_history: "सापट/लेनदेन विवरण", monthly_chart_title: "आम्दानी र खर्च", acc_balances_title: "खाता अनुसार ब्यालेन्स", recent_trans_title: "भर्खरैका कारोबारहरू", view_all: "सबै हेर्नुहोस्", manage_accounts: "खाताहरू व्यवस्थापन", add_account: "खाता थप्नुहोस्", add_new: "नयाँ थप्नुहोस्", record_income: "नयाँ आम्दानी", record_expense: "नयाँ खर्च", account_transfer: "रकमान्तर गर्नुहोस्", title_source: "शीर्षक *", amount: "रकम *", date: "मिति *", category: "वर्ग *", receive_account: "खाता *", payment_account: "खाता *", notes: "कैफियत", save_income: "सेभ", save_expense: "सेभ", reset: "रिसेट", from_account: "पठाउने खाता *", to_account: "प्राप्त गर्ने खाता *", transfer_fee: "शुल्क", transfer_funds: "पठाउनुहोस्", self_transfer: "आफ्नै खातामा", friend_transfer: "साथी/परिवारलाई", friend_email: "सम्पर्क / इमेल *", sapat_type: "लेनदेन प्रकार *", send_money: "रकम पठाउनुहोस्", friend_transfer_info: "यसबाट पठाएको रकम तुरुन्तै खाताबाट घट्नेछ र साथीलाई Notification जानेछ।", transaction_history: "कारोबार इतिहास", all_types: "सबै प्रकार", all_accounts: "सबै खाताहरू", search_placeholder: "खोज्नुहोस्...", date_col: "मिति", type_col: "प्रकार", title_col: "शीर्षक", account_col: "खाता", amount_col: "रकम", actions_col: "कार्य", monthly_budgets: "मासिक बजेट", set_budget: "बजेट सेट", financial_reports: "आर्थिक रिपोर्टहरू", cat_expense: "वर्ग अनुसार खर्च", savings_trend: "बचत प्रवृत्ति", data_settings: "सेटिङ्स", logout: "लगआउट", login: "लगइन", offline: "अफलाइन", synced: "सिंक भयो", pending: "सिंक बाँकी", confirm_title: "प्रमाणीकरण", cancel: "रद्द", confirm_btn: "निश्चित", udharo_acc: "उधारो (Unpaid)" , request_money: "रकम माग्नुहोस्"}
@@ -632,6 +632,18 @@
             const p = yyyyMm.split('-'); const m = parseInt(p[1], 10);
             if (m >= 1 && m <= 12) return `${(appLang === 'ne' ? neMonths : enMonths)[m - 1]} ${p[0]}`;
             return yyyyMm;
+        }
+
+        // अटोमेटिक नेपाली मिति निकाल्ने फङ्सन
+        function getTodayBS() {
+            const d = new Date();
+            d.setDate(d.getDate() + 15);
+            d.setMonth(d.getMonth() + 8);
+            d.setFullYear(d.getFullYear() + 56);
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${y}-${m}-${day}`;
         }
 
         function changeReportMonth(offset) {
@@ -652,7 +664,6 @@
                 if(i18n[appLang][key]) el.placeholder = i18n[appLang][key]; 
             });
             
-            // पुरानो हेडरको टेक्स्ट छ भने मात्र अपडेट गर्ने
             const oldLangText = document.getElementById('lang-text');
             if (oldLangText) oldLangText.textContent = appLang === 'en' ? 'नेपाली' : 'English';
             
@@ -689,9 +700,10 @@
         const appId = fbCfg.appId; const app = initializeApp(fbCfg); const auth = getAuth(app); 
         const db = initializeFirestore(app, { localCache: persistentLocalCache({tabManager: persistentMultipleTabManager()}) });
 
-        async function dbAdd(s, d) { if (!userId) return showToast("Login required!", "error"); await addDoc(collection(db, 'artifacts', appId, 'users', userId, s), d); }
-        async function dbPut(s, d) { if (!userId) return; const c = {...d}; delete c.id; await updateDoc(doc(db, 'artifacts', appId, 'users', userId, s, d.id), c); }
-        async function dbDelete(s, id) { if (!userId) return; await deleteDoc(doc(db, 'artifacts', appId, 'users', userId, s, id)); }
+        // Non-blocking Database Functions (Toast immediately appears)
+        const dbAdd = (s, d) => { if (userId) addDoc(collection(db, 'artifacts', appId, 'users', userId, s), d).catch(()=>{}); };
+        const dbPut = (s, d) => { if (userId) { const c={...d}; delete c.id; updateDoc(doc(db, 'artifacts', appId, 'users', userId, s, d.id), c).catch(()=>{}); }};
+        const dbDelete = (s, id) => { if (userId) deleteDoc(doc(db, 'artifacts', appId, 'users', userId, s, id)).catch(()=>{}); };
 
         window.formatNPR = function(amount) {
             if (!amount) return 'रु. 0.00';
@@ -699,11 +711,13 @@
         };
       
         window.addEventListener('DOMContentLoaded', async () => {
-            const today = "2083-07-16"; 
-            ['income-date','expense-date','transfer-date','friend-transfer-date'].forEach(id => document.getElementById(id).value = today);
-            document.getElementById('report-month-input').value = "2083-07"; document.getElementById('bud-month').value = "2083-07";
+            const todayBS = getTodayBS(); // Current Date in BS Auto-fill
+            ['income-date','expense-date','transfer-date','friend-transfer-date'].forEach(id => document.getElementById(id).value = todayBS);
             
-            // Load local contacts initially
+            const currentMonthBS = todayBS.substring(0, 7);
+            document.getElementById('report-month-input').value = currentMonthBS; 
+            document.getElementById('bud-month').value = currentMonthBS;
+            
             contactsData = JSON.parse(localStorage.getItem('appContacts') || '[]');
             populateContactsList();
 
@@ -852,7 +866,6 @@
             }
         }
 
-        // --- Core Logic: Account Balances including Udharo ---
         async function calculateAccountBalances() {
             const b = {}; 
             accountsData.forEach(a => { b[a.id] = {...a, currentBalance: a.openingBalance}; });
@@ -955,12 +968,11 @@
             document.getElementById('sapat-history-list').innerHTML = sHistory.length === 0 ? `<tr><td class="py-4 text-gray-500 text-center">No Sapat Records.</td></tr>` : sHistory.map(t => `<tr class="border-b dark:border-gray-700"><td class="py-3 px-2">${t.date}</td><td class="py-3 px-2">${t.title}</td><td class="py-3 px-2 font-bold ${t.sapatSign==='+'?'text-rose-500': t.sapatSign==='B'?'text-indigo-500' : 'text-emerald-500'}">${t.sapatSign==='+'?'Lent': t.sapatSign==='B'?'Borrowed':'Repaid'} ${formatNPR(t.amount)}</td></tr>`).join('');
         }
 
-async function showBreakdown(accountType, title) {
+        async function showBreakdown(accountType, title) {
             document.getElementById('breakdown-title').innerText = title;
             const list = document.getElementById('breakdown-list');
             list.innerHTML = '';
 
-            // सापट दिएको वा लिएको विवरण देखाउने लजिक
             if (accountType === 'Lent' || accountType === 'Borrowed') {
                 const isLent = accountType === 'Lent';
                 const filtered = transactionsData.filter(t => t.sapatType === (isLent ? 'lent' : 'borrowed'));
@@ -979,7 +991,6 @@ async function showBreakdown(accountType, title) {
                     `).join('');
                 }
             } 
-            // बैंक, क्यास र वालेटको विवरण देखाउने लजिक
             else {
                 const bMap = await calculateAccountBalances();
                 const accs = Object.values(bMap).filter(a => a.type === accountType);
@@ -1016,13 +1027,13 @@ async function showBreakdown(accountType, title) {
         }
         function openContactModal() { document.getElementById('contact-modal').classList.replace('hidden', 'flex'); }
         function closeContactModal() { document.getElementById('contact-modal').classList.replace('flex', 'hidden'); }
-        async function handleContactSubmit(e) { 
+        function handleContactSubmit(e) { 
             e.preventDefault(); 
             const d = { name: document.getElementById('cont-name').value, email: document.getElementById('cont-email').value.toLowerCase(), relation: document.getElementById('cont-relation').value }; 
-            await dbAdd("contacts", d); 
-            closeContactModal(); showToast("Contact Saved!"); 
+            dbAdd("contacts", d); 
+            closeContactModal(); showToast(navigator.onLine ? "Contact Saved!" : "Saved Offline (Pending Sync)"); 
         }
-        async function deleteContact(id) { customConfirm("Delete this contact?", async () => { await dbDelete("contacts", id); }); }
+        function deleteContact(id) { customConfirm("Delete this contact?", () => { dbDelete("contacts", id); showToast(navigator.onLine ? "Deleted!" : "Deleted Offline (Pending Sync)"); }); }
         
         function populateContactsList() { 
             document.getElementById('contacts-list').innerHTML = contactsData.map(c => {
@@ -1032,10 +1043,12 @@ async function showBreakdown(accountType, title) {
             }).join(''); 
         }
         
-        // Accounts Logic
-        function loadAccounts() { 
-            document.getElementById('accounts-grid').innerHTML = accountsData.map(a => `
-            <div onclick="viewAccountTransactions('${a.id}')" class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 cursor-pointer hover:border-brand-500 transition">
+        // Accounts Logic (Now Shows Current Balance)
+        async function loadAccounts() { 
+            const bMap = await calculateAccountBalances();
+            const accs = Object.values(bMap).filter(a => a.id !== 'udharo');
+            document.getElementById('accounts-grid').innerHTML = accs.map(a => `
+            <div onclick="viewAccountTransactions('${a.id}')" class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 cursor-pointer hover:border-brand-500 transition flex flex-col justify-between h-full">
                 <div class="flex items-start justify-between">
                     <div>
                         <span class="text-xs bg-brand-50 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 px-2.5 py-1 rounded-full font-semibold">${a.type}</span>
@@ -1046,9 +1059,15 @@ async function showBreakdown(accountType, title) {
                         <button onclick="deleteAccount('${a.id}')" class="p-2 text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
-                <div class="mt-3 border-t border-gray-100 dark:border-gray-700 pt-3">
-                    <p class="text-xs text-gray-500">Opening Balance</p>
-                    <p class="text-xl font-bold">${formatNPR(a.openingBalance)}</p>
+                <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-end">
+                    <div>
+                        <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wide">Current Balance</p>
+                        <p class="text-xl font-bold text-brand-600 dark:text-brand-400">${formatNPR(a.currentBalance)}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] text-gray-400 uppercase font-semibold">Opening</p>
+                        <p class="text-xs font-semibold text-gray-500">${formatNPR(a.openingBalance)}</p>
+                    </div>
                 </div>
             </div>`).join(''); 
         }
@@ -1064,15 +1083,15 @@ async function showBreakdown(accountType, title) {
             } 
         }
         function closeAccountModal() { document.getElementById('account-modal').classList.replace('flex', 'hidden'); }
-        async function handleAccountSubmit(e) { 
+        function handleAccountSubmit(e) { 
             e.preventDefault(); 
             const d = { name: document.getElementById('acc-name').value, type: document.getElementById('acc-type').value, openingBalance: Math.round(parseFloat(document.getElementById('acc-opening').value)*100) }; 
             const id = document.getElementById('acc-id').value; 
-            if(id) { d.id=id; await dbPut("accounts",d); } else await dbAdd("accounts",d); 
-            closeAccountModal(); showToast("Account Saved!"); 
+            if(id) { d.id=id; dbPut("accounts",d); } else dbAdd("accounts",d); 
+            closeAccountModal(); showToast(navigator.onLine ? "Account Saved!" : "Saved Offline (Pending Sync)"); 
         }
-        async function editAccount(id) { openAccountModal(accountsData.find(a => a.id === id)); }
-        async function deleteAccount(id) { customConfirm("Delete this account?", async () => { await dbDelete("accounts", id); }); }
+        function editAccount(id) { openAccountModal(accountsData.find(a => a.id === id)); }
+        function deleteAccount(id) { customConfirm("Delete this account?", () => { dbDelete("accounts", id); showToast(navigator.onLine ? "Deleted!" : "Deleted Offline"); }); }
         
         function populateAccountDropdowns() { 
             const opts = accountsData.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
@@ -1093,21 +1112,21 @@ async function showBreakdown(accountType, title) {
         }
 
         // Transactions Form Handlers
-        async function handleIncomeSubmit(e) { 
+        function handleIncomeSubmit(e) { 
             e.preventDefault(); 
             const d = { type: "income", title: document.getElementById('income-title').value, amount: Math.round(parseFloat(document.getElementById('income-amount').value)*100), date: document.getElementById('income-date').value, category: document.getElementById('income-category').value, accountId: document.getElementById('income-account').value, notes: document.getElementById('income-notes').value }; 
             const id = document.getElementById('income-id').value; 
-            if(id) { d.id=id; await dbPut("transactions",d); } else await dbAdd("transactions",d); 
-            resetIncomeForm(); switchTab('transactions'); showToast("Income Saved!"); 
+            if(id) { d.id=id; dbPut("transactions",d); } else dbAdd("transactions",d); 
+            resetIncomeForm(); switchTab('transactions'); showToast(navigator.onLine ? "Income Saved!" : "Saved Offline (Pending Sync)"); 
         }
         function resetIncomeForm() { document.getElementById('income-id').value=""; document.getElementById('income-title').value=""; document.getElementById('income-amount').value=""; document.getElementById('income-notes').value=""; }
         
-        async function handleExpenseSubmit(e) { 
+        function handleExpenseSubmit(e) { 
             e.preventDefault(); 
             const d = { type: "expense", title: document.getElementById('expense-title').value, amount: Math.round(parseFloat(document.getElementById('expense-amount').value)*100), date: document.getElementById('expense-date').value, category: document.getElementById('expense-category').value, accountId: document.getElementById('expense-account').value, notes: document.getElementById('expense-notes').value }; 
             const id = document.getElementById('expense-id').value; 
-            if(id) { d.id=id; await dbPut("transactions",d); } else await dbAdd("transactions",d); 
-            resetExpenseForm(); switchTab('transactions'); showToast("Expense Saved!"); 
+            if(id) { d.id=id; dbPut("transactions",d); } else dbAdd("transactions",d); 
+            resetExpenseForm(); switchTab('transactions'); showToast(navigator.onLine ? "Expense Saved!" : "Saved Offline (Pending Sync)"); 
         }
         function resetExpenseForm() { document.getElementById('expense-id').value=""; document.getElementById('expense-title').value=""; document.getElementById('expense-amount').value=""; document.getElementById('expense-notes').value=""; }
 
@@ -1117,14 +1136,14 @@ async function showBreakdown(accountType, title) {
             else { document.getElementById('transfer-form-self').classList.add('hidden'); document.getElementById('transfer-form-friend').classList.remove('hidden'); } 
         }
         
-        async function handleTransferSubmit(e) { 
+        function handleTransferSubmit(e) { 
             e.preventDefault(); 
             const d = { type: "transfer", fromAccountId: document.getElementById('transfer-from').value, toAccountId: document.getElementById('transfer-to').value, amount: Math.round(parseFloat(document.getElementById('transfer-amount').value)*100), fee: Math.round(parseFloat(document.getElementById('transfer-fee').value||0)*100), date: document.getElementById('transfer-date').value, notes: document.getElementById('transfer-notes').value }; 
-            await dbAdd("transactions",d); resetTransferForm(); switchTab('transactions'); showToast("Transfer Saved!"); 
+            dbAdd("transactions",d); resetTransferForm(); switchTab('transactions'); showToast(navigator.onLine ? "Transfer Saved!" : "Saved Offline (Pending Sync)"); 
         }
         function resetTransferForm() { document.getElementById('transfer-id').value=""; document.getElementById('transfer-amount').value=""; document.getElementById('transfer-fee').value="0"; document.getElementById('transfer-notes').value=""; }
 
-window.handleSapatTypeChange = handleSapatTypeChange;
+        window.handleSapatTypeChange = handleSapatTypeChange;
         function handleSapatTypeChange() {
             const type = document.getElementById('friend-transfer-sapat').value;
             const btn = document.getElementById('friend-transfer-submit-btn');
@@ -1145,7 +1164,7 @@ window.handleSapatTypeChange = handleSapatTypeChange;
             }
         }
 
-        async function handleFriendTransferSubmit(e) {
+        function handleFriendTransferSubmit(e) {
             e.preventDefault(); 
             if(!userEmail) return showToast("Login required.", "error");
             
@@ -1157,20 +1176,19 @@ window.handleSapatTypeChange = handleSapatTypeChange;
             const nt = document.getElementById('friend-transfer-notes').value;
 
             if(sapatType === 'borrowed') {
-                // Modified: Now income correctly goes INTO the selected account (fId)
-                await dbAdd("transactions", { type: "income", title: `Borrowed from ${contactInput}`, amount: amt, date: dt, category: "Transfer In", accountId: fId, sapatType: sapatType, notes: nt });
+                dbAdd("transactions", { type: "income", title: `Borrowed from ${contactInput}`, amount: amt, date: dt, category: "Transfer In", accountId: fId, sapatType: sapatType, notes: nt });
             } else {
-                await dbAdd("transactions", { type: "expense", title: `Sent to ${contactInput}`, amount: amt, date: dt, category: "Transfer Out", accountId: fId, sapatType: sapatType, notes: nt });
+                dbAdd("transactions", { type: "expense", title: `Sent to ${contactInput}`, amount: amt, date: dt, category: "Transfer Out", accountId: fId, sapatType: sapatType, notes: nt });
             }
             
             const isEmail = contactInput.includes('@');
             if(isEmail) {
-                await addDoc(collection(db, 'artifacts', appId, 'peer_transfers'), { fromEmail: userEmail, toEmail: contactInput, amount: amt, date: dt, sapatType: sapatType, status: 'pending', notes: nt });
+                addDoc(collection(db, 'artifacts', appId, 'peer_transfers'), { fromEmail: userEmail, toEmail: contactInput, amount: amt, date: dt, sapatType: sapatType, status: 'pending', notes: nt }).catch(()=>{});
             }
             
             const exists = contactsData.some(c => (typeof c === 'string' ? c : c.email) === contactInput);
             if(!exists) { 
-                await dbAdd("contacts", {
+                dbAdd("contacts", {
                     name: isEmail ? contactInput.split('@')[0] : contactInput, 
                     email: contactInput, 
                     relation: isEmail ? 'App User' : 'Offline Contact'
@@ -1179,13 +1197,14 @@ window.handleSapatTypeChange = handleSapatTypeChange;
 
             document.getElementById('friend-transfer-amount').value=""; 
             document.getElementById('friend-transfer-notes').value="";
-            document.getElementById('friend-transfer-sapat').value="none"; // ड्रपडाउन रिसेट गर्ने
-            handleSapatTypeChange(); // बटनको नाम रिसेट गर्ने
+            document.getElementById('friend-transfer-sapat').value="none"; 
+            handleSapatTypeChange(); 
             
-            showToast(isEmail ? "Saved & Request Sent!" : "Offline Record Saved!"); 
+            showToast(navigator.onLine ? (isEmail ? "Saved & Request Sent!" : "Record Saved!") : "Saved Offline (Pending Sync)"); 
             switchTab('insight');
         }
-        async function saveContact() {
+
+        function saveContact() {
             const contactInput = document.getElementById('friend-transfer-email').value.trim().toLowerCase(); 
             if(!contactInput) return showToast("Enter a name or email first.", "error"); 
             
@@ -1193,23 +1212,57 @@ window.handleSapatTypeChange = handleSapatTypeChange;
             const exists = contactsData.some(c => (typeof c === 'string' ? c : c.email) === contactInput);
             
             if(!exists) { 
-                await dbAdd("contacts", {
+                dbAdd("contacts", {
                     name: isEmail ? contactInput.split('@')[0] : contactInput, 
                     email: contactInput, 
                     relation: isEmail ? 'Online Friend' : 'Offline Friend'
                 });
-                showToast("Contact added!"); 
+                showToast(navigator.onLine ? "Contact added!" : "Saved Offline"); 
             } else {
                 showToast("Contact already exists.");
             }
         }
   
+        // Sync Notification and Peer Transfers
+        window.forceSync = function() {
+            if (navigator.onLine) {
+                showToast("Syncing with cloud...");
+                setTimeout(() => {
+                    updateSyncStatus();
+                    openNotificationModal();
+                    if(Object.values(pendingWritesCount).reduce((a,b)=>a+b,0) === 0) {
+                        showToast("All data synced successfully!");
+                    }
+                }, 1200);
+            } else {
+                showToast("Still offline! Please connect to internet.", "error");
+            }
+        };
+
         function openNotificationModal() {
             const l = document.getElementById('notifications-list');
-            if(peerTransfersData.length===0) l.innerHTML=`<p>No new transfers.</p>`;
-            else { 
+            let html = '';
+            
+            // Check pending writes
+            const totalPending = Object.values(pendingWritesCount).reduce((a,b)=>a+b,0);
+            if (totalPending > 0) {
+                html += `
+                <div class="p-4 bg-amber-50 dark:bg-amber-900/30 rounded-xl border border-amber-200 mb-4 text-left">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-amber-800 dark:text-amber-400"><i class="fa-solid fa-cloud-arrow-up"></i> Offline Records</p>
+                            <p class="text-xs text-amber-700 dark:text-amber-300 mt-1">${totalPending} items waiting to sync.</p>
+                        </div>
+                        <button onclick="forceSync()" class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition">Sync Now</button>
+                    </div>
+                </div>`;
+            }
+
+            if(peerTransfersData.length === 0) {
+                html += totalPending === 0 ? `<p class="text-sm text-gray-500 text-center py-4">No new notifications.</p>` : '';
+            } else { 
                 const opts = accountsData.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
-                l.innerHTML = peerTransfersData.map(t => {
+                html += peerTransfersData.map(t => {
                     const isDeduction = t.sapatType === 'borrowed'; 
                     const titleText = isDeduction ? "Payment Request (सापट मागिएको)" : "Received Money (रकम प्राप्त)";
                     const amtClass = isDeduction ? "text-rose-600" : "text-emerald-600";
@@ -1218,7 +1271,7 @@ window.handleSapatTypeChange = handleSapatTypeChange;
                     const textClass = isDeduction ? "text-rose-700 dark:text-rose-400" : "text-emerald-700 dark:text-emerald-400";
                     
                     return `
-                    <div class="p-4 ${bgClass} rounded-xl border text-left">
+                    <div class="p-4 ${bgClass} rounded-xl border text-left mb-3">
                         <div class="flex justify-between">
                             <div><p class="font-bold ${textClass}">${titleText}</p><p class="text-xs">From: ${t.fromEmail}</p></div>
                             <p class="font-bold ${amtClass}">${sign}${formatNPR(t.amount)}</p>
@@ -1230,26 +1283,27 @@ window.handleSapatTypeChange = handleSapatTypeChange;
                     </div>`;
                 }).join(''); 
             }
+            l.innerHTML = html;
             document.getElementById('notification-modal').classList.replace('hidden', 'flex');
         }
         function closeNotificationModal() { document.getElementById('notification-modal').classList.replace('flex', 'hidden'); }
 
-        async function acceptPeerTransfer(tId) {
+        function acceptPeerTransfer(tId) {
             const accId = document.getElementById(`acc-${tId}`).value; 
             if(!accId) return alert("Select account!");
             const t = peerTransfersData.find(x => x.id === tId); 
             if(!t) return;
             
             if (t.sapatType === 'borrowed') {
-                await dbAdd("transactions", { type: "expense", title: `Lent to ${t.fromEmail}`, amount: t.amount, date: t.date, category: "Transfer Out", accountId: accId, sapatType: 'lent', notes: t.notes });
+                dbAdd("transactions", { type: "expense", title: `Lent to ${t.fromEmail}`, amount: t.amount, date: t.date, category: "Transfer Out", accountId: accId, sapatType: 'lent', notes: t.notes });
             } else {
                 let mySapatType = t.sapatType === 'lent' ? 'borrowed' : (t.sapatType === 'repaid' ? 'none' : 'none');
                 let titlePrefix = t.sapatType === 'lent' ? 'Borrowed from' : 'Received from';
-                await dbAdd("transactions", { type: "income", title: `${titlePrefix} ${t.fromEmail}`, amount: t.amount, date: t.date, category: "Transfer In", accountId: accId, sapatType: mySapatType, notes: t.notes });
+                dbAdd("transactions", { type: "income", title: `${titlePrefix} ${t.fromEmail}`, amount: t.amount, date: t.date, category: "Transfer In", accountId: accId, sapatType: mySapatType, notes: t.notes });
             }
             
-            await updateDoc(doc(db, 'artifacts', appId, 'peer_transfers', tId), { status: 'accepted' }); 
-            showToast("Accepted!"); closeNotificationModal();
+            updateDoc(doc(db, 'artifacts', appId, 'peer_transfers', tId), { status: 'accepted' }).catch(()=>{}); 
+            showToast(navigator.onLine ? "Accepted!" : "Accepted Offline!"); closeNotificationModal();
         }
 
         function viewAccountTransactions(accId) {
@@ -1280,13 +1334,13 @@ window.handleSapatTypeChange = handleSapatTypeChange;
                 return `<tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition"><td class="py-3 px-2 whitespace-nowrap text-xs">${t.date}</td><td class="py-3 px-2">${badge}</td><td class="py-3 px-2 font-medium">${t.title||t.category}</td><td class="py-3 px-2 text-xs text-gray-500">${acc}</td><td class="py-3 px-2 text-right font-bold whitespace-nowrap">${amt}</td><td class="py-3 px-2 text-center"><button onclick="deleteTransaction('${t.id}')" class="text-gray-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button></td></tr>`;
             }).join('');
         }
-        async function editTransaction(id, type) {} 
-        async function deleteTransaction(id) { customConfirm("Delete transaction?", async () => { await dbDelete("transactions", id); }); }
+        function editTransaction(id, type) {} 
+        function deleteTransaction(id) { customConfirm("Delete transaction?", () => { dbDelete("transactions", id); showToast(navigator.onLine ? "Deleted!" : "Deleted Offline (Pending Sync)"); }); }
 
         // Budgets
         function openBudgetModal() { document.getElementById('budget-modal').classList.replace('hidden', 'flex'); }
         function closeBudgetModal() { document.getElementById('budget-modal').classList.replace('flex', 'hidden'); }
-        async function handleBudgetSubmit(e) { e.preventDefault(); await dbAdd("budgets", { category: document.getElementById('bud-category').value, month: document.getElementById('bud-month').value, amount: Math.round(parseFloat(document.getElementById('bud-amount').value)*100) }); closeBudgetModal(); }
+        function handleBudgetSubmit(e) { e.preventDefault(); dbAdd("budgets", { category: document.getElementById('bud-category').value, month: document.getElementById('bud-month').value, amount: Math.round(parseFloat(document.getElementById('bud-amount').value)*100) }); closeBudgetModal(); showToast(navigator.onLine ? "Budget Saved" : "Saved Offline");}
         async function loadBudgets() {
             const cM = document.getElementById('report-month-input').value; const sMap = {};
             transactionsData.forEach(t => { if(t.type === 'expense' && (t.date||'').startsWith(cM)) sMap[t.category] = (sMap[t.category]||0) + t.amount; });
