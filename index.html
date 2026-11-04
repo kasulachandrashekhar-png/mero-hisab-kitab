@@ -66,16 +66,11 @@
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col min-h-screen relative z-10">
-       <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 shadow-sm sticky top-0 z-20">
+      
+ <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 shadow-sm sticky top-0 z-20">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="flex flex-col items-center">
-                        <button onclick="toggleMobileSidebar()" class="md:hidden text-xl text-gray-600 dark:text-gray-300 focus:outline-none hover:text-brand-600"><i class="fa-solid fa-bars"></i></button>
-                        <!-- Back Button under Hamburger -->
-                        <button id="global-back-btn" onclick="goBackTab()" class="hidden text-sm text-gray-500 dark:text-gray-400 focus:outline-none hover:text-brand-600 transition mt-1">
-                            <i class="fa-solid fa-arrow-left"></i>
-                        </button>
-                    </div>
+                    <button onclick="toggleMobileSidebar()" class="md:hidden text-xl text-gray-600 dark:text-gray-300 focus:outline-none hover:text-brand-600"><i class="fa-solid fa-bars"></i></button>
                     <h2 id="page-title" class="text-lg font-bold" data-i18n="nav_dashboard">Dashboard</h2>
                 </div>
                 <div class="flex items-center gap-3">
@@ -87,15 +82,14 @@
                 </div>
             </div>
         </header>
-<!-- यो हो Header भन्दा मुनि राखिएको नयाँ Back Button -->
-        <div class="max-w-7xl mx-auto w-full px-4 md:px-8 pt-4 -mb-2">
-            <button id="global-back-btn" onclick="goBackTab()" class="hidden inline-flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm hover:text-brand-600 transition w-max">
-                <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+
+        <!-- यो Back Button हो, जुन Hamburger को ठ्याक्कै तल देखिनेछ -->
+        <div class="w-full max-w-7xl mx-auto px-4 md:px-8 pt-4 -mb-2 flex justify-start">
+            <button id="global-back-btn" onclick="goBackTab()" class="hidden items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 shadow-sm hover:text-brand-600 transition cursor-pointer z-10">
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
         </div>
 
-        <!-- Main Content Area -->
-        <div class="p-4 md:p-8 flex-1 max-w-7xl w-full mx-auto space-y-6 pb-12">
         <div class="p-4 md:p-8 flex-1 max-w-7xl w-full mx-auto space-y-6 pb-12">
             
             <!-- 1. DASHBOARD TAB -->
@@ -126,49 +120,51 @@
                 </div>
             </section>
 
-            <!-- 2. INSIGHT TAB (Udharo/Sapat Tracking) -->
+           <!-- 2. INSIGHT TAB (Udharo/Sapat Tracking) -->
             <section id="tab-insight" class="tab-content hidden space-y-6">
                 <h3 class="text-lg font-bold mb-4" data-i18n="nav_insight">Insights & Totals</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition" onclick="showBreakdown('Bank Account', 'Bank Breakdown')">
-                        <p class="text-emerald-100 text-sm" data-i18n="total_bank">Bank Total</p>
-                        <h3 id="insight-bank" class="text-2xl font-bold mt-1">रु. 0</h3>
-                        <p class="text-xs text-emerald-200 mt-2 flex items-center gap-1"><i class="fa-solid fa-circle-info"></i> View Details</p>
+                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-4 sm:p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition overflow-hidden" onclick="showBreakdown('Bank Account', 'Bank Breakdown')">
+                        <p class="text-emerald-100 text-xs sm:text-sm truncate" data-i18n="total_bank">Bank Total</p>
+                        <h3 id="insight-bank" class="text-lg sm:text-2xl font-bold mt-1 truncate">रु. 0</h3>
+                        <p class="text-[10px] sm:text-xs text-emerald-200 mt-2 flex items-center gap-1 truncate"><i class="fa-solid fa-circle-info"></i> View Details</p>
                     </div>
-                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition" onclick="showBreakdown('Cash', 'Cash Breakdown')">
-                        <p class="text-blue-100 text-sm" data-i18n="total_cash">Cash Total</p>
-                        <h3 id="insight-cash" class="text-2xl font-bold mt-1">रु. 0</h3>
-                        <p class="text-xs text-blue-200 mt-2 flex items-center gap-1"><i class="fa-solid fa-circle-info"></i> View Details</p>
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-4 sm:p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition overflow-hidden" onclick="showBreakdown('Cash', 'Cash Breakdown')">
+                        <p class="text-blue-100 text-xs sm:text-sm truncate" data-i18n="total_cash">Cash Total</p>
+                        <h3 id="insight-cash" class="text-lg sm:text-2xl font-bold mt-1 truncate">रु. 0</h3>
+                        <p class="text-[10px] sm:text-xs text-blue-200 mt-2 flex items-center gap-1 truncate"><i class="fa-solid fa-circle-info"></i> View Details</p>
                     </div>
-                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition" onclick="showBreakdown('Mobile Wallet', 'Wallet Breakdown')">
-                        <p class="text-purple-100 text-sm" data-i18n="total_wallet">Wallet</p>
-                        <h3 id="insight-wallet" class="text-2xl font-bold mt-1">रु. 0</h3>
-                        <p class="text-xs text-purple-200 mt-2 flex items-center gap-1"><i class="fa-solid fa-circle-info"></i> View Details</p>
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-4 sm:p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition overflow-hidden" onclick="showBreakdown('Mobile Wallet', 'Wallet Breakdown')">
+                        <p class="text-purple-100 text-xs sm:text-sm truncate" data-i18n="total_wallet">Wallet</p>
+                        <h3 id="insight-wallet" class="text-lg sm:text-2xl font-bold mt-1 truncate">रु. 0</h3>
+                        <p class="text-[10px] sm:text-xs text-purple-200 mt-2 flex items-center gap-1 truncate"><i class="fa-solid fa-circle-info"></i> View Details</p>
                     </div>
                     <!-- सापट दिएको र लिएको -->
-                    <div class="bg-gradient-to-br from-amber-500 to-amber-600 p-5 rounded-2xl shadow-sm text-white">
-                        <p class="text-amber-100 text-sm">सापट दिएको (Lent)</p>
-                        <h3 id="insight-sapat-diyako" class="text-2xl font-bold mt-1">रु. 0</h3>
+                    <div class="bg-gradient-to-br from-amber-500 to-amber-600 p-4 sm:p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition overflow-hidden" onclick="showBreakdown('Lent', 'Lent Details')">
+                        <p class="text-amber-100 text-xs sm:text-sm truncate">सापट दिएको (Lent)</p>
+                        <h3 id="insight-sapat-diyako" class="text-lg sm:text-2xl font-bold mt-1 truncate">रु. 0</h3>
+                        <p class="text-[10px] sm:text-xs text-amber-200 mt-2 flex items-center gap-1 truncate"><i class="fa-solid fa-list"></i> View Details</p>
                     </div>
-                    <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 p-5 rounded-2xl shadow-sm text-white">
-                        <p class="text-indigo-100 text-sm">सापट लिएको (Borrowed)</p>
-                        <h3 id="insight-sapat-liyako" class="text-2xl font-bold mt-1">रु. 0</h3>
+                    <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 p-4 sm:p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition overflow-hidden" onclick="showBreakdown('Borrowed', 'Borrowed Details')">
+                        <p class="text-indigo-100 text-xs sm:text-sm truncate">सापट लिएको (Borrowed)</p>
+                        <h3 id="insight-sapat-liyako" class="text-lg sm:text-2xl font-bold mt-1 truncate">रु. 0</h3>
+                        <p class="text-[10px] sm:text-xs text-indigo-200 mt-2 flex items-center gap-1 truncate"><i class="fa-solid fa-list"></i> View Details</p>
                     </div>
                     <!-- उधारो (Payable) -->
-                    <div class="bg-gradient-to-br from-rose-500 to-rose-600 p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition" onclick="viewAccountTransactions('udharo')">
-                        <p class="text-rose-100 text-sm" data-i18n="total_udharo">Payable (उधारो)</p>
-                        <h3 id="insight-udharo" class="text-2xl font-bold mt-1">रु. 0</h3>
-                        <p class="text-xs text-rose-200 mt-2 flex items-center gap-1"><i class="fa-solid fa-clock-rotate-left"></i> View History</p>
+                    <div class="bg-gradient-to-br from-rose-500 to-rose-600 p-4 sm:p-5 rounded-2xl shadow-sm text-white cursor-pointer hover:opacity-90 transition overflow-hidden" onclick="viewAccountTransactions('udharo')">
+                        <p class="text-rose-100 text-xs sm:text-sm truncate" data-i18n="total_udharo">Payable (उधारो)</p>
+                        <h3 id="insight-udharo" class="text-lg sm:text-2xl font-bold mt-1 truncate">रु. 0</h3>
+                        <p class="text-[10px] sm:text-xs text-rose-200 mt-2 flex items-center gap-1 truncate"><i class="fa-solid fa-clock-rotate-left"></i> View History</p>
                     </div>
                 </div>
-                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700">
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border dark:border-gray-700 mt-6">
                     <h3 class="text-md font-bold mb-4" data-i18n="sapat_history">Sapat / Peer History</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm"><tbody id="sapat-history-list" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody></table>
                     </div>
                 </div>
             </section>
-            
+
             <!-- Breakdown Modal for Insight -->
             <div id="breakdown-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[5000] p-4" onclick="closeBreakdown()">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-xl" onclick="event.stopPropagation()">
@@ -346,10 +342,11 @@
                     </form>
 
                     <!-- Transfer Friend -->
+                   <!-- Transfer Friend -->
                     <form id="transfer-form-friend" onsubmit="handleFriendTransferSubmit(event)" class="space-y-4 hidden">
                         <div class="p-3 mb-4 bg-amber-50 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200 rounded-xl text-xs flex gap-2">
                             <i class="fa-solid fa-circle-info text-base mt-0.5"></i>
-                            <span data-i18n="friend_transfer_info">यसबाट पठाएको रकम तुरुन्तै खाताबाट घट्नेछ र साथीलाई Notification जानेछ।</span>
+                            <span id="friend-transfer-info-text" data-i18n="friend_transfer_info">यसबाट पठाएको रकम तुरुन्तै खाताबाट घट्नेछ र साथीलाई Notification जानेछ।</span>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div><label class="block text-sm font-medium mb-1" data-i18n="from_account">From Account *</label><select id="friend-transfer-from" required class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></select></div>
@@ -361,7 +358,8 @@
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-brand-600 dark:text-brand-400 mb-1" data-i18n="sapat_type">Transfer Type (सापट/लेनदेन) *</label>
-                            <select id="friend-transfer-sapat" required class="w-full bg-brand-50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800 rounded-xl px-4 py-2.5 font-medium outline-none focus:border-brand-500">
+                            <!-- यहाँ onchange थपिएको छ -->
+                            <select id="friend-transfer-sapat" onchange="handleSapatTypeChange()" required class="w-full bg-brand-50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800 rounded-xl px-4 py-2.5 font-medium outline-none focus:border-brand-500">
                                 <option value="none">Normal Transfer (सामान्य लेनदेन)</option>
                                 <option value="lent">Lent (सापट दिएको)</option>
                                 <option value="repaid">Repaid (सापट फिर्ता गरेको)</option>
@@ -375,10 +373,10 @@
                         <div><label class="block text-sm font-medium mb-1" data-i18n="notes">Message</label><textarea id="friend-transfer-notes" rows="2" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500"></textarea></div>
                         <div class="flex justify-end gap-3 pt-2">
                             <button type="button" onclick="saveContact()" class="px-4 py-2.5 rounded-xl text-sm border border-brand-200 dark:border-brand-800 text-brand-600 dark:text-brand-400 hover:bg-brand-50 dark:hover:bg-brand-900/30 transition font-medium"><i class="fa-solid fa-user-plus"></i> Save Contact</button>
-                            <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition" data-i18n="send_money">Send Money</button>
+                            <!-- यहाँ बटनमा ID थपिएको छ -->
+                            <button type="submit" id="friend-transfer-submit-btn" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-sm transition" data-i18n="send_money">Send Money</button>
                         </div>
-                    </form>
-                </div>
+                    </form>                </div>
             </section>
 
             <!-- 8. TRANSACTIONS TAB -->
@@ -621,8 +619,8 @@
 
         // Translation Dict (Including Udharo)
         const i18n = {
-            en: { app_title: "Expense Tracker", nav_dashboard: "Dashboard", nav_insight: "Insight", nav_contacts: "Contacts", nav_accounts: "Accounts", nav_income: "Income", nav_expense: "Expense", nav_transfer: "Transfer", nav_history: "History", nav_reports: "Reports", nav_settings: "Settings", nav_budget: "Budgets", dark_mode: "Dark Mode", light_mode: "Light Mode", total_balance: "Total Balance", total_income_all: "Total Income", total_expense_all: "Total Expenses", total_bank: "Bank Total", total_cash: "Cash Total", total_wallet: "Wallet Total", total_sapat: "Total Lent (Sapat)", total_udharo: "Payable (Udharo)", sapat_history: "Sapat/Peer History", monthly_chart_title: "Income vs Expense", acc_balances_title: "Account Balances", recent_trans_title: "Recent Transactions", view_all: "View All", manage_accounts: "Manage Accounts", add_account: "Add Account", add_new: "Add New", record_income: "Record Income", record_expense: "Record Expense", account_transfer: "Transfer Money", title_source: "Title *", amount: "Amount *", date: "Date *", category: "Category *", receive_account: "Account *", payment_account: "Account *", notes: "Notes", save_income: "Save", save_expense: "Save", reset: "Reset", from_account: "From *", to_account: "To *", transfer_fee: "Fee", transfer_funds: "Transfer", self_transfer: "Own Accounts", friend_transfer: "To Contact", friend_email: "Contact / Email *", sapat_type: "Transfer Type *", send_money: "Send Money", friend_transfer_info: "Amount deducts immediately. Recipient gets notified.", transaction_history: "Transaction History", all_types: "All Types", all_accounts: "All Accounts", search_placeholder: "Search...", date_col: "Date", type_col: "Type", title_col: "Title", account_col: "Account", amount_col: "Amount", actions_col: "Action", monthly_budgets: "Monthly Budgets", set_budget: "Set Budget", financial_reports: "Financial Reports", cat_expense: "Category Expenses", savings_trend: "Savings Trend", data_settings: "Settings", logout: "Logout", login: "Login", offline: "Offline", synced: "Synced", pending: "Pending Sync", confirm_title: "Confirm Action", cancel: "Cancel", confirm_btn: "Confirm", udharo_acc: "Payable (Udharo)" },
-            ne: { app_title: "मेरो हिसाब", nav_dashboard: "ड्यासबोर्ड", nav_insight: "इनसाइट", nav_contacts: "सम्पर्कहरू", nav_accounts: "खाताहरू", nav_income: "आम्दानी", nav_expense: "खर्च", nav_transfer: "रकमान्तर", nav_history: "इतिहास", nav_reports: "रिपोर्टहरू", nav_settings: "सेटिङ्स", nav_budget: "बजेट", dark_mode: "गाढा मोड", light_mode: "उज्यालो मोड", total_balance: "कुल ब्यालेन्स", total_income_all: "कुल आम्दानी", total_expense_all: "कुल खर्च", total_bank: "बैंक ब्यालेन्स", total_cash: "नगद ब्यालेन्स", total_wallet: "वालेट ब्यालेन्स", total_sapat: "लिन बाँकी सापट", total_udharo: "तिर्न बाँकी उधारो", sapat_history: "सापट/लेनदेन विवरण", monthly_chart_title: "आम्दानी र खर्च", acc_balances_title: "खाता अनुसार ब्यालेन्स", recent_trans_title: "भर्खरैका कारोबारहरू", view_all: "सबै हेर्नुहोस्", manage_accounts: "खाताहरू व्यवस्थापन", add_account: "खाता थप्नुहोस्", add_new: "नयाँ थप्नुहोस्", record_income: "नयाँ आम्दानी", record_expense: "नयाँ खर्च", account_transfer: "रकमान्तर गर्नुहोस्", title_source: "शीर्षक *", amount: "रकम *", date: "मिति *", category: "वर्ग *", receive_account: "खाता *", payment_account: "खाता *", notes: "कैफियत", save_income: "सेभ", save_expense: "सेभ", reset: "रिसेट", from_account: "पठाउने खाता *", to_account: "प्राप्त गर्ने खाता *", transfer_fee: "शुल्क", transfer_funds: "पठाउनुहोस्", self_transfer: "आफ्नै खातामा", friend_transfer: "साथी/परिवारलाई", friend_email: "सम्पर्क / इमेल *", sapat_type: "लेनदेन प्रकार *", send_money: "रकम पठाउनुहोस्", friend_transfer_info: "यसबाट पठाएको रकम तुरुन्तै खाताबाट घट्नेछ र साथीलाई Notification जानेछ।", transaction_history: "कारोबार इतिहास", all_types: "सबै प्रकार", all_accounts: "सबै खाताहरू", search_placeholder: "खोज्नुहोस्...", date_col: "मिति", type_col: "प्रकार", title_col: "शीर्षक", account_col: "खाता", amount_col: "रकम", actions_col: "कार्य", monthly_budgets: "मासिक बजेट", set_budget: "बजेट सेट", financial_reports: "आर्थिक रिपोर्टहरू", cat_expense: "वर्ग अनुसार खर्च", savings_trend: "बचत प्रवृत्ति", data_settings: "सेटिङ्स", logout: "लगआउट", login: "लगइन", offline: "अफलाइन", synced: "सिंक भयो", pending: "सिंक बाँकी", confirm_title: "प्रमाणीकरण", cancel: "रद्द", confirm_btn: "निश्चित", udharo_acc: "उधारो (Unpaid)" }
+            en: { app_title: "Expense Tracker", nav_dashboard: "Dashboard", nav_insight: "Insight", nav_contacts: "Contacts", nav_accounts: "Accounts", nav_income: "Income", nav_expense: "Expense", nav_transfer: "Transfer", nav_history: "History", nav_reports: "Reports", nav_settings: "Settings", nav_budget: "Budgets", dark_mode: "Dark Mode", light_mode: "Light Mode", total_balance: "Total Balance", total_income_all: "Total Income", total_expense_all: "Total Expenses", total_bank: "Bank Total", total_cash: "Cash Total", total_wallet: "Wallet Total", total_sapat: "Total Lent (Sapat)", total_udharo: "Payable (Udharo)", sapat_history: "Sapat/Peer History", monthly_chart_title: "Income vs Expense", acc_balances_title: "Account Balances", recent_trans_title: "Recent Transactions", view_all: "View All", manage_accounts: "Manage Accounts", add_account: "Add Account", add_new: "Add New", record_income: "Record Income", record_expense: "Record Expense", account_transfer: "Transfer Money", title_source: "Title *", amount: "Amount *", date: "Date *", category: "Category *", receive_account: "Account *", payment_account: "Account *", notes: "Notes", save_income: "Save", save_expense: "Save", reset: "Reset", from_account: "From *", to_account: "To *", transfer_fee: "Fee", transfer_funds: "Transfer", self_transfer: "Own Accounts", friend_transfer: "To Contact", friend_email: "Contact / Email *", sapat_type: "Transfer Type *", send_money: "Send Money", friend_transfer_info: "Amount deducts immediately. Recipient gets notified.", transaction_history: "Transaction History", all_types: "All Types", all_accounts: "All Accounts", search_placeholder: "Search...", date_col: "Date", type_col: "Type", title_col: "Title", account_col: "Account", amount_col: "Amount", actions_col: "Action", monthly_budgets: "Monthly Budgets", set_budget: "Set Budget", financial_reports: "Financial Reports", cat_expense: "Category Expenses", savings_trend: "Savings Trend", data_settings: "Settings", logout: "Logout", login: "Login", offline: "Offline", synced: "Synced", pending: "Pending Sync", confirm_title: "Confirm Action", cancel: "Cancel", confirm_btn: "Confirm", udharo_acc: "Payable (Udharo)", request_money: "Request Money" },
+            ne: { app_title: "मेरो हिसाब", nav_dashboard: "ड्यासबोर्ड", nav_insight: "इनसाइट", nav_contacts: "सम्पर्कहरू", nav_accounts: "खाताहरू", nav_income: "आम्दानी", nav_expense: "खर्च", nav_transfer: "रकमान्तर", nav_history: "इतिहास", nav_reports: "रिपोर्टहरू", nav_settings: "सेटिङ्स", nav_budget: "बजेट", dark_mode: "गाढा मोड", light_mode: "उज्यालो मोड", total_balance: "कुल ब्यालेन्स", total_income_all: "कुल आम्दानी", total_expense_all: "कुल खर्च", total_bank: "बैंक ब्यालेन्स", total_cash: "नगद ब्यालेन्स", total_wallet: "वालेट ब्यालेन्स", total_sapat: "लिन बाँकी सापट", total_udharo: "तिर्न बाँकी उधारो", sapat_history: "सापट/लेनदेन विवरण", monthly_chart_title: "आम्दानी र खर्च", acc_balances_title: "खाता अनुसार ब्यालेन्स", recent_trans_title: "भर्खरैका कारोबारहरू", view_all: "सबै हेर्नुहोस्", manage_accounts: "खाताहरू व्यवस्थापन", add_account: "खाता थप्नुहोस्", add_new: "नयाँ थप्नुहोस्", record_income: "नयाँ आम्दानी", record_expense: "नयाँ खर्च", account_transfer: "रकमान्तर गर्नुहोस्", title_source: "शीर्षक *", amount: "रकम *", date: "मिति *", category: "वर्ग *", receive_account: "खाता *", payment_account: "खाता *", notes: "कैफियत", save_income: "सेभ", save_expense: "सेभ", reset: "रिसेट", from_account: "पठाउने खाता *", to_account: "प्राप्त गर्ने खाता *", transfer_fee: "शुल्क", transfer_funds: "पठाउनुहोस्", self_transfer: "आफ्नै खातामा", friend_transfer: "साथी/परिवारलाई", friend_email: "सम्पर्क / इमेल *", sapat_type: "लेनदेन प्रकार *", send_money: "रकम पठाउनुहोस्", friend_transfer_info: "यसबाट पठाएको रकम तुरुन्तै खाताबाट घट्नेछ र साथीलाई Notification जानेछ।", transaction_history: "कारोबार इतिहास", all_types: "सबै प्रकार", all_accounts: "सबै खाताहरू", search_placeholder: "खोज्नुहोस्...", date_col: "मिति", type_col: "प्रकार", title_col: "शीर्षक", account_col: "खाता", amount_col: "रकम", actions_col: "कार्य", monthly_budgets: "मासिक बजेट", set_budget: "बजेट सेट", financial_reports: "आर्थिक रिपोर्टहरू", cat_expense: "वर्ग अनुसार खर्च", savings_trend: "बचत प्रवृत्ति", data_settings: "सेटिङ्स", logout: "लगआउट", login: "लगइन", offline: "अफलाइन", synced: "सिंक भयो", pending: "सिंक बाँकी", confirm_title: "प्रमाणीकरण", cancel: "रद्द", confirm_btn: "निश्चित", udharo_acc: "उधारो (Unpaid)" , request_money: "रकम माग्नुहोस्"}
         };
 
         let appLang = localStorage.getItem('appLang') || 'en';
@@ -807,8 +805,13 @@
             
             const backBtn = document.getElementById('global-back-btn');
             if(backBtn) {
-                if(tabHistory.length > 0) backBtn.classList.remove('hidden');
-                else backBtn.classList.add('hidden');
+                if(tabHistory.length > 0) {
+                    backBtn.classList.remove('hidden');
+                    backBtn.classList.add('flex');
+                } else {
+                    backBtn.classList.remove('flex');
+                    backBtn.classList.add('hidden');
+                }
             }
 
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden')); 
@@ -952,22 +955,45 @@
             document.getElementById('sapat-history-list').innerHTML = sHistory.length === 0 ? `<tr><td class="py-4 text-gray-500 text-center">No Sapat Records.</td></tr>` : sHistory.map(t => `<tr class="border-b dark:border-gray-700"><td class="py-3 px-2">${t.date}</td><td class="py-3 px-2">${t.title}</td><td class="py-3 px-2 font-bold ${t.sapatSign==='+'?'text-rose-500': t.sapatSign==='B'?'text-indigo-500' : 'text-emerald-500'}">${t.sapatSign==='+'?'Lent': t.sapatSign==='B'?'Borrowed':'Repaid'} ${formatNPR(t.amount)}</td></tr>`).join('');
         }
 
-        async function showBreakdown(accountType, title) {
-            const bMap = await calculateAccountBalances();
-            const accs = Object.values(bMap).filter(a => a.type === accountType);
-            
+async function showBreakdown(accountType, title) {
             document.getElementById('breakdown-title').innerText = title;
             const list = document.getElementById('breakdown-list');
-            
-            if(accs.length === 0) {
-                list.innerHTML = `<p class="text-sm text-gray-500 text-center py-4">No accounts found.</p>`;
-            } else {
-                list.innerHTML = accs.map(a => `
-                    <div onclick="viewAccountTransactions('${a.id}'); closeBreakdown();" class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-xl cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition border dark:border-gray-600">
-                        <p class="font-semibold text-sm text-gray-800 dark:text-gray-100">${a.name}</p>
-                        <p class="font-bold text-sm text-brand-600 dark:text-brand-400">${formatNPR(a.currentBalance)}</p>
-                    </div>
-                `).join('');
+            list.innerHTML = '';
+
+            // सापट दिएको वा लिएको विवरण देखाउने लजिक
+            if (accountType === 'Lent' || accountType === 'Borrowed') {
+                const isLent = accountType === 'Lent';
+                const filtered = transactionsData.filter(t => t.sapatType === (isLent ? 'lent' : 'borrowed'));
+                
+                if(filtered.length === 0) {
+                    list.innerHTML = `<p class="text-sm text-gray-500 text-center py-4">No records found.</p>`;
+                } else {
+                    list.innerHTML = filtered.map(t => `
+                        <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-xl border dark:border-gray-600 mb-2">
+                            <div class="overflow-hidden pr-2">
+                                <p class="font-semibold text-sm text-gray-800 dark:text-gray-100 truncate">${t.title}</p>
+                                <p class="text-xs text-gray-500">${t.date}</p>
+                            </div>
+                            <p class="font-bold text-sm ${isLent ? 'text-amber-600 dark:text-amber-400' : 'text-indigo-600 dark:text-indigo-400'} shrink-0">${formatNPR(t.amount)}</p>
+                        </div>
+                    `).join('');
+                }
+            } 
+            // बैंक, क्यास र वालेटको विवरण देखाउने लजिक
+            else {
+                const bMap = await calculateAccountBalances();
+                const accs = Object.values(bMap).filter(a => a.type === accountType);
+                
+                if(accs.length === 0) {
+                    list.innerHTML = `<p class="text-sm text-gray-500 text-center py-4">No accounts found.</p>`;
+                } else {
+                    list.innerHTML = accs.map(a => `
+                        <div onclick="viewAccountTransactions('${a.id}'); closeBreakdown();" class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-xl cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition border dark:border-gray-600 mb-2">
+                            <p class="font-semibold text-sm text-gray-800 dark:text-gray-100 truncate pr-2">${a.name}</p>
+                            <p class="font-bold text-sm text-brand-600 dark:text-brand-400 shrink-0">${formatNPR(a.currentBalance)}</p>
+                        </div>
+                    `).join('');
+                }
             }
             document.getElementById('breakdown-modal').classList.replace('hidden', 'flex');
         }
@@ -1098,6 +1124,27 @@
         }
         function resetTransferForm() { document.getElementById('transfer-id').value=""; document.getElementById('transfer-amount').value=""; document.getElementById('transfer-fee').value="0"; document.getElementById('transfer-notes').value=""; }
 
+window.handleSapatTypeChange = handleSapatTypeChange;
+        function handleSapatTypeChange() {
+            const type = document.getElementById('friend-transfer-sapat').value;
+            const btn = document.getElementById('friend-transfer-submit-btn');
+            const infoText = document.getElementById('friend-transfer-info-text');
+            
+            if (type === 'borrowed') {
+                btn.setAttribute('data-i18n', 'request_money');
+                btn.innerText = i18n[appLang]['request_money'];
+                infoText.innerText = appLang === 'ne' ? "तपाईंले साथीसँग रकम माग्दै हुनुहुन्छ। साथीले Accept गरेपछि मात्र खातामा जोडिनेछ।" : "You are requesting money. Balance updates once accepted.";
+                infoText.classList.replace('text-amber-800', 'text-indigo-800');
+                infoText.parentElement.classList.replace('bg-amber-50', 'bg-indigo-50');
+            } else {
+                btn.setAttribute('data-i18n', 'send_money');
+                btn.innerText = i18n[appLang]['send_money'];
+                infoText.innerText = i18n[appLang]['friend_transfer_info'];
+                infoText.classList.replace('text-indigo-800', 'text-amber-800');
+                infoText.parentElement.classList.replace('bg-indigo-50', 'bg-amber-50');
+            }
+        }
+
         async function handleFriendTransferSubmit(e) {
             e.preventDefault(); 
             if(!userEmail) return showToast("Login required.", "error");
@@ -1132,11 +1179,12 @@
 
             document.getElementById('friend-transfer-amount').value=""; 
             document.getElementById('friend-transfer-notes').value="";
+            document.getElementById('friend-transfer-sapat').value="none"; // ड्रपडाउन रिसेट गर्ने
+            handleSapatTypeChange(); // बटनको नाम रिसेट गर्ने
             
-            showToast(isEmail ? "Saved & Notification Sent!" : "Offline Record Saved!"); 
+            showToast(isEmail ? "Saved & Request Sent!" : "Offline Record Saved!"); 
             switchTab('insight');
         }
-
         async function saveContact() {
             const contactInput = document.getElementById('friend-transfer-email').value.trim().toLowerCase(); 
             if(!contactInput) return showToast("Enter a name or email first.", "error"); 
